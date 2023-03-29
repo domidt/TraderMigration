@@ -14,22 +14,22 @@ The program has the following features:
 |TimeIN| Length in seconds of the RoleInfo stage.|
 |TimeAuction|	Length in seconds of the Auction stage.|
 |TimeCalculationTask|	Length in seconds of the CalculationTask stage.|
-|TimeHistory|	Length in seconds of the History stage.|
-|TimePunishment|	Length in seconds of the Punishment stage.|
-|TimeFinalResults|	Length in seconds of the FinalResults stage.|
-|TimePrediction|	Length in seconds of the Prediction stage.|
-|Exchangerate|	Exchangerate, expressed as value of one ECU in CU. In the Profit variable, profit is always saved in actual CU, not ECU. This way, only this variable has to be modified, while the exchange rate in the Background is always 1.|
+|TimeHistory| Length in seconds of the History stage.|
+|TimePunishment| Length in seconds of the Punishment stage.|
+|TimeFinalResults| Length in seconds of the FinalResults stage.|
+|TimePrediction| Length in seconds of the Prediction stage.|
+|Exchangerate| Exchangerate, expressed as value of one ECU in CU. In the Profit variable, profit is always saved in actual CU, not ECU. This way, only this variable has to be modified, while the exchange rate in the Background is always 1.|
 |Treatment|	Treatment ID. 0=Training, 1=BASE, 2=ID, 3=PUN, 4=MIX.|
-|ForceTreatment|	If set to -1, Treatment is read from structure file, otherwise the setting here overwrites the setting in the structure file.|
+|ForceTreatment| If set to -1, Treatment is read from structure file, otherwise the setting here overwrites the setting in the structure file.|
 |IsPun|	Punishment treatment (Treatments 3 and 4).|
-|IsID|	ID treatment (Treatments 2 and 4).|
-|Testmode|	Switch to activate testing mode.|
+|IsID| ID treatment (Treatments 2 and 4).|
+|Testmode| Switch to activate testing mode.|
 |MaxGroups|	Maximum number of groups within a market.|
 |MaxObserverCols|	Maximum number of summary table data observers may see at a time.|
 |NumTraders[\MaxGroups]|	Total number of traders in each of the groups. Array variable is GroupNum.|
 |NumInsiders[\MaxGroups]|	Number of insiders in each of the groups. Array variable is GroupNum.
-|NumGroups	Number of active groups.|
-|NumTraderSubjects	Sum over all NumTraders[#].|
+|NumGroups|	Number of active groups.|
+|NumTraderSubjects| Sum over all NumTraders[#].|
 |GroupID[\MaxGroups]|	Group ID of each group. Corresponds to GroupID in the markets and groups tables and is in fact read from the markets table. Array variable is group number (1…\MaxGroups).|
 |BBV[\MaxGroups]| Buy back value in each group. Array variable is GroupNum.|
 |LastP[\MaxGroups]|	Last transaction price. Array variable is GroupNum.|
@@ -44,134 +44,134 @@ The program has the following features:
 |ABMarktContracts| Beginning number of market contracts (offers).|
 |ABMarktActions	Beginning number of market actions (every activity).|
 |MarktTransaktionen| Number of market transactions in a market.|
-|SumMarktTransaktionen| Cumulative (over all periods) number of market transactions.
+|SumMarktTransaktionen| Cumulative (over all periods) number of market transactions.|
 |MarktContracts| Number of market contracts in a market.|
-SumMarktContracts| Cumulative (over all periods) number of market contracts.
-MarktActions| 
-SummarktActions| Cumulative (over all periods) number of market actions.
-RelativePayoff| Equal to 1 if payoff is relative to average earnings in the group, equal to 0 otherwise.
-Payment| Traders’ base payoff.
-Margin| Fixed amount (in ECU) which is deducted from total wealth at the end of the session.
-PaymentAuthority| Authorities’ base payoff.
-PaymentSelected| Payment to authority for each correctly selected insider. For uninformed traders who are selected, the payoff is 2*PaymentSelected.
-PaymentSuspected| Payment to authority for each correctly suspected insider. For uninformed traders who are marked, the payoff is 2*PaymentSuspected.
-PaymentInsidersGuess| Payment to authority for correctly guessing number of insiders.
-PaymentTradersGuessTraders| Payment to traders for correctly guessing number of traders.
-PaymentInsidersGuessTraders| Payment to traders for correctly guessing number of insiders.
-BestBid[\MaxGroups]| Best currently outstanding bid (highest price). Array variable is GroupNum.
-BestAsk[\MaxGroups]| Best currently outstanding ask (lowest price). Array variable is GroupNum.
-numContracts[\MaxGroups]| Total number of contracts. Array variable is GroupNum.
-numActions[\MaxGroups]| Total number of actions (every activity). Array variable is GroupNum.
-numDelete[\MaxGroups]| Total number of deleted contracts. Array variable is GroupNum.
-numTrades[\MaxGroups]| Total number of traded contracts. Array variable is GroupNum.
-SumPunishment[\MaxGroups]| Total punishment assigned in the group.
-Claimbase[\MaxGroups]| Total number of shares traded to the detriment of “claimants”, i.e. traders who were not identified as insiders.
-NumPunishmentDone| Total number of subjecs who have finished the Punishment stage.
-NumPredictionDone| Total number of subjecs who have finished the Prediction stage.
-NumRoleInfoDone| Total number of subjecs who have finished the RoleInfo stage.
-NumHistoryDone| Total number of subjecs who have finished the History stage.
-NumHistoryDone| Total number of subjecs who have finished the History stage.
-NumHistoryDone| Total number of subjecs who have finished the History stage.
-FontSizeStandard| Standard font size.
-FontSizeHeading| Font size used in headings.
-FontSizeSubHeading| Font size used in subheadings.
-I| Initialization variable, =-77777
-i, j, k, m, Done| Temporary variables
-PaymentAuthorityFixed| Fixed compensation for participation in experiment for authority
-AssetEndowmentNonInsiderLowerBound| lower bound for stock, money (*BBV) and shorting endowment (=10)
-AssetEndowmentNonInsiderUpperBound| Upper bound for stock, money (*BBV) and shorting endowment(=50)
-ForceTreatment| Added: 5=ShortNOLeg, 6=ShortLeg
-IsShort| | 0 for NOShort;1 for Short (Short selling possible)
-MP| Multiplier to leverage PD (percentage difference) (=6.75)
+|SumMarktContracts| Cumulative (over all periods) number of market contracts.|
+|MarktActions| Number of market actions in a market.|
+|SummarktActions| Cumulative (over all periods) number of market actions.|
+|RelativePayoff| Equal to 1 if payoff is relative to average earnings in the group, equal to 0 otherwise.|
+|Payment| Traders’ base payoff.|
+|Margin| Fixed amount (in ECU) which is deducted from total wealth at the end of the session.|
+|PaymentAuthority| Authorities’ base payoff.|
+|PaymentSelected| Payment to authority for each correctly selected insider. For uninformed traders who are selected, the payoff is 2*PaymentSelected.|
+|PaymentSuspected| Payment to authority for each correctly suspected insider. For uninformed traders who are marked, the payoff is 2*PaymentSuspected.|
+|PaymentInsidersGuess| Payment to authority for correctly guessing number of insiders.|
+|PaymentTradersGuessTraders| Payment to traders for correctly guessing number of traders.|
+|PaymentInsidersGuessTraders| Payment to traders for correctly guessing number of insiders.|
+|BestBid[\MaxGroups]| Best currently outstanding bid (highest price). Array variable is GroupNum.|
+|BestAsk[\MaxGroups]| Best currently outstanding ask (lowest price). Array variable is GroupNum.|
+|numContracts[\MaxGroups]| Total number of contracts. Array variable is GroupNum.|
+|numActions[\MaxGroups]| Total number of actions (every activity). Array variable is GroupNum.|
+|numDelete[\MaxGroups]| Total number of deleted contracts. Array variable is GroupNum.|
+|numTrades[\MaxGroups]| Total number of traded contracts. Array variable is GroupNum.|
+|SumPunishment[\MaxGroups]| Total punishment assigned in the group.|
+|Claimbase[\MaxGroups]| Total number of shares traded to the detriment of “claimants”, i.e. traders who were not identified as insiders.|
+|NumPunishmentDone| Total number of subjecs who have finished the Punishment stage.|
+|NumPredictionDone| Total number of subjecs who have finished the Prediction stage.|  
+|NumRoleInfoDone| Total number of subjecs who have finished the RoleInfo stage.|
+|NumHistoryDone| Total number of subjecs who have finished the History stage.|
+|NumHistoryDone| Total number of subjecs who have finished the History stage.|
+|NumHistoryDone| Total number of subjecs who have finished the History stage.|
+|FontSizeStandard| Standard font size.|
+|FontSizeHeading| Font size used in headings.|
+|FontSizeSubHeading| Font size used in subheadings.|
+I| Initialization variable, =-77777.|
+|i, j, k, m, Done| Temporary variables.|
+|PaymentAuthorityFixed| Fixed compensation for participation in experiment for authority.|
+|AssetEndowmentNonInsiderLowerBound| lower bound for stock, money (*BBV) and shorting endowment (=10).|
+|AssetEndowmentNonInsiderUpperBound| Upper bound for stock, money (*BBV) and shorting endowment(=50).|
+|ForceTreatment| Added: 5=ShortNOLeg, 6=ShortLeg.|
+|IsShort| | 0 for NOShort;1 for Short (Short selling possible).|
+|MP| Multiplier to leverage PD (percentage difference) (=6.75).|
 
-subjects
-Variable| Content
-Period| Period number of the record
-Subject| Subject number of the record
-Group| Group the subject belongs to. Corresponds to GroupID in the markets and groups tables.
-GroupNum| Group number the subject belongs to. Starts at 1 and bounded from above by \MaxGroups.
-Profit| Period profit, calculated as (Money-StartMoney)*\exchangerate.
-TotalProfit| Cumulative profit up to this period
-IsExperimenter| 0 if normal participant, 1 if experimenter subject
-Role| Subject’s role in the experiment: 0=calculation task, 1=uninformed, 2=insider, 3=authority.
-IsInsider| 1 if insider (Role 2), 0 if not (Roles 0, 1 or 3)
-Money| Subjects’ money balance.
-Stock| Subjects’ stock balance.
-FreeMoney| Money subjects have available after accounting for capital “bound” in outstanding buy offers.
-FreeStock| Stock subjects have available after accounting for stock “bound” in outstanding sell offers.
-Vermoegen| Current wealth at latest transaction price LastP.
-VermoegenStock| Wealth in stocks at latest transaction price LastP.
-OutgoingMoney| Total money “bound” in outstanding buy offers.
-OutgoingStock| Total stock “bound” in outstanding sell offers.
-LastP| Last transaction price.
-LastPHelp| Starting price for graphs.
-Contracts| Number of contracts created by this subject.
-TaxRate| Tax rate applicable to trading volume (price times quantity).
-SumTax| Total taxes paid by subject (continuously updated during trading).
-Volume| Total number of shares traded by subject (continuously updated).
-VolMarketOrders| Total number of shares traded by market orders by subject (continuously updated).
-Transaktionen| Total number of transactions (irrespective of transacted quantity).
-Purchases| Number of transactions where subject purchased.
-PurchasedVol| Volume of transactions where subject purchased.
-CancelledVol| Volume of cancelled orders.
-Sales| Number of transactions where subject sold.
-SoldVol| Volume of transactions where subject sold.
-AvgPrice| Average price paid/received per share (volume-weighted).
-MarketOrders| Total number of market orders (irrespective of transacted quantity).
-SortOrder| Sort order for contract display. 1=Trader Tag, 2=Price, 3=Quantity.
-num1| Number used in calculation task. Correct answer=num1*(num2*10+num3).
-num2| Number used in calculation task. Correct answer=num1*(num2*10+num3).
-num3| Number used in calculation task. Correct answer=num1*(num2*10+num3).
-answer| Answer on latest calculation task question. Correct answer=num1*(num2*10+num3).
-RightAnswers| Total number of correct answers given by subject.
-WageBuchhalter| Per-answer payment to calculator subjects in EUR.
-LastPUp| Upper bound derived from last price. Used for confirmation question in case subject submits bid or ask price far from last transaction price.
-LastPDown| Lower bound derived from last price. Used for confirmation question in case subject submits bid or ask price far from last transaction price.
-DoneRoleInfo| 0 if subject has not yet completed RoleInfo stage, 1 if it has.
-DonePrediction| 0 if subject has not yet completed Prediction stage, 1 if it has.
-DonePunishment| 0 if subject has not yet completed Punishment stage, 1 if it has.
-DoneHistory| 0 if subject has not yet completed History stage, 1 if it has.
-GuessTraders| Guess of the number of traders in the market.
-GuessInsiders| Guess of the number of insiders in the market.
-ScreenDisplay| Switch to determine which screen subjects see in stages. In Prediction stage and for authority subjects, 1=GeneralPrediction, 2=IndividualPrediction
-RandNum| Random number for choice which authority’s punishment point assignment counts in case there are multiple authorities in same group.
-Punished| 1 if subject was punished in this period, 0 if not.
-Claimbase| Total number of shares traded to the detriment of the trader if the trader was a “claimant”, i.e. a trader who was not identified as an insider.
-CompensationReceived| Compensation received through redistribution (in case of discovered insider, this is equal to insider’s positive profits, in case of uninformed or undiscovered insider, this is equal to sum of discovered insiders’ positive profits times the uninformed#s or undiscovered insider’s volume of unprofitable trades divided by the total volume of unprofitable trades of all unpunished traders).
-ProfitPeriodCalculator| Period calculation profit in the calculator role.
-ProfitPeriodTrader| Period trading profit in the trader role.
-ProfitPeriodPredictor| Period prediction profit in the trader role.
-ProfitPeriodAuthority| Period authority profit in the authority role.
-ProfitPeriod| Subject’s total period profit.
-EndVermoegen| Subject’s ending period wealth (Money+Stock*BBV[GroupNum]).
-AvEndVermoegen| Average of EndVermoegen in the same group.
-DiffAvEndVermoegen| If \RelativePayoff==1, difference between subject’s EndVermoegen and AvEndVermoegen, if ==0, difference between subjects’ EndVermoegen and their endowment value evaluated at the buyback value.
-ShowColumn[9]| Switches to determine which of the columns in an observers’ summary table are being displayed.
-Help| Determines which help screens are shown to observers:
-1| No help screen active.
-2| Offer volume screen active.
-3| Offer-induced trading volume screen active.
-4| Market trades screen active.
-5| Volume bought screen active.
-6| Volume sold screen active.
-7| Volume bought minus volume sold screen active.
-8| Average price screen active.
-9| Average volume screen active.
-10| Cancelled offers screen active.
-MaxShort| Maximum of stocks subject shorted
-MaxMargin| Maximum amount of taler subject used for buying on margin
-TotalShort| Total amount of stock subject shorted
-TotalMargin| Total amount of taler subject used for buying on margin
-ShortStock| Shorting endowment stock
-ShortMoney| Shorting endowment money
-PersonalMoneyEndowment| | Personal money endowment for profit calculation
-PersonalStockEndowment| Personal stock endowment for profit calculation
-PaymentSubjectsTable| =if(Role==1|Role==2,\Payment,0);
-basic compensation per period for traders for profit calculation (=2000 taler)
-PaymentAuthoritySubjectsTable| =if(Role==3,\PaymentAuthority,0); basic compensation for per period for authorities for profit calculation (=2 €)
-PD| Percentage difference
-PDtimesMP| Percentage difference multiplicated with MP
-DiffAvEndVermoegen| changed: now only difference between wealth in the beginning of the period and wealth in the end of the period (DiffAvEndVermoegen=Endvermögen-Anfangsvermögen)
+## subjects
+|Variable| Content|
+---| ---|
+|Period| Period number of the record.|
+|Subject| Subject number of the record.|
+|Group| Group the subject belongs to. Corresponds to GroupID in the markets and groups tables.|
+|GroupNum| Group number the subject belongs to. Starts at 1 and bounded from above by \MaxGroups.|
+|Profit| Period profit, calculated as (Money-StartMoney)*\exchangerate.|
+|TotalProfit| Cumulative profit up to this period.|
+|IsExperimenter| 0 if normal participant, 1 if experimenter subject.|
+|Role| Subject’s role in the experiment: 0=calculation task, 1=uninformed, 2=insider, 3=authority.|
+|IsInsider| 1 if insider (Role 2), 0 if not (Roles 0, 1 or 3).|
+|Money| Subjects’ money balance.|
+|Stock| Subjects’ stock balance.|
+|FreeMoney| Money subjects have available after accounting for capital “bound” in outstanding buy offers.|
+|FreeStock| Stock subjects have available after accounting for stock “bound” in outstanding sell offers.|
+|Vermoegen| Current wealth at latest transaction price LastP.|
+|VermoegenStock| Wealth in stocks at latest transaction price LastP.|
+|OutgoingMoney| Total money “bound” in outstanding buy offers.|
+|OutgoingStock| Total stock “bound” in outstanding sell offers.|
+|LastP| Last transaction price.|
+|LastPHelp| Starting price for graphs.|
+|Contracts| Number of contracts created by this subject.|
+|TaxRate| Tax rate applicable to trading volume (price times quantity).|
+|SumTax| Total taxes paid by subject (continuously updated during trading).|
+|Volume| Total number of shares traded by subject (continuously updated).|
+|VolMarketOrders| Total number of shares traded by market orders by subject (continuously updated).|
+|Transaktionen| Total number of transactions (irrespective of transacted quantity).|
+|Purchases| Number of transactions where subject purchased.|
+|PurchasedVol| Volume of transactions where subject purchased.|
+|CancelledVol| Volume of cancelled orders.|
+|Sales| Number of transactions where subject sold.|
+|SoldVol| Volume of transactions where subject sold.|
+|AvgPrice| Average price paid/received per share (volume-weighted).|
+|MarketOrders| Total number of market orders (irrespective of transacted quantity).|
+|SortOrder| Sort order for contract display. 1=Trader Tag, 2=Price, 3=Quantity.|
+|num1| Number used in calculation task. Correct answer=num1*(num2*10+num3).|
+|num2| Number used in calculation task. Correct answer=num1*(num2*10+num3).|
+|num3| Number used in calculation task. Correct answer=num1*(num2*10+num3).|
+|answer| Answer on latest calculation task question. Correct answer=num1*(num2*10+num3).|
+|RightAnswers| Total number of correct answers given by subject.|
+|WageBuchhalter| Per-answer payment to calculator subjects in EUR.|
+|LastPUp| Upper bound derived from last price. Used for confirmation question in case subject submits bid or ask price far from last transaction price.|
+|LastPDown| Lower bound derived from last price. Used for confirmation question in case subject submits bid or ask price far from last transaction price.|
+|DoneRoleInfo| 0 if subject has not yet completed RoleInfo stage, 1 if it has.|
+|DonePrediction| 0 if subject has not yet completed Prediction stage, 1 if it has.|
+|DonePunishment| 0 if subject has not yet completed Punishment stage, 1 if it has.|
+|DoneHistory| 0 if subject has not yet completed History stage, 1 if it has.|
+|GuessTraders| Guess of the number of traders in the market.|
+|GuessInsiders| Guess of the number of insiders in the market.|
+|ScreenDisplay| Switch to determine which screen subjects see in stages. In Prediction stage and for authority subjects, 1=GeneralPrediction, 2=IndividualPrediction.|
+|RandNum| Random number for choice which authority’s punishment point assignment counts in case there are multiple authorities in same group.|
+|Punished| 1 if subject was punished in this period, 0 if not.|
+|Claimbase| Total number of shares traded to the detriment of the trader if the trader was a “claimant”, i.e. a trader who was not identified as an insider.|
+|CompensationReceived| Compensation received through redistribution (in case of discovered insider, this is equal to insider’s positive profits, in case of uninformed or undiscovered insider, this is equal to sum of discovered insiders’ positive profits times the uninformed#s or undiscovered insider’s volume of unprofitable trades divided by the total volume of unprofitable trades of all unpunished traders).|
+|ProfitPeriodCalculator| Period calculation profit in the calculator role.|
+|ProfitPeriodTrader| Period trading profit in the trader role.|
+|ProfitPeriodPredictor| Period prediction profit in the trader role.|
+|ProfitPeriodAuthority| Period authority profit in the authority role.|
+|ProfitPeriod| Subject’s total period profit.|
+|EndVermoegen| Subject’s ending period wealth (Money+Stock*BBV[GroupNum]).|
+|AvEndVermoegen| Average of EndVermoegen in the same group.|
+|DiffAvEndVermoegen| If \RelativePayoff==1, difference between subject’s EndVermoegen and AvEndVermoegen, if ==0, difference between subjects’ EndVermoegen and their endowment value evaluated at the buyback value.|
+|ShowColumn[9]| Switches to determine which of the columns in an observers’ summary table are being displayed.|
+|Help| Determines which help screens are shown to observers:|
+||1. No help screen active.|
+||2. Offer volume screen active.|
+||3. Offer-induced trading volume screen active.|
+||4. Market trades screen active.|
+||5. Volume bought screen active.|
+||6. Volume sold screen active.|
+||7. Volume bought minus volume sold screen active.|
+||8. Average price screen active.|
+||9. Average volume screen active.|
+||10. Cancelled offers screen active.|
+|MaxShort| Maximum of stocks subject shorted.|
+|MaxMargin| Maximum amount of taler subject used for buying on margin.|
+|TotalShort| Total amount of stock subject shorted.|
+|TotalMargin| Total amount of taler subject used for buying on margin.|
+|ShortStock| Shorting endowment stock.|
+|ShortMoney| Shorting endowment money.|
+|PersonalMoneyEndowment| | Personal money endowment for profit calculation.|
+|PersonalStockEndowment| Personal stock endowment for profit calculation.|
+|PaymentSubjectsTable| =if(Role==1|Role==2,\Payment,0); basic compensation per period for traders for profit calculation (=2000 taler).|
+|PaymentAuthoritySubjectsTable| =if(Role==3,\PaymentAuthority,0); basic compensation for per period for authorities for profit calculation (=2 €).|
+|PD| Percentage difference.|
+|PDtimesMP| Percentage difference multiplicated with MP.|
+|DiffAvEndVermoegen| changed: now only difference between wealth in the beginning of the period and wealth in the end of the period (DiffAvEndVermoegen=Endvermögen-Anfangsvermögen).|
 
 ## timelog
 |Variable| Content|
