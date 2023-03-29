@@ -24,9 +24,16 @@ The table ``marketsummary`` summarizes data within a
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
 |IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
 |othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
-|REGBoth|
-|REGSH|
-                                                  "BestBid180", "BestAsk180", "BAspread180", "midpointBA180", "BestBid150", "BestAsk150", "BAspread150", "midpointBA150", "midpointBAavg150",
+|REGBoth| Regulatory index which is either ``1`` when both markets in a period apply regulation or ``0`` otherwise.|
+|REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
+|BestBid180| Active bid in the order book when market ended which offered the highest bid price.|
+|BestAsk180| Active ask in the order book when market ended which offered assets for the lowest ask price.|
+|BAspread180| Difference between best bid and best ask price when market ended.
+|midpointBA180| Arithmetic average of the best bid and best ask price when market ended.|
+|BestBid150| Mean best bids in the order book in the last 30 seconds weighted at the seconds providing the highest bid price.|
+BestAsk150| Mean best asks in the order book in the last 30 seconds weighted at the seconds providing the lowest ask price.|
+BAspread150|
+|midpointBA150", "midpointBAavg150",
                                                   "BA_BBV", "BA_BBV150", "BA_BBV180", "lnBA_BBV",  "lnBA_BBV150", "lnBA_BBV180",  
                                                   "meanBestBid", "meanBestAsk", "meanBAspread", "meanmidpointBA", "meanBAspreadwins", "meanBAspreadwins2", 
                                                   "meanreturnsec", "meanreturn", "meanreturnwins", "meanreturnwins2", "obsreturn", "sdreturnsec", "volatility", "volatilitywins", "volatilitywins2", "meanPrice", "sdPrice",   
