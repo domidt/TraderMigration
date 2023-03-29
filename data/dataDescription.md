@@ -174,11 +174,11 @@ PDtimesMP| Percentage difference multiplicated with MP
 DiffAvEndVermoegen| changed: now only difference between wealth in the beginning of the period and wealth in the end of the period (DiffAvEndVermoegen=Endvermögen-Anfangsvermögen)
 
 timelog
-|Variable| Content
-|ID| Unique identifier of this entry
-|Time| Time in seconds since start of treatment
-|Period| Period number of the record
-|Subject| Subject event was triggered by, (0) if not applicable
+|Variable| Content|
+|ID| Unique identifier of this entry|
+|Time| Time in seconds since start of treatment|
+|Period| Period number of the record|
+|Subject| Subject event was triggered by, (0) if not applicable|
 |Event| Event being logged:|
 ||1. Program start.|
 ||2. Experimenter clicks OK to proceed from RoleInfo to next stage.|
