@@ -1,30 +1,31 @@
 # TraderMigration
 This repository provides all data and analyses code used in the JFM paper
 
-The file ``Data.RData'' consists of six data tables:
+The file ``Data.RData`` consists of six data tables:
 
 ## marketsummary
-The table ``marketsummary'' summarizes data within a 
+The table ``marketsummary`` summarizes data within a 
 
 | Variable | Description |
 ---| ---|
-|SessionID| ID variable, which uniquely identifies each session from 1 to 24.|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
 |Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
-|Period| Period index, ranging from 1 to 12.|
-|Period0| Period index, ranging from 0 to 5, indicating the distance to the phase’s first
-period, starting with 0 to facilitate the interpretation of the intercept.|
-|Phase| Phase index, which is either ``Phase 1'' for periods 1 to 3, ``Phase 2'' for periods 4 to 9, or ``Phase 3''.|
-|market| Market index, which is either ``Bottom'' or ``Top'' indicating the position on the screen.|
-|Programme| Progress index, which is either 1 for the pre-experimental questionnaire, 2 for the training periods, and 3 for the actual experimental data.|
-|Treatment| Treatment index, which is either ``NN.NR.RR'', ``NN.RN.RR'', ``RR.NR.NN'', ``RR.NR.RR'', ``RR.RN.NN'', or ``RR.RN.RR''.|
-|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR'', or ``RN''.| 
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Period0| Period index, ranging from ``0`` to ``5``, indicating the distance to the phase’s first period, starting with 0 to facilitate the interpretation of the intercept.|
+|Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR''.|
-|history| Treatment index specifying the regulation in previous Phases, which is either 1 for markets in Phase 1, ``N'' (resp. ``R'') for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N'', ``N.R'', ``R.N'', or ``R.R'' for markets in Phase 3.| 
-|Location| City index, which is either ``Graz'' or ``Vienna''.|
+|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
 |BBV| Buyback Value.|
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
-|IsREG|
-othermarket", "REGBoth", "REGSH",
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
+|REGBoth|
+|REGSH|
                                                   "BestBid180", "BestAsk180", "BAspread180", "midpointBA180", "BestBid150", "BestAsk150", "BAspread150", "midpointBA150", "midpointBAavg150",
                                                   "BA_BBV", "BA_BBV150", "BA_BBV180", "lnBA_BBV",  "lnBA_BBV150", "lnBA_BBV180",  
                                                   "meanBestBid", "meanBestAsk", "meanBAspread", "meanmidpointBA", "meanBAspreadwins", "meanBAspreadwins2", 
