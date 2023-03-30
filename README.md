@@ -70,12 +70,44 @@ The table ``marketsummary`` summarizes data within a
 |lagLimitVolume| Number of assets offered in limit orders in the previous market.|
 |LimitVolumeInf| Number of assets offered  in limit orders by informed traders in a single market.|
 |LimitVolumeUni| Number of assets offered  in limit orders by uninformed traders in a single market.|
-|NumTransactions| Number of limit orders placed in a single market.|
-                                                  "Countoffers", "CountSelloffers", "CountBuyoffers", "CancelledVolume", "remainingVol", "SellLimitVolume","BuyLimitVolume",
-                                                  "ProfitPotential", "GD", "GAD", "GADhyp", "rGAD", "RD", "RAD", "GD120", "GAD120", "RD120", "RAD120",  "Price", "Price120",
-                                                  "marketshare", "lagmarketshare", "marketshareLimit", "lagmarketshareLimit", "AssetTurnover",  "TransactionSize", "LimitOrderTurnover",  "LimitOrderSize",
-                                                  "odds", "lagodds", "oddsLimit", "lagoddsLimit", "oddsUninf", "oddsInf", "oddsInfmax", "oddsInfmax2", "oddsInfmax3","
-                                                  
+|NumTransactions| Number of transactions in a single market.|
+|Countoffers| Number of limit orders placed in a single market.|
+|CountSelloffers| Number of asks placed in a single market.|
+|CountBuyoffers| Number of bids placed in a single market.|
+|CancelledVolume| Number of offered assets withdrawn before market closing.|
+|remainingVol| Number of offered assets in the order book at market closing.|
+|SellLimitVolume| Number of assets offered in ask limit orders in a single market.|
+|BuyLimitVolume| Number of assets offered in bid limit orders in a single market.|
+|ProfitPotential|
+|GD| Geometric Deviation - Geometric volume-weighted average relative mispricing within a market.|
+|GAD| Geometric Absolute Deviation - Absolute geometric volume-weighted average relative mispricing within a market.|
+|GADhyp| Hypothetical GAD when prices are set to be the unconditional expected value, 57.5.|
+|rGAD| 1 minus the ratio between GAD and the hypothetical GAD.|
+|RD| Relative Deviation - Arithmetic volume-weighted average relative mispricing within a market.|
+|RAD| Relative Absolute Deviation - Absolute arithmetic volume-weighted average relative mispricing within a market.|
+|GD120| Geometric volume-weighted average relative mispricing in the last minute of a market.|
+|GAD120| Absolute geometric volume-weighted average relative mispricing in the last minute of a market.|
+|RD120| Arithmetic volume-weighted average relative mispricing in the last minute of a market.|
+|RAD120| Absolute arithmetic volume-weighted average relative mispricing in the last minute of a market.|
+|Price| Last transaction price in a market.|
+|Price120| Mean transaction price in the last minute of a market.|
+|marketshare| Ratio of transacted volume over the transacted volume of both simultaneously operating markets.|
+|lagmarketshare| marketshare in the previous period.|
+|marketshareLimit| Ratio of limit order volume over the limit order volume of both simultaneously operating markets.|
+|lagmarketshareLimit| marketshare of limits in the previous period.|
+|AssetTurnover| Ratio of transacted volume over the remaining volume at market closing.|
+|TransactionSize| Ratio of transacted volume over the number of transactions in a single market.|
+|LimitOrderTurnover| Ratio of limit order volume over the remaining volume at market closing.|
+|LimitOrderSize| Ratio of limit order volume over the number of transactions in a single market.|
+|odds| Ratio of transacted volume over the transacted volume in the other, simultaneously operating market.|
+|lagodds| odds in the previous period.|
+|oddsLimit| Ratio of limit order volume over the limit order volume in the other, simultaneously operating market.|
+|lagoddsLimit| limit order odds in the previous period.|
+|oddsUninf| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market.|
+|oddsInf| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market.|
+|oddsInfmax| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio.|
+|oddsInfmax2| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the transacted volume over 1.|
+|oddsInfmax3| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio in the same phase.|
 |oddswins| odds after 90% winsorization.|
 |oddsLimitwins| limit order odds after 90% winsorization.|
 |oddsInfwins| odds involving informed traders after 90% winsorization.|
