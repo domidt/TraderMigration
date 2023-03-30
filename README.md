@@ -17,7 +17,7 @@ The table ``marketsummary`` summarizes data within a
 |Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
 |Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
 |regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
-|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR''.|
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
 |history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
 |Location| City index, which is either ``Graz`` or ``Vienna``.|
 |BBV| Buyback Value.|
@@ -30,8 +30,8 @@ The table ``marketsummary`` summarizes data within a
 |BestAsk180| Active ask in the order book when market ended which offered assets for the lowest ask price.|
 |BAspread180| Difference between best bid and best ask price when market ended.
 |midpointBA180| Arithmetic average of the best bid and best ask price when market ended.|
-|BestBid150| Mean best bids in the order book in the last 30 seconds weighted at the seconds providing the highest bid price.|
-|BestAsk150| Mean best asks in the order book in the last 30 seconds weighted at the seconds providing the lowest ask price.|
+|BestBid150| Mean best bids in the order book in the last 30 seconds weighted with the seconds providing the highest bid price.|
+|BestAsk150| Mean best asks in the order book in the last 30 seconds weighted with the seconds providing the lowest ask price.|
 |BAspread150| Mean difference between best bid and best ask price in the last 30 seconds each second.|
 |midpointBA150| Mean midpoint between best bid and best ask price in the last 30 seconds each second.|
 |midpointBAavg150| Midpoint between mean best bid and mean best ask price in the last 30 seconds each second.|
@@ -41,16 +41,46 @@ The table ``marketsummary`` summarizes data within a
 |lnBA_BBV| Logarithmic ratio of the mean midpoints between best bid and best ask prices of the whole timespan of one market, and the the buyback value.|
 |lnBA_BBV150| Logarithmic ratio between the mean midpoints between best bid and best ask prices in the last 30 seconds, and the the buyback value.|
 |lnBA_BBV180| Logarithmic ratio between the mean midpoints between best bid and best ask prices when market closes, and the the buyback value.|
-|meanBestBid|
-|meanBestAsk|
-|meanBAspread", "meanmidpointBA", "meanBAspreadwins", "meanBAspreadwins2", 
-                                                  "meanreturnsec", "meanreturn", "meanreturnwins", "meanreturnwins2", "obsreturn", "sdreturnsec", "volatility", "volatilitywins", "volatilitywins2", "meanPrice", "sdPrice",   
-                                                  "Volume", "lagVolume", "VolumeUni", "VolumeInf", "Volume_Informed_Informed", "Volume_Uninformed_Informed", "Volume_Informed_Uninformed", "Volume_Uninformed_Uninformed",
-                                                  "LimitVolume", "lagLimitVolume", "LimitVolumeInf", "LimitVolumeUni", "NumTransactions",
+|meanBestBid| Mean best bids in the order book in the whole timespan of a market weighted with the seconds providing the highest bid price.|
+|meanBestAsk| Mean best asks in the order book in the whole timespan of a market weighted with the seconds providing the lowerst ask price.|
+|meanBAspread| Mean difference between best bid and best ask price each second.|
+|meanmidpointBA| Mean midpoint between best bid and best ask price in the whole timespan of a market.|
+|meanBAspreadwins| Mean difference between best bid and best ask price each second after a symmetric 90% winsorization of prices.|
+|meanBAspreadwins2| Mean difference between best bid and best ask price each second after a symmetric 90% winsorization.|
+|meanreturnsec| Mean price change between observations each second.|
+|meanreturn| Mean price change between transactions.|
+|meanreturnwins| Mean price change between transactions after a symmetric 90% winsorization of prices.|
+|meanreturnwins2| Mean price change between transactions after a symmetric 90% winsorization.|
+|obsreturn| Number of observations of returns, i.e., of two consecutive transactions.|
+|sdreturnsec| Standard deviation of price changes observed each second within a market.|
+|volatility| Standard deviation of transaction price returns within a market.|
+|volatilitywins| Standard deviation of transaction price returns within a market after a symmetric 90% winsorization of prices.|
+|volatilitywins2| Standard deviation of transaction price returns within a market after a symmetric 90% winsorization.|
+|meanPrice| Mean transaction price within a market.|
+|sdPrice| Standard deviation of transaction prices within a market.|
+|Volume| Number of assets transacted in a single market.|
+|lagVolume| Number of assets transacted in the previous market.|
+|VolumeUni| Number of assets transacted involving uninformed traders in a single market.|
+|VolumeInf| Number of assets transacted involving informed traders in a single market.|
+|Volume_Informed_Informed| Number of assets offered and accepted by informed traders in a single market.|
+|Volume_Uninformed_Informed| Number of assets offered by uninformed and accepted by informed traders in a single market.|
+|Volume_Informed_Uninformed| Number of assets offered by informed and accepted by uninformed traders in a single market.|
+|Volume_Uninformed_Uninformed| Number of assets offered and accepted by uninformed traders in a single market.|
+|LimitVolume| Number of assets offered in limit orders in a single market.|
+|lagLimitVolume| Number of assets offered in limit orders in the previous market.|
+|LimitVolumeInf| Number of assets offered  in limit orders by informed traders in a single market.|
+|LimitVolumeUni| Number of assets offered  in limit orders by uninformed traders in a single market.|
+|NumTransactions| Number of limit orders placed in a single market.|
                                                   "Countoffers", "CountSelloffers", "CountBuyoffers", "CancelledVolume", "remainingVol", "SellLimitVolume","BuyLimitVolume",
                                                   "ProfitPotential", "GD", "GAD", "GADhyp", "rGAD", "RD", "RAD", "GD120", "GAD120", "RD120", "RAD120",  "Price", "Price120",
                                                   "marketshare", "lagmarketshare", "marketshareLimit", "lagmarketshareLimit", "AssetTurnover",  "TransactionSize", "LimitOrderTurnover",  "LimitOrderSize",
-                                                  "odds", "lagodds", "oddsLimit", "lagoddsLimit", "oddsUninf", "oddsInf", "oddsInfmax", "oddsInfmax2", "oddsInfmax3","oddswins", "oddsLimitwins", "oddsInfwins", "oddsUninfwins",
+                                                  "odds", "lagodds", "oddsLimit", "lagoddsLimit", "oddsUninf", "oddsInf", "oddsInfmax", "oddsInfmax2", "oddsInfmax3","
+                                                  
+|oddswins| odds after 90% winsorization.|
+|oddsLimitwins| limit order odds after 90% winsorization.|
+|oddsInfwins| odds involving informed traders after 90% winsorization.|
+|oddsUninfwins| odds involving uninformed traders after 90% winsorization.|
+                                                  
                                                   #"geomodds_start", "geomodds_middle", "geomodds_end", "absgeomodds_start", "absgeomodds_middle", "absgeomodds_end", "geomoddsInf_start", "geomoddsInf_middle", "geomoddsInf_end", "geomoddsUni_start", "geomoddsUni_middle", "geomoddsUni_end",
                                                   #"geomoddswins_start", "geomoddswins_middle", "geomoddswins_end",  "geomoddsInfwins_start", "geomoddsInfwins_middle", "geomoddsInfwins_end", "geomoddsUniwins_start", "geomoddsUniwins_middle", "geomoddsUniwins_end",
                                                   #"geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "absgeomoddsLimit_start", "absgeomoddsLimit_middle", "absgeomoddsLimit_end", 
