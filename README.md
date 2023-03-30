@@ -31,11 +31,19 @@ The table ``marketsummary`` summarizes data within a
 |BAspread180| Difference between best bid and best ask price when market ended.
 |midpointBA180| Arithmetic average of the best bid and best ask price when market ended.|
 |BestBid150| Mean best bids in the order book in the last 30 seconds weighted at the seconds providing the highest bid price.|
-BestAsk150| Mean best asks in the order book in the last 30 seconds weighted at the seconds providing the lowest ask price.|
-BAspread150|
-|midpointBA150", "midpointBAavg150",
-                                                  "BA_BBV", "BA_BBV150", "BA_BBV180", "lnBA_BBV",  "lnBA_BBV150", "lnBA_BBV180",  
-                                                  "meanBestBid", "meanBestAsk", "meanBAspread", "meanmidpointBA", "meanBAspreadwins", "meanBAspreadwins2", 
+|BestAsk150| Mean best asks in the order book in the last 30 seconds weighted at the seconds providing the lowest ask price.|
+|BAspread150| Mean difference between best bid and best ask price in the last 30 seconds each second.|
+|midpointBA150| Mean midpoint between best bid and best ask price in the last 30 seconds each second.|
+|midpointBAavg150| Midpoint between mean best bid and mean best ask price in the last 30 seconds each second.|
+|BA_BBV| Difference between the mean midpoints between best bid and best ask prices of the whole timespan of one market, and the the buyback value.|
+|BA_BBV150| Difference between the mean midpoints between best bid and best ask prices in the last 30 seconds, and the the buyback value.|
+|BA_BBV180| Difference between the mean midpoints between best bid and best ask prices when market closes, and the the buyback value.|
+|lnBA_BBV| Logarithmic ratio of the mean midpoints between best bid and best ask prices of the whole timespan of one market, and the the buyback value.|
+|lnBA_BBV150| Logarithmic ratio between the mean midpoints between best bid and best ask prices in the last 30 seconds, and the the buyback value.|
+|lnBA_BBV180| Logarithmic ratio between the mean midpoints between best bid and best ask prices when market closes, and the the buyback value.|
+|meanBestBid|
+|meanBestAsk|
+|meanBAspread", "meanmidpointBA", "meanBAspreadwins", "meanBAspreadwins2", 
                                                   "meanreturnsec", "meanreturn", "meanreturnwins", "meanreturnwins2", "obsreturn", "sdreturnsec", "volatility", "volatilitywins", "volatilitywins2", "meanPrice", "sdPrice",   
                                                   "Volume", "lagVolume", "VolumeUni", "VolumeInf", "Volume_Informed_Informed", "Volume_Uninformed_Informed", "Volume_Informed_Uninformed", "Volume_Uninformed_Uninformed",
                                                   "LimitVolume", "lagLimitVolume", "LimitVolumeInf", "LimitVolumeUni", "NumTransactions",
