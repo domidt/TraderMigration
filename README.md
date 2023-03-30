@@ -112,12 +112,41 @@ The table ``marketsummary`` summarizes data within a
 |oddsLimitwins| limit order odds after 90% winsorization.|
 |oddsInfwins| odds involving informed traders after 90% winsorization.|
 |oddsUninfwins| odds involving uninformed traders after 90% winsorization.|
-                                                  
-                                                  #"geomodds_start", "geomodds_middle", "geomodds_end", "absgeomodds_start", "absgeomodds_middle", "absgeomodds_end", "geomoddsInf_start", "geomoddsInf_middle", "geomoddsInf_end", "geomoddsUni_start", "geomoddsUni_middle", "geomoddsUni_end",
-                                                  #"geomoddswins_start", "geomoddswins_middle", "geomoddswins_end",  "geomoddsInfwins_start", "geomoddsInfwins_middle", "geomoddsInfwins_end", "geomoddsUniwins_start", "geomoddsUniwins_middle", "geomoddsUniwins_end",
-                                                  #"geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "absgeomoddsLimit_start", "absgeomoddsLimit_middle", "absgeomoddsLimit_end", 
-                                                  "unprofittime",  "RUPT", "shortsells", "marginbuysTaler", "marginbuysAsset", "marginbuys", "shortsells_Informed", "shortsells_Uninformed", "marginbuys_Informed", "marginbuys_Uninformed", "marginbuysAsset_Informed", "marginbuysAsset_Uninformed",
-                                                  "NumActiveTrader", "NumTransactingTraders", "NumOfferingTraders", "ParticipationRate_Uninf", "ParticipationRate_Inf",
-                                                  "HHInitialAssets", "HHEndAssets", "HHInitialEndowment", "HHEndEndowment", "HHEndEndowmentPun", "HHVolume", "HHPDbefore", "HHPDPun",
-                                                  "HHI_InitialAssets","HHI_EndAssets","HHI_InitialEndowment", "HHI_EndEndowment", "HHI_EndEndowmentPun", "HHI_Volume", "HHI_PDbefore", "HHI_PDPun", 
-                                                  "GiniPDbefore", "GiniPDPun", "GiniProfit", "GiniAssets", "GiniEndowment"
+|unprofittime| Unexectued Profitable Orders per Time - Money on the table times the time on the market, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market.|
+|RUPT| Relative Unexecuted Profitable Orders per Time - relative money on the table, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market divided by the fundamental value and divided by the sum of time times volume of all limit orders.|
+|shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
+|marginbuysTaler| Money spend to buy assets with negative money endowment using the credit limit.|
+|marginbuysAsset| Purchases with negative money endowments devided by the transaction price.|
+|marginbuys| Purchases with negative money endowments devided by the buyback value.|
+|shortsells_Informed| Number of assets sold with negative asset endowment using the short limit capacity involving informed traders.|
+|shortsells_Uninformed| Number of assets sold with negative asset endowment using the short limit capacity involving uninformed traders.| 
+|marginbuys_Informed| Purchases with negative money endowments devided by the buyback value involving informed traders.|
+|marginbuys_Uninformed| Purchases with negative money endowments devided by the buyback value involving uninformed traders.|
+|marginbuysAsset_Informed| Purchases with negative money endowments devided by the transaction price involving informed traders.|
+marginbuysAsset_Uninformed| Purchases with negative money endowments devided by the transaction price involving uninformed traders.|
+|NumActiveTrader| Number of traders who either placed a limit order or accepted a market order.|
+|NumTransactingTraders| Number of traders who either accepted a market order or whose limit order has been accepted by others.|
+|NumOfferingTraders| Number of traders who placed a limit order.|
+|ParticipationRate_Uninf| Number of active uninformed traders divided by the total number of uninformed traders.|
+|ParticipationRate_Inf| Number of active informed traders divided by the total number of informed traders.|
+|HHInitialAssets| Herfindahl–Hirschman index for the initial asset endowment with an alpha of 2.|
+|HHEndAssets| Herfindahl–Hirschman index for the asset endowment at market closing with an alpha of 2.|
+|HHInitialEndowment| Herfindahl–Hirschman index for the initial endowment with an alpha of 2.|
+|HHEndEndowment| Herfindahl–Hirschman index for the endowment at market closing with an alpha of 2.|
+|HHEndEndowmentPun| Herfindahl–Hirschman index for the endowment at market closing after punishment payments with an alpha of 2.|
+|HHVolume| Herfindahl–Hirschman index for the transacted volume with an alpha of 2.|
+|HHPDbefore| Herfindahl–Hirschman index for the wealth change before redistributions with an alpha of 2.|
+|HHPDPun| Herfindahl–Hirschman index for the wealth change after punishement payments with an alpha of 2.|
+|HHI_InitialAssets| Herfindahl–Hirschman index for the initial asset endowment with an alpha of 2 for active traders.|
+|HHI_EndAssets| Herfindahl–Hirschman index for the asset endowment at market closing with an alpha of 2 for active traders.|
+|HHI_InitialEndowment| Herfindahl–Hirschman index for the initial endowment with an alpha of 2 for active traders.|
+|HHI_EndEndowment| Herfindahl–Hirschman index for the endowment at market closing with an alpha of 2 for active traders.|
+|HHI_EndEndowmentPun| Herfindahl–Hirschman index for the endowment after punishment payment at market closing with an alpha of 2 for active traders.|
+|HHI_Volume| Herfindahl–Hirschman index for the transacted volume with an alpha of 2 for active traders.|
+|HHI_PDbefore| Herfindahl–Hirschman index for the wealth change before redistributions with an alpha of 2 for active traders.|
+|HHI_PDPun| Herfindahl–Hirschman index for the wealth change after punisment payments with an alpha of 2 for active traders.|
+|GiniPDbefore| Gini index for wealth change before redistributions.|
+|GiniPDPun| Gini index for wealth change after punishment payment.|
+|GiniProfit| Gini index for payoffs at market closing after punishemnt payment.|
+|GiniAssets| Gini index for the initial asset endowment.|
+|GiniEndowment| Gini index for the initial endowment.|
