@@ -4,7 +4,7 @@ This repository provides all data and analyses code used in the JFM paper
 The file ``Data.RData`` consists of six data tables:
 
 ## marketsummary
-The table ``marketsummary`` summarizes data within a 
+The table ``marketsummary`` summarizes data for each market, i.e. two observations per period and cohort.
 
 | Variable | Description |
 ---| ---|
@@ -152,7 +152,7 @@ marginbuysAsset_Uninformed| Purchases with negative money endowments divided by 
 |GiniEndowment| Gini index for the initial endowment.|
 
 ## subjectsummary
-The table ``marketsummary`` summarizes data within a 
+The table ``subjectsummary`` summarizes data for each individual in each market, i.e. 14 observation for each market, period, and cohort. 
 
 | Variable | Description |
 ---| ---|
@@ -237,3 +237,90 @@ The table ``marketsummary`` summarizes data within a
 |GeneralComments| Room for further comments concerning the experiment.|
 |gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
 
+## phasesummary
+The table ``phasesummary`` summarizes data for each phase, market, and trader type and for the overall market, i.e. three observations for each trader type times two markets times three phases constitute 18 observations for each cohort.
+
+| Variable | Description |
+---| ---|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Role| Trader type index which is either ``Informed trader``, ``Uninformed trader``, or ``market``.|
+|Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
+|REGBoth| Regulatory index which is either ``1`` when both markets in a phase apply regulation or ``0`` otherwise.|
+|REGSH| Regulatory index which is eiterh ``1`` when markets in Phase 2 apply regulation or ``0`` otherwise.|
+|Volume| Number of assets transacted in a phase.|
+|LimitVolume| Number of assets offered in limit orders in a phase.|
+|NumActiveTrader| Number of traders who either placed a limit order or accepted a market order.|
+|PR| Participation Rate - Number of active traders divided by the total number of traders.|
+|CancelledVolume| Number of offered assets withdrawn before market closing.|
+|TraderCount| Number of traders times periods in a phase.|
+|obs| Number of market observations, i.e. number of markets with activity.|
+, "TraderVolume", "TraderLimitVolume", 
+                                                "shortsells", "marginbuys", "marginbuysAsset", "marginbuysTaler",  
+                                                "odds", "odds_start", "odds_middle", "odds_end", "oddsLimit", "oddsLimit_start", "oddsLimit_middle", "oddsLimit_end",
+                                                "geomodds", "geomoddsLimit", "absgeomodds", "absgeomoddsLimit", "geomodds_start", "geomodds_middle", "geomodds_end", "geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "marketshare", "marketshareLimit",
+                                                "d1", "d2", "d3", "d1r", "d2r", "d3r", "d1P", "d2P", "d3P"
+                                                
+|NumTransactions| Number of transactions in a single market.|
+|Countoffers| Number of limit orders placed in a single market.|
+|CountSelloffers| Number of asks placed in a single market.|
+|CountBuyoffers| Number of bids placed in a single market.|
+|remainingVol| Number of offered assets in the order book at market closing.|
+|SellLimitVolume| Number of assets offered in ask limit orders in a single market.|
+|BuyLimitVolume| Number of assets offered in bid limit orders in a single market.|
+|ProfitPotential|
+|GD| Geometric Deviation - Geometric volume-weighted average relative mispricing within a market.|
+|GAD| Geometric Absolute Deviation - Absolute geometric volume-weighted average relative mispricing within a market.|
+|GADhyp| Hypothetical GAD when prices are set to be the unconditional expected value, 57.5.|
+|rGAD| 1 minus the ratio between GAD and the hypothetical GAD.|
+|RD| Relative Deviation - Arithmetic volume-weighted average relative mispricing within a market.|
+|RAD| Relative Absolute Deviation - Absolute arithmetic volume-weighted average relative mispricing within a market.|
+|GD120| Geometric volume-weighted average relative mispricing in the last minute of a market.|
+|GAD120| Absolute geometric volume-weighted average relative mispricing in the last minute of a market.|
+|RD120| Arithmetic volume-weighted average relative mispricing in the last minute of a market.|
+|RAD120| Absolute arithmetic volume-weighted average relative mispricing in the last minute of a market.|
+|Price| Last transaction price in a market.|
+|Price120| Mean transaction price in the last minute of a market.|
+|marketshare| Ratio of transacted volume over the transacted volume of both simultaneously operating markets.|
+|lagmarketshare| marketshare in the previous period.|
+|marketshareLimit| Ratio of limit order volume over the limit order volume of both simultaneously operating markets.|
+|lagmarketshareLimit| marketshare of limits in the previous period.|
+|AssetTurnover| Ratio of transacted volume over the remaining volume at market closing.|
+|TransactionSize| Ratio of transacted volume over the number of transactions in a single market.|
+|LimitOrderTurnover| Ratio of limit order volume over the remaining volume at market closing.|
+|LimitOrderSize| Ratio of limit order volume over the number of transactions in a single market.|
+|odds| Ratio of transacted volume over the transacted volume in the other, simultaneously operating market.|
+|lagodds| odds in the previous period.|
+|oddsLimit| Ratio of limit order volume over the limit order volume in the other, simultaneously operating market.|
+|lagoddsLimit| limit order odds in the previous period.|
+|oddsUninf| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market.|
+|oddsInf| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market.|
+|oddsInfmax| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio.|
+|oddsInfmax2| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the transacted volume over 1.|
+|oddsInfmax3| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio in the same phase.|
+|oddswins| odds after 90% winsorization.|
+|oddsLimitwins| limit order odds after 90% winsorization.|
+|oddsInfwins| odds involving informed traders after 90% winsorization.|
+|oddsUninfwins| odds involving uninformed traders after 90% winsorization.|
+|unprofittime| Unexectued Profitable Orders per Time - Money on the table times the time on the market, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market.|
+|RUPT| Relative Unexecuted Profitable Orders per Time - relative money on the table, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market divided by the fundamental value and divided by the sum of time times volume of all limit orders.|
+|shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
+|marginbuysTaler| Money spend to buy assets with negative money endowment using the credit limit.|
+|marginbuysAsset| Purchases with negative money endowments divided by the transaction price.|
+|marginbuys| Purchases with negative money endowments divided by the buyback value.|
+|shortsells_Informed| Number of assets sold with negative asset endowment using the short limit capacity involving informed traders.|
+|shortsells_Uninformed| Number of assets sold with negative asset endowment using the short limit capacity involving uninformed traders.| 
+|marginbuys_Informed| Purchases with negative money endowments divided by the buyback value involving informed traders.|
+|marginbuys_Uninformed| Purchases with negative money endowments divided by the buyback value involving uninformed traders.|
+|marginbuysAsset_Informed| Purchases with negative money endowments divided by the transaction price involving informed traders.|
+marginbuysAsset_Uninformed| Purchases with negative money endowments divided by the transaction price involving uninformed traders.|
+|NumTransactingTraders| Number of traders who either accepted a market order or whose limit order has been accepted by others.|
+|NumOfferingTraders| Number of traders who placed a limit order.|
