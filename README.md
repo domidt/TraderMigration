@@ -263,64 +263,77 @@ The table ``phasesummary`` summarizes data for each phase, market, and trader ty
 |CancelledVolume| Number of offered assets withdrawn before market closing.|
 |TraderCount| Number of traders times periods in a phase.|
 |obs| Number of market observations, i.e. number of markets with activity.|
-, "TraderVolume", "TraderLimitVolume", 
-                                                "shortsells", "marginbuys", "marginbuysAsset", "marginbuysTaler",  
-                                                "odds", "odds_start", "odds_middle", "odds_end", "oddsLimit", "oddsLimit_start", "oddsLimit_middle", "oddsLimit_end",
-                                                "geomodds", "geomoddsLimit", "absgeomodds", "absgeomoddsLimit", "geomodds_start", "geomodds_middle", "geomodds_end", "geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "marketshare", "marketshareLimit",
-                                                "d1", "d2", "d3", "d1r", "d2r", "d3r", "d1P", "d2P", "d3P"
-                                                
-|NumTransactions| Number of transactions in a single market.|
-|Countoffers| Number of limit orders placed in a single market.|
-|CountSelloffers| Number of asks placed in a single market.|
-|CountBuyoffers| Number of bids placed in a single market.|
-|remainingVol| Number of offered assets in the order book at market closing.|
-|SellLimitVolume| Number of assets offered in ask limit orders in a single market.|
-|BuyLimitVolume| Number of assets offered in bid limit orders in a single market.|
-|ProfitPotential|
-|GD| Geometric Deviation - Geometric volume-weighted average relative mispricing within a market.|
-|GAD| Geometric Absolute Deviation - Absolute geometric volume-weighted average relative mispricing within a market.|
-|GADhyp| Hypothetical GAD when prices are set to be the unconditional expected value, 57.5.|
-|rGAD| 1 minus the ratio between GAD and the hypothetical GAD.|
-|RD| Relative Deviation - Arithmetic volume-weighted average relative mispricing within a market.|
-|RAD| Relative Absolute Deviation - Absolute arithmetic volume-weighted average relative mispricing within a market.|
-|GD120| Geometric volume-weighted average relative mispricing in the last minute of a market.|
-|GAD120| Absolute geometric volume-weighted average relative mispricing in the last minute of a market.|
-|RD120| Arithmetic volume-weighted average relative mispricing in the last minute of a market.|
-|RAD120| Absolute arithmetic volume-weighted average relative mispricing in the last minute of a market.|
-|Price| Last transaction price in a market.|
-|Price120| Mean transaction price in the last minute of a market.|
-|marketshare| Ratio of transacted volume over the transacted volume of both simultaneously operating markets.|
-|lagmarketshare| marketshare in the previous period.|
-|marketshareLimit| Ratio of limit order volume over the limit order volume of both simultaneously operating markets.|
-|lagmarketshareLimit| marketshare of limits in the previous period.|
-|AssetTurnover| Ratio of transacted volume over the remaining volume at market closing.|
-|TransactionSize| Ratio of transacted volume over the number of transactions in a single market.|
-|LimitOrderTurnover| Ratio of limit order volume over the remaining volume at market closing.|
-|LimitOrderSize| Ratio of limit order volume over the number of transactions in a single market.|
-|odds| Ratio of transacted volume over the transacted volume in the other, simultaneously operating market.|
-|lagodds| odds in the previous period.|
-|oddsLimit| Ratio of limit order volume over the limit order volume in the other, simultaneously operating market.|
-|lagoddsLimit| limit order odds in the previous period.|
-|oddsUninf| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market.|
-|oddsInf| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market.|
-|oddsInfmax| Ratio of transacted volume involving informed traders over the transacted volume involving informed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio.|
-|oddsInfmax2| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the transacted volume over 1.|
-|oddsInfmax3| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio in the same phase.|
-|oddswins| odds after 90% winsorization.|
-|oddsLimitwins| limit order odds after 90% winsorization.|
-|oddsInfwins| odds involving informed traders after 90% winsorization.|
-|oddsUninfwins| odds involving uninformed traders after 90% winsorization.|
-|unprofittime| Unexectued Profitable Orders per Time - Money on the table times the time on the market, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market.|
-|RUPT| Relative Unexecuted Profitable Orders per Time - relative money on the table, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market divided by the fundamental value and divided by the sum of time times volume of all limit orders.|
+|TraderVolume| Number of assets transacted per trader in a phase.|
+|TraderLimitVolume| Number of assets offered in limit orders per trader in a phase.|
 |shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
 |marginbuysTaler| Money spend to buy assets with negative money endowment using the credit limit.|
 |marginbuysAsset| Purchases with negative money endowments divided by the transaction price.|
 |marginbuys| Purchases with negative money endowments divided by the buyback value.|
-|shortsells_Informed| Number of assets sold with negative asset endowment using the short limit capacity involving informed traders.|
-|shortsells_Uninformed| Number of assets sold with negative asset endowment using the short limit capacity involving uninformed traders.| 
-|marginbuys_Informed| Purchases with negative money endowments divided by the buyback value involving informed traders.|
-|marginbuys_Uninformed| Purchases with negative money endowments divided by the buyback value involving uninformed traders.|
-|marginbuysAsset_Informed| Purchases with negative money endowments divided by the transaction price involving informed traders.|
-marginbuysAsset_Uninformed| Purchases with negative money endowments divided by the transaction price involving uninformed traders.|
-|NumTransactingTraders| Number of traders who either accepted a market order or whose limit order has been accepted by others.|
-|NumOfferingTraders| Number of traders who placed a limit order.|
+|odds| Ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (arithmetic averages).|
+|odds_start| Ratio of transacted volume between simultaneously operating market of the same cohort in Phase 1.|
+|odds_middle| Ratio of transacted volume between simultaneously operating market of the same cohort in Phase 2.|
+|odds_end| Ratio of transacted volume between simultaneously operating market of the same cohort in Phase 3.|
+|oddsLimit| Ratio of limit order volume over the limit order volume in the other, simultaneously operating markets.|
+|oddsLimit_start| Ratio of limit order volume between simultaneously operating market of the same cohort in Phase 1.|
+|oddsLimit_middle| Ratio of limit order volume between simultaneously operating market of the same cohort in Phase 2.|
+|oddsLimit_end| Ratio of limit order volume between simultaneously operating market of the same cohort in Phase 3.|
+|geomodds| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages).|
+|geomoddsLimit| Geometric ratio of limit order volume over the limit order volume in the other, simultaneously operating markets.|
+|absgeomodds| Geometric absolute ratio of transacted volume over the transacted volume in the other, simultaneously operating markets.|
+|absgeomoddsLimit| Geometric absolute ratio of limit order volume over the limit order volume in the other, simultaneously operating markets.|
+|geomodds_start| Geometric ratio of transacted volume between simultaneously operating market of the same cohort in Phase 1.|
+|geomodds_middle| Geometric ratio of transacted volume between simultaneously operating market of the same cohort in Phase 2.|
+|geomodds_end| Geometric ratio of transacted volume between simultaneously operating market of the same cohort in Phase 3.|
+|geomoddsLimit_start| Geometric ratio of limit order volume between simultaneously operating market of the same cohort in Phase 1.|
+|geomoddsLimit_middle| Geometric ratio of limit order volume between simultaneously operating market of the same cohort in Phase 2.|
+|geomoddsLimit_end| Geometric ratio of limit order volume between simultaneously operating market of the same cohort in Phase 3.|
+|marketshare| Ratio of transacted volume over the transacted volume of simultaneously operating markets.|
+|marketshareLimit| Ratio of limit order volume over the limit order volume of simultaneously operating markets.|
+|d1| Difference in odds between this phase and Phase 1.|
+|d2| Difference in odds between this phase and Phase 2.|
+|d3| Difference in odds between this phase and Phase 3.|
+|d1r| Difference in odds between this phase and Phase 1 dividing odds by the number of periods in the resp. phase.|
+|d2r| Difference in odds between this phase and Phase 2 dividing odds by the number of periods in the resp. phase.|
+|d3r| Difference in odds between this phase and Phase 3 dividing odds by the number of periods in the resp. phase.|
+|d1P| Difference in geometric odds between this phase and Phase 1.|
+|d2P| Difference in geometric odds between this phase and Phase 2.|
+|d3P| Difference in geometric odds between this phase and Phase 3.|
+
+## observers
+The table ``observers`` summarizes data for each observer in each period, i.e. two observation for each period and cohort. 
+
+| Variable | Description |
+---| ---|
+|subjectID| ID variable, which uniquely identifies each participant from ``1`` to ``382``.|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
+|Subject| ID variable, which identifies participants within a experimental session from ``1`` to ``14``.|
+|client| ID variable, which identifies participants within a experimental session.|
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|Role| Trader type index which is either ``Informed trader`` or ``Uninformed trader``.|
+|NumSelected| Number of traders suspected to be informed after market closing.|
+|NumDetections| Number of traders correctly identified to be informed after market closing.|
+|NumPunished| Number of traders correctly identified to be informed in the regulatory regime REG after market closing.|
+|NumSelected| Number of traders incorrectly suspected to be informed after market closing.|
+|ProfitPeriod| Profit from market observation in Euro.|
+|ObserverStrategy| Self-description of observers at the end of the experiment how they use information: PostQ1: ``Please describe how you think the available information (1.\ volume limit; 2.\ volume limit deleted; 3.\ trading volume limit; 4.\ trading volume market; 5.\ volume purchased; 6.\ volume sold; 7.\ volume purchased - sold; 8.\ average price; 9.\ average volume) can be used to identify informed traders!``.|
+|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: `` How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
+|StrategyTrader| Self-description of traders at the end of the experiment of their trading strategy. PostQ4: ``What strategies did you use to avoid being recognized by observers as a trader with information?``.|
+|OpinionPenalty| Self-description of participants at the end of the experiment about their opinion on the appropriateness of the penalty. PostQ5: ``If a trader with information is correctly selected by the observer, he loses his trading profit and must pay an additional penalty equal to the trading profit. Please indicate whether you consider this penalty to be appropriate, too low, or too high.``.|
+|RiskGeneral| Self-description of participants' risk tolerance at the end of the experiment. PostQ6: ``How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?``.|
+|RiskFinancial| Self-description of participants' financial risk tolerance at the end of the experiment. PostQ7 ``People can behave differently in different situations. How would you rate your willingness to take risks in financial matters?``.|
+|LossAversion| Self-description of participants loss tolerance at the end of the experiment. PostQ8 ``In financial decisions, both gains and losses are possible. To what extent do possible losses compared to possible gains influence you?``.|
+|Department| Self-description of participants' department of studies. PostQ9: ``Which faculty are you studying at?``.|
+|MajorOther| If they specified other at department, they are asked to specify here their faculty.|
+|Age| Self-description of participants' age. PostQ10a: ``Age in years``.|
+|Female| Self-description of participants' gender which can be either ``Weiblich`` for Female, ``Männlich`` for Male, or ``Divers``.
+|GeneralComments| Room for further comments concerning the experiment.|
+|gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
