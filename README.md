@@ -123,7 +123,7 @@ The table ``marketsummary`` summarizes data for each market, i.e. two observatio
 |marginbuys_Informed| Purchases with negative money endowments divided by the buyback value involving informed traders.|
 |marginbuys_Uninformed| Purchases with negative money endowments divided by the buyback value involving uninformed traders.|
 |marginbuysAsset_Informed| Purchases with negative money endowments divided by the transaction price involving informed traders.|
-marginbuysAsset_Uninformed| Purchases with negative money endowments divided by the transaction price involving uninformed traders.|
+|marginbuysAsset_Uninformed| Purchases with negative money endowments divided by the transaction price involving uninformed traders.|
 |NumActiveTrader| Number of traders who either placed a limit order or accepted a market order.|
 |NumTransactingTraders| Number of traders who either accepted a market order or whose limit order has been accepted by others.|
 |NumOfferingTraders| Number of traders who placed a limit order.|
@@ -318,7 +318,7 @@ The table ``observers`` summarizes data for each observer in each period, i.e. t
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
 |Location| City index, which is either ``Graz`` or ``Vienna``.|
 |IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
-|Role| Trader type index which is either ``Informed trader`` or ``Uninformed trader``.|
+|Role| Participants' role index which is ``Observer``.|
 |NumSelected| Number of traders suspected to be informed after market closing.|
 |NumDetections| Number of traders correctly identified to be informed after market closing.|
 |NumPunished| Number of traders correctly identified to be informed in the regulatory regime REG after market closing.|
@@ -337,3 +337,63 @@ The table ``observers`` summarizes data for each observer in each period, i.e. t
 |Female| Self-description of participants' gender which can be either ``Weiblich`` for Female, ``Männlich`` for Male, or ``Divers``.
 |GeneralComments| Room for further comments concerning the experiment.|
 |gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
+
+## transactions
+The table ``transactions`` summarizes data for each acceptence of a limit order, i.e. one observations per market order.
+
+| Variable | Description |
+---| ---|
+|transactionID| ID variable, which uniquely identifies each market order from ``1`` to ``23549``.|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|BBV| Buyback Value.|
+|BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
+|REGBoth| Regulatory index which is either ``1`` when both markets in a period apply regulation or ``0`` otherwise.|
+|REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
+|offerID| ID variable, which uniquely identifies each limit order from ``1`` to ``19390``.|
+|type| Limit order index specifying whether the liquidity provider offers to buy (``BuyingOffer``) or to sell (``SellingOffer``).|
+|takerID| ID variable, which uniquely identifies the liquidity taker from ``1`` to ``382``.|
+|makerID| ID variable, which uniquely identifies the liquidity provider from ``1`` to ``382``.|
+|makerRole | Trader type index for the liquidity taker which is either ``Informed trader`` or ``Uninformed trader``.|
+|takerRole| Trader type index for the liquidity provider which is either ``Informed trader`` or ``Uninformed trader``.|
+|BuyerID| ID variable, which uniquely identifies the buying party from ``1`` to ``382``.|
+|SellerID| ID variable, which uniquely identifies the selling party from ``1`` to ``382``.|
+|orderID| ID variable, which uniquely identifies each withdrawal, limit, and market order from ``1`` to ``19390``.|
+|Price| Price of the transactions at which the asset is bought and sold.|
+|Volume| Number of assets transacted via this market order.|
+|remainingVolExAnte| Number of assets offered via the respective limit order before this market order.|
+|remainingVolExPost| Number of assets offered via the respective limit order after the execution of this market order.|
+|SellersProfit| Trading profit in Taler of the selling party by this market order.|
+|MakersProfit| Trading profit in Taler of the liquidity provider by this market order.|
+|shortsells| Number of assets sold by the selling party with negative asset endowment using the short limit capacity.|
+|marginbuysTaler| Money spend to buy assets by the buying party with negative money endowment using the credit limit.|
+|marginbuysAsset| Purchases by the buying party with negative money endowments divided by the transaction price.|
+|Pricewins| Price of the transactions at which the asset is bought and sold after a symmetric 90% winsorization of prices.|
+L.Pricewins| Last price before this market order after a symmetric 90% winsorization of prices.|
+|L.Price| Last price before this market order.|
+|returnwins|
+return", "returnwins2",
+                                                "Time
+                                                
+|transactionVol| Number of assets transacted via this market order.|
+                                                OfferTime", "AuctionStartTime", "AuctionEndTime", "offertime", "transactiontime"
+
+
+
+
+|NumActiveTrader| Number of traders who either placed a limit order or accepted a market order.|
+|NumTransactingTraders| Number of traders who either accepted a market order or whose limit order has been accepted by others.|
+|NumOfferingTraders| Number of traders who placed a limit order.|
+|ParticipationRate_Uninf| Number of active uninformed traders divided by the total number of uninformed traders.|
+|ParticipationRate_Inf| Number of active informed traders divided by the total number of informed traders.|
