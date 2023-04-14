@@ -417,32 +417,18 @@ The table ``offers`` summarizes data for each placement of a limit order, i.e. o
 |REGBoth| Regulatory index which is either ``1`` when both markets in a period apply regulation or ``0`` otherwise.|
 |REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
 |type| Limit order index specifying whether the liquidity provider offers to buy (``BuyingOffer``) or to sell (``SellingOffer``).|
-|takerID| ID variable, which uniquely identifies the liquidity taker from ``1`` to ``382``.|
 |makerID| ID variable, which uniquely identifies the liquidity provider from ``1`` to ``382``.|
 |makerRole | Trader type index for the liquidity taker which is either ``Informed trader`` or ``Uninformed trader``.|
-|takerRole| Trader type index for the liquidity provider which is either ``Informed trader`` or ``Uninformed trader``.|
-|BuyerID| ID variable, which uniquely identifies the buying party from ``1`` to ``382``.|
-|SellerID| ID variable, which uniquely identifies the selling party from ``1`` to ``382``.|
-|orderID| ID variable, which uniquely identifies each withdrawal, limit, and market order from ``1`` to ``19390``.|
-|Price| Price of the transactions at which the asset is bought and sold.|
-|Volume| Number of assets transacted via this market order.|
-|remainingVolExAnte| Number of assets offered via the respective limit order before this market order.|
-|remainingVolExPost| Number of assets offered via the respective limit order after the execution of this market order.|
-|SellersProfit| Trading profit in Taler of the selling party by this market order.|
-|MakersProfit| Trading profit in Taler of the liquidity provider by this market order.|
-|shortsells| Number of assets sold by the selling party with negative asset endowment using the short limit capacity.|
-|marginbuysTaler| Money spend to buy assets by the buying party with negative money endowment using the credit limit.|
-|marginbuysAsset| Purchases by the buying party with negative money endowments divided by the transaction price.|
-|Pricewins| Price of the transactions at which the asset is bought and sold after a symmetric 90% winsorization of prices.|
-L.Pricewins| Last price before this market order after a symmetric 90% winsorization of prices.|
-|L.Price| Last price before this market order.|
-|return| Log price change between transactions, i.e., ln(``Price``) - ln(``L.Price``).|
-|returnwins| Log price change between transactions after a symmetric 90% winsorization of prices.|
-|returnwins2| Log price change between transactions after a symmetric 90% winsorization of returns.|
-|Time| Time in seconds that has been passed since z-Tree has been started until the market order was executed.|
-|transactionVol| Number of assets transacted via this market order.|
-|OfferTime| Time in seconds that has been passed since z-Tree has been started until the limit order was placed.|
+|status| Limit order index, which is either ``cancelled`` if this limit order got cancelled somewhen throughout the auction, ``on market`` if this limit order remaind in the order book at market closing, ``sold out`` when all assets were accepted by another party, or ``fully invalidated`` when they are no longer feasible at market closing.|
+|Price| Price of the limit order at which the asset is offered to buy or sell.|
+|Volume| Number of assets offered via this limit order.|
+|LimitVolume| Number of assets offered via this limit order.|
+|totTransacted| Number of assets transacted via this limit order.|
+|CancelledVolume| Number of assets cancelled of this limit order.|
+|remainingVol| Number of assets offered via this limit order at market closing.|
+|BuyVol| Number of assets offered via this limit order which the liquidity provided offered to buy.|
+|SellVol| Number of assets offered via this limit order which the liquidity provided offered to sell.|
 |AuctionStartTime| Time in seconds that has been passed since z-Tree has been started until the start of the auction.|
 |AuctionEndTime| Time in seconds that has been passed since z-Tree has been started until the end of the auction.|
 |offertime| Time in seconds that has been passed since the start of the auction until the limit order was placed.|
-|transactiontime| Time in seconds that has been passed since the start of the auction until the market order was executed.|
+|offertimeEnd| Time in seconds that has been passed since the start of the auction until the end of the respective limit order, i.e., either at market closing, withdrawal, or when the limit order sold out.|
