@@ -353,7 +353,6 @@ The table ``transactions`` summarizes data for each acceptence of a limit order,
 |Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
 |regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
-|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
 |Location| City index, which is either ``Graz`` or ``Vienna``.|
 |BBV| Buyback Value.|
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
@@ -408,7 +407,6 @@ The table ``offers`` summarizes data for each placement of a limit order, i.e. o
 |Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
 |regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
-|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
 |Location| City index, which is either ``Graz`` or ``Vienna``.|
 |BBV| Buyback Value.|
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
@@ -430,5 +428,50 @@ The table ``offers`` summarizes data for each placement of a limit order, i.e. o
 |SellVol| Number of assets offered via this limit order which the liquidity provided offered to sell.|
 |AuctionStartTime| Time in seconds that has been passed since z-Tree has been started until the start of the auction.|
 |AuctionEndTime| Time in seconds that has been passed since z-Tree has been started until the end of the auction.|
+|offertime| Time in seconds that has been passed since the start of the auction until the limit order was placed.|
+|offertimeEnd| Time in seconds that has been passed since the start of the auction until the end of the respective limit order, i.e., either at market closing, withdrawal, or when the limit order sold out.|
+
+## orders
+The table ``orders`` summarizes data for each order, i.e. one observations per withdrawal, limit, and market order.
+
+| Variable | Description |
+---| ---|
+|orderID| ID variable, which uniquely identifies each withdrawal, limit, and market order from ``1`` to ``19390``.|
+|offerID| ID variable, which uniquely identifies each limit order from ``1`` to ``19390``.|
+|transactionID| ID variable, which uniquely identifies each market order from ``1`` to ``23549``.|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|BBV| Buyback Value.|
+|BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
+|REGBoth| Regulatory index which is either ``1`` when both markets in a period apply regulation or ``0`` otherwise.|
+|REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
+|type| Limit order index specifying whether the liquidity provider offers to buy (``BuyingOffer``) or to sell (``SellingOffer``).|
+|makerID| ID variable, which uniquely identifies the liquidity provider from ``1`` to ``382``.|
+|makerRole | Trader type index for the liquidity taker which is either ``Informed trader`` or ``Uninformed trader``.|
+|takerID| ID variable, which uniquely identifies the liquidity taker from ``1`` to ``382``.|
+|takerRole| Trader type index for the liquidity provider which is either ``Informed trader`` or ``Uninformed trader``.|
+|status| Limit order index, which is either ``cancelled`` if this limit order got cancelled via this order, ``on market`` if this limit order remaind in the order book after this order, ``sold out`` when all assets were accepted by another party, or ``fully invalidated`` when they are no longer feasible.|
+|Price| Price of the limit order at which the asset is offered to buy or sell.|
+|Volume| Number of assets offered via this limit order.|
+|LimitVolume| Number of assets offered via the respective limit order.|
+|transactionVol| Number of assets transacted via the respective market order.|
+|totTransacted| Number of assets transacted via the respective limit order.|
+|CancelledVolume| Number of assets cancelled of the respective limit order.|
+|remainingVolExAnte| Number of assets offered via the respective limit order before this order.|
+|remainingVolExPost| Number of assets offered via the respective limit order after the execution of this order.|
+|AuctionStartTime| Time in seconds that has been passed since z-Tree has been started until the start of the auction.|
+|AuctionEndTime| Time in seconds that has been passed since z-Tree has been started until the end of the auction.|
+|ordertime| Time in seconds that has been passed since the start of the auction until the order was executed/placed/withdrawn.|
+|orderStarttime| Time in seconds that has been passed since the start of the auction until the order was placed, i.e. since the limit order was placed or the last market order was executed.|
 |offertime| Time in seconds that has been passed since the start of the auction until the limit order was placed.|
 |offertimeEnd| Time in seconds that has been passed since the start of the auction until the end of the respective limit order, i.e., either at market closing, withdrawal, or when the limit order sold out.|
