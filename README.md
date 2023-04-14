@@ -78,7 +78,7 @@ The table ``marketsummary`` summarizes data for each market, i.e. two observatio
 |remainingVol| Number of offered assets in the order book at market closing.|
 |SellLimitVolume| Number of assets offered in ask limit orders in a single market.|
 |BuyLimitVolume| Number of assets offered in bid limit orders in a single market.|
-|ProfitPotential|
+|ProfitPotential| Sum absolute difference between the transaction price and the buyback value for each transaction times the transacted volume.|
 |GD| Geometric Deviation - Geometric volume-weighted average relative mispricing within a market.|
 |GAD| Geometric Absolute Deviation - Absolute geometric volume-weighted average relative mispricing within a market.|
 |GADhyp| Hypothetical GAD when prices are set to be the unconditional expected value, 57.5.|
