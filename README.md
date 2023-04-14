@@ -457,16 +457,13 @@ The table ``orders`` summarizes data for each order, i.e. one observations per w
 |REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
 |type| Limit order index specifying whether the liquidity provider offers to buy (``BuyingOffer``) or to sell (``SellingOffer``).|
 |makerID| ID variable, which uniquely identifies the liquidity provider from ``1`` to ``382``.|
-|makerRole | Trader type index for the liquidity taker which is either ``Informed trader`` or ``Uninformed trader``.|
 |takerID| ID variable, which uniquely identifies the liquidity taker from ``1`` to ``382``.|
-|takerRole| Trader type index for the liquidity provider which is either ``Informed trader`` or ``Uninformed trader``.|
 |status| Limit order index, which is either ``cancelled`` if this limit order got cancelled via this order, ``on market`` if this limit order remaind in the order book after this order, ``sold out`` when all assets were accepted by another party, or ``fully invalidated`` when they are no longer feasible.|
 |Price| Price of the limit order at which the asset is offered to buy or sell.|
 |Volume| Number of assets offered via this limit order.|
 |LimitVolume| Number of assets offered via the respective limit order.|
 |transactionVol| Number of assets transacted via the respective market order.|
 |totTransacted| Number of assets transacted via the respective limit order.|
-|CancelledVolume| Number of assets cancelled of the respective limit order.|
 |remainingVolExAnte| Number of assets offered via the respective limit order before this order.|
 |remainingVolExPost| Number of assets offered via the respective limit order after the execution of this order.|
 |AuctionStartTime| Time in seconds that has been passed since z-Tree has been started until the start of the auction.|
