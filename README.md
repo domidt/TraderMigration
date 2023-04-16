@@ -152,15 +152,15 @@ The table ``marketsummary`` summarizes data for each market, i.e. two observatio
 |GiniEndowment| Gini index for the initial endowment.|
 
 ## subjectsummary
-The table ``subjectsummary`` summarizes data for each individual in each market, i.e. 14 observation for each market, period, and cohort. 
+The table ``subjectsummary`` summarizes data for each individual in each market, i.e. 14 observations for each market, period, and cohort. 
 
 | Variable | Description |
 ---| ---|
 |subjectID| ID variable, which uniquely identifies each participant from ``1`` to ``382``.|
 |SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
 |Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
-|Subject| ID variable, which identifies participants within a experimental session from ``1`` to ``14``.|
-|client| ID variable, which identifies participants within a experimental session.|
+|Subject| ID variable, which identifies participants within an experimental session from ``1`` to ``14``.|
+|client| ID variable, which identifies participants within an experimental session.|
 |Period| Period index, ranging from ``1`` to ``12``.|
 |Period0| Period index, ranging from ``0`` to ``5``, indicating the distance to the phase’s first period, starting with 0 to facilitate the interpretation of the intercept.|
 |Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
@@ -189,6 +189,88 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |EndEndowmentUnits| Asset endowment plus the monetary units divided by the buyback value at market closing before redistributions and punishment.|
 |EndEndowmentUnitsPun| Asset endowment plus the monetary units divided by the buyback value at market closing after redistributions and punishment.|
 |Punished| Binary variable which is either ``1`` when this trader is informed and correctly identified, or ``0`` otherwise.|
+|PunishmentReceived| Sum of redistributions and punishement payments lost or received in this single market.|
+|TradingProfit| Profits from market participation in experimental monetary units before redistribution and punishment.|
+|TPRedist| Profits from market participation in experimental monetary units after redistribution.|
+|TPPun| Profits from market participation in experimental monetary units after redistribution and punishment.|
+|TPUnits| Profits from market participation in asset units (experimental monetary units divided by the buyback value) before redistribution and punishment.|
+|TPUnitsRedist| Profits from market participation in asset units after redistribution.|
+|TPUnitsPun| Profits from market participation in asset units after redistribution and punishment.|
+|ProfitPeriod| Profit from market participation in Euro after redistribution and punishment.|
+|PDbefore| Wealth change before redistribution and punishement.|
+|PDRedist| Wealth change after redistribution.|
+|PDPun| Wealth change after redistribution and punishment.|
+|PDbeforeVol| Wealth change per transacted asset before redistribution and punishment.|
+|PDRedistVol| Wealth change per transacted asset after redistribution.|
+|PDPunVol| Wealth change per transacted asset after redistribution and punishment.|
+|rankPDbefore| Ordered rank of wealth change before redistribution and punishment within a single market from ``1`` (lowest) to ``14`` (highest).|
+|rankPDbeforeRole| Ordered rank of wealth change before redistribution and punishment within a single market by trader type from ``1`` (lowest) to ``10`` (highest, resp. ``4`` for informed traders).|
+|rankavgPDbeforeRole| Ordered rank of average wealth change before redistribution and punishment throughout the experiment by role from ``1`` (lowest) to ``14`` (highest).|
+|Volume| Number of assets transacted in a single market.|
+|LimitVolume| Number of assets offered in limit orders in a single market.|
+|CancelledVolume| Number of offered assets withdrawn before market closing.|
+|VolumeMarketOrder| Number of accepted assets in market orders in a single market.|
+|VolumeLimitOrder| Number of offered assets accepted by another trader in a single market.|
+|activeTrader| Binary variable which identifies whether this trader placed any limit order or accepted any market order.|
+|transacted| Binary variable which identifies whether this trader accepted any market order.|
+|offered| Binary variable which identifies whether this trader placed any limit order.|
+|TPUnProfitTransaction| Trading losses from unprofitable transactions in a single market.|
+|VolUnprofitTransaction| Number of assets transacted in unprofitable transactions in a single market.|
+|NumUnprofitTransactions| Number of unprofitable transactions in a single market.|
+|marketshare| Ratio of transacted volume of this trader over the transacted volume in both simultaneously operating markets.|
+|odds| Ratio of transacted volume of this trader over the transacted volume in the other, simultaneously operating market.|
+|oddsLimit| Ratio of limit order volume of this trader over the limit order volume in the other, simultaneously operating market.|
+|shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
+|marginbuysTaler| Money spend to buy assets with negative money endowment using the credit limit.|
+|marginbuysAsset| Purchases with negative money endowments divided by the transaction price.|
+|marginbuys| Purchases with negative money endowments divided by the buyback value.|
+|ParticipationRate_Uninf| Number of active uninformed traders in this market divided by the total number of uninformed traders.|
+|ParticipationRate_Inf| Number of active informed traders in this market divided by the total number of informed traders.|
+|ObserverStrategy| Self-description of observers at the end of the experiment how they use information: PostQ1: ``Please describe how you think the available information (1.\ volume limit; 2.\ volume limit deleted; 3.\ trading volume limit; 4.\ trading volume market; 5.\ volume purchased; 6.\ volume sold; 7.\ volume purchased - sold; 8.\ average price; 9.\ average volume) can be used to identify informed traders!``.|
+|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: `` How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
+|StrategyTrader| Self-description of traders at the end of the experiment of their trading strategy. PostQ4: ``What strategies did you use to avoid being recognized by observers as a trader with information?``.|
+|OpinionPenalty| Self-description of participants at the end of the experiment about their opinion on the appropriateness of the penalty. PostQ5: ``If a trader with information is correctly selected by the observer, he loses his trading profit and must pay an additional penalty equal to the trading profit. Please indicate whether you consider this penalty to be appropriate, too low, or too high.``.|
+|RiskGeneral| Self-description of participants' risk tolerance at the end of the experiment. PostQ6: ``How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?``.|
+|RiskFinancial| Self-description of participants' financial risk tolerance at the end of the experiment. PostQ7 ``People can behave differently in different situations. How would you rate your willingness to take risks in financial matters?``.|
+|LossAversion| Self-description of participants loss tolerance at the end of the experiment. PostQ8 ``In financial decisions, both gains and losses are possible. To what extent do possible losses compared to possible gains influence you?``.|
+|Department| Self-description of participants' department of studies. PostQ9: ``Which faculty are you studying at?``.|
+|MajorOther| If they specified other at department, they are asked to specify here their faculty.|
+|Age| Self-description of participants' age. PostQ10a: ``Age in years``.|
+|Female| Self-description of participants' gender which can be either ``Weiblich`` for Female, ``Männlich`` for Male, or ``Divers``.
+|GeneralComments| Room for further comments concerning the experiment.|
+|gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
+
+## subjects
+The table ``subjects`` summarizes data for each individual in each market, i.e. 14 observations for each market, period, and cohort. 
+
+| Variable | Description |
+---| ---|
+|subjectID| ID variable, which uniquely identifies each participant from ``1`` to ``382``.|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
+|Subject| ID variable, which identifies participants within an experimental session from ``1`` to ``14``.|
+|Group| ID variable, which identifies participants' group within an experiemntal session from ``1`` to ``2``.|
+|client| ID variable, which identifies participants within an experimental session.|
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Market| Market index, which is either ``1`` (Top) or ``2`` (Bottom) indicating the position on the screen.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|Role| Participant role index which is either ``Informed trader``, ``Uninformed trader``, ``Observer``, or ``Experimenter``.|
+|IsInsider| Participant role index which is either ``1`` for informed traders or ``0`` otherwise.|
+|IsExperimenter| Participant role index which is either ``1`` for the experimenter or ``0`` otherwise.|
+|IsAuthority| Participant role index which is either ``1`` for observers or ``0`` otherwise.|
+|InitialAssets[1]| Number of assets this participant is endowed at the beginning of this period.|
+|Assets[1]| Number of assets this participants holds at market closing of this period.|
+|InitialCash| Monetary units this participant is endowed at the beginning of this period.|
+|Cash| Monetary units this participants holds at market closing of this period.|
+|InitialEndowment| Initial asset endowment time the buyback value plus the initial monetary units.|
+|EndVermoegen| Asset endowment times the buyback value plus the monetary units at market closing before redistributions and punishment.|
+|EndEndowmentPun| Asset endowment times the buyback value plus the monetary units at market closing after redistributions and punishment.|
+|Punished[1]| Binary variable which is either ``1`` when this trader is informed and correctly identified in the top market, or ``0`` otherwise.|
+|Punished[2]| Binary variable which is either ``1`` when this trader is informed and correctly identified in the bottom market, or ``0`` otherwise.|
 |PunishmentReceived| Sum of redistributions and punishement payments lost or received in this single market.|
 |TradingProfit| Profits from market participation in experimental monetary units before redistribution and punishment.|
 |TPRedist| Profits from market participation in experimental monetary units after redistribution.|
@@ -303,15 +385,15 @@ The table ``phasesummary`` summarizes data for each phase, market, and trader ty
 |d3P| Difference in geometric odds between this phase and Phase 3.|
 
 ## observers
-The table ``observers`` summarizes data for each observer in each period, i.e. two observation for each period and cohort. 
+The table ``observers`` summarizes data for each observer in each period, i.e. two observations for each period and cohort. 
 
 | Variable | Description |
 ---| ---|
 |subjectID| ID variable, which uniquely identifies each participant from ``1`` to ``382``.|
 |SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
 |Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
-|Subject| ID variable, which identifies participants within a experimental session from ``1`` to ``14``.|
-|client| ID variable, which identifies participants within a experimental session.|
+|Subject| ID variable, which identifies participants within an experimental session from ``1`` to ``14``.|
+|client| ID variable, which identifies participants within an experimental session.|
 |Period| Period index, ranging from ``1`` to ``12``.|
 |Phase| Phase index, which is either ``Phase 1`` for periods 1 to 3, ``Phase 2`` for periods 4 to 9, or ``Phase 3``.|
 |market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
@@ -342,7 +424,7 @@ The table ``observers`` summarizes data for each observer in each period, i.e. t
 |gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
 
 ## transactions
-The table ``transactions`` summarizes data for each acceptence of a limit order, i.e. one observations per market order.
+The table ``transactions`` summarizes data for each acceptence of a limit order, i.e. one observation per market order.
 
 | Variable | Description |
 ---| ---|
@@ -396,7 +478,7 @@ L.Pricewins| Last price before this market order after a symmetric 90% winsoriza
 |transactiontime| Time in seconds that has been passed since the start of the auction until the market order was executed.|
 
 ## offers
-The table ``offers`` summarizes data for each placement of a limit order, i.e. one observations per limit order.
+The table ``offers`` summarizes data for each placement of a limit order, i.e. one observation per limit order.
 
 | Variable | Description |
 ---| ---|
@@ -435,7 +517,7 @@ The table ``offers`` summarizes data for each placement of a limit order, i.e. o
 |offertimeEnd| Time in seconds that has been passed since the start of the auction until the end of the respective limit order, i.e., either at market closing, withdrawal, or when the limit order sold out.|
 
 ## orders
-The table ``orders`` summarizes data for each order, i.e. one observations per withdrawal, limit, and market order.
+The table ``orders`` summarizes data for each order, i.e. one observation per withdrawal, limit, and market order.
 
 | Variable | Description |
 ---| ---|
