@@ -214,6 +214,9 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |activeTrader| Binary variable which identifies whether this trader placed any limit order or accepted any market order.|
 |transacted| Binary variable which identifies whether this trader accepted any market order.|
 |offered| Binary variable which identifies whether this trader placed any limit order.|
+|TPUnProfitTransaction| Trading losses from unprofitable transactions in a single market.|
+|VolUnprofitTransaction| Number of assets transacted in unprofitable transactions in a single market.|
+|NumUnprofitTransactions| Number of unprofitable transactions in a single market.|
 |marketshare| Ratio of transacted volume of this trader over the transacted volume in both simultaneously operating markets.|
 |odds| Ratio of transacted volume of this trader over the transacted volume in the other, simultaneously operating market.|
 |oddsLimit| Ratio of limit order volume of this trader over the limit order volume in the other, simultaneously operating market.|
