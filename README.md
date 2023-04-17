@@ -190,12 +190,12 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |EndEndowmentUnitsPun| Asset endowment plus the monetary units divided by the buyback value at market closing after redistributions and punishment.|
 |Punished| Binary variable which is either ``1`` when this trader is informed and correctly identified, or ``0`` otherwise.|
 |PunishmentReceived| Sum of redistributions and punishement payments lost or received in this single market.|
-|TradingProfit| Profits from market participation in experimental monetary units before redistribution and punishment.|
-|TPRedist| Profits from market participation in experimental monetary units after redistribution.|
-|TPPun| Profits from market participation in experimental monetary units after redistribution and punishment.|
-|TPUnits| Profits from market participation in asset units (experimental monetary units divided by the buyback value) before redistribution and punishment.|
-|TPUnitsRedist| Profits from market participation in asset units after redistribution.|
-|TPUnitsPun| Profits from market participation in asset units after redistribution and punishment.|
+|TradingProfit| Trading profits from market participation in experimental monetary units before redistribution and punishment.|
+|TPRedist| Trading profits from market participation in experimental monetary units after redistribution.|
+|TPPun| Trading profits from market participation in experimental monetary units after redistribution and punishment.|
+|TPUnits| Trading profits from market participation in asset units (experimental monetary units divided by the buyback value) before redistribution and punishment.|
+|TPUnitsRedist| Trading profits from market participation in asset units after redistribution.|
+|TPUnitsPun| Trading profits from market participation in asset units after redistribution and punishment.|
 |ProfitPeriod| Profit from market participation in Euro after redistribution and punishment.|
 |PDbefore| Wealth change before redistribution and punishement.|
 |PDRedist| Wealth change after redistribution.|
@@ -227,7 +227,8 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |ParticipationRate_Uninf| Number of active uninformed traders in this market divided by the total number of uninformed traders.|
 |ParticipationRate_Inf| Number of active informed traders in this market divided by the total number of informed traders.|
 |ObserverStrategy| Self-description of observers at the end of the experiment how they use information: PostQ1: ``Please describe how you think the available information (1.\ volume limit; 2.\ volume limit deleted; 3.\ trading volume limit; 4.\ trading volume market; 5.\ volume purchased; 6.\ volume sold; 7.\ volume purchased - sold; 8.\ average price; 9.\ average volume) can be used to identify informed traders!``.|
-|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: `` How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
+|WhichMarket| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ2: ``Please describe, which criteria were decisive for you, when choosing which market to trade on!``.|
+|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: ``How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
 |StrategyTrader| Self-description of traders at the end of the experiment of their trading strategy. PostQ4: ``What strategies did you use to avoid being recognized by observers as a trader with information?``.|
 |OpinionPenalty| Self-description of participants at the end of the experiment about their opinion on the appropriateness of the penalty. PostQ5: ``If a trader with information is correctly selected by the observer, he loses his trading profit and must pay an additional penalty equal to the trading profit. Please indicate whether you consider this penalty to be appropriate, too low, or too high.``.|
 |RiskGeneral| Self-description of participants' risk tolerance at the end of the experiment. PostQ6: ``How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?``.|
@@ -241,7 +242,7 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |gender| Self-description of participants' gender which can be either ``female``, ``male``, or ``xdivers``.
 
 ## subjects
-The table ``subjects`` summarizes data for each individual in each market, i.e. 14 observations for each market, period, and cohort. 
+The table ``subjects`` summarizes data for each individual in each period, i.e. 14 observations for each period and cohort. 
 
 | Variable | Description |
 ---| ---|
@@ -252,7 +253,6 @@ The table ``subjects`` summarizes data for each individual in each market, i.e. 
 |Group| ID variable, which identifies participants' group within an experiemntal session from ``1`` to ``2``.|
 |client| ID variable, which identifies participants within an experimental session.|
 |Period| Period index, ranging from ``1`` to ``12``.|
-|Market| Market index, which is either ``1`` (Top) or ``2`` (Bottom) indicating the position on the screen.|
 |Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
 |Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
 |regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
@@ -271,45 +271,32 @@ The table ``subjects`` summarizes data for each individual in each market, i.e. 
 |EndEndowmentPun| Asset endowment times the buyback value plus the monetary units at market closing after redistributions and punishment.|
 |Punished[1]| Binary variable which is either ``1`` when this trader is informed and correctly identified in the top market, or ``0`` otherwise.|
 |Punished[2]| Binary variable which is either ``1`` when this trader is informed and correctly identified in the bottom market, or ``0`` otherwise.|
-|PunishmentReceived| Sum of redistributions and punishement payments lost or received in this single market.|
-|TradingProfit| Profits from market participation in experimental monetary units before redistribution and punishment.|
-|TPRedist| Profits from market participation in experimental monetary units after redistribution.|
-|TPPun| Profits from market participation in experimental monetary units after redistribution and punishment.|
-|TPUnits| Profits from market participation in asset units (experimental monetary units divided by the buyback value) before redistribution and punishment.|
-|TPUnitsRedist| Profits from market participation in asset units after redistribution.|
-|TPUnitsPun| Profits from market participation in asset units after redistribution and punishment.|
+|TradingProfit[1]| Trading profits from market participation in experimental monetary units before redistribution and punishment in the top market.|
+|TradingProfit[2]| Trading profits from market participation in experimental monetary units before redistribution and punishment in the bottom market.|
+|CompensationReceived[1]| Sum of redistributions and punishement payments lost or received in the top market.|
+|CompensationReceived[2]| Sum of redistributions and punishement payments lost or received in the bottom market.|
 |ProfitPeriod| Profit from market participation in Euro after redistribution and punishment.|
-|PDbefore| Wealth change before redistribution and punishement.|
-|PDRedist| Wealth change after redistribution.|
-|PDPun| Wealth change after redistribution and punishment.|
-|PDbeforeVol| Wealth change per transacted asset before redistribution and punishment.|
-|PDRedistVol| Wealth change per transacted asset after redistribution.|
-|PDPunVol| Wealth change per transacted asset after redistribution and punishment.|
-|rankPDbefore| Ordered rank of wealth change before redistribution and punishment within a single market from ``1`` (lowest) to ``14`` (highest).|
-|rankPDbeforeRole| Ordered rank of wealth change before redistribution and punishment within a single market by trader type from ``1`` (lowest) to ``10`` (highest, resp. ``4`` for informed traders).|
-|rankavgPDbeforeRole| Ordered rank of average wealth change before redistribution and punishment throughout the experiment by role from ``1`` (lowest) to ``14`` (highest).|
-|Volume| Number of assets transacted in a single market.|
-|LimitVolume| Number of assets offered in limit orders in a single market.|
-|CancelledVolume| Number of offered assets withdrawn before market closing.|
-|VolumeMarketOrder| Number of accepted assets in market orders in a single market.|
-|VolumeLimitOrder| Number of offered assets accepted by another trader in a single market.|
-|activeTrader| Binary variable which identifies whether this trader placed any limit order or accepted any market order.|
-|transacted| Binary variable which identifies whether this trader accepted any market order.|
-|offered| Binary variable which identifies whether this trader placed any limit order.|
-|TPUnProfitTransaction| Trading losses from unprofitable transactions in a single market.|
-|VolUnprofitTransaction| Number of assets transacted in unprofitable transactions in a single market.|
-|NumUnprofitTransactions| Number of unprofitable transactions in a single market.|
-|marketshare| Ratio of transacted volume of this trader over the transacted volume in both simultaneously operating markets.|
-|odds| Ratio of transacted volume of this trader over the transacted volume in the other, simultaneously operating market.|
-|oddsLimit| Ratio of limit order volume of this trader over the limit order volume in the other, simultaneously operating market.|
-|shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
-|marginbuysTaler| Money spend to buy assets with negative money endowment using the credit limit.|
-|marginbuysAsset| Purchases with negative money endowments divided by the transaction price.|
-|marginbuys| Purchases with negative money endowments divided by the buyback value.|
-|ParticipationRate_Uninf| Number of active uninformed traders in this market divided by the total number of uninformed traders.|
-|ParticipationRate_Inf| Number of active informed traders in this market divided by the total number of informed traders.|
+|PD| Wealth change after redistribution and punishment.|
+|VolumeTransactions[1]| Number of assets transacted in the top market.|
+|VolumeTransactions[2]| Number of assets transacted in the bottom market.|
+|LimitVol[1]| Number of assets offered in limit orders in the top market.|
+|LimitVol[2]| Number of assets offered in limit orders in the bottom market.|
+|CancelledVol[1]| Number of offered assets withdrawn before market closing in the top market.|
+|CancelledVol[2]| Number of offered assets withdrawn before market closing in the bottom market.|
+|VolMarketTran[1]| Number of accepted assets in market orders in the top market.|
+|VolMarketTran[2]| Number of accepted assets in market orders in the bottom market.|
+|VolLimitTran[1]| Number of offered assets accepted by another trader in the top market.|
+|VolLimitTran[2]| Number of offered assets accepted by another trader in the bottom market.|
+|Transactions[1]| Number of transactions in the top market.|
+|Transactions[2]| Number of transactions in the bottom market.|
+|VolPurch[1]| Number of assets purchased in the top market.|
+|VolPurch[2]| Number of assets purchased in the bottom market.|
+|VolSold[1]| Number of assets sold in the top market.|
+|VolSold[2]| Number of assets sold in the bottom market.|
+|TotalProfit| Profit from participation in Euro at the end of an experimental session.|
 |ObserverStrategy| Self-description of observers at the end of the experiment how they use information: PostQ1: ``Please describe how you think the available information (1.\ volume limit; 2.\ volume limit deleted; 3.\ trading volume limit; 4.\ trading volume market; 5.\ volume purchased; 6.\ volume sold; 7.\ volume purchased - sold; 8.\ average price; 9.\ average volume) can be used to identify informed traders!``.|
-|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: `` How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
+|WhichMarket| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ2: ``Please describe, which criteria were decisive for you, when choosing which market to trade on!``.|
+|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: ``How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
 |StrategyTrader| Self-description of traders at the end of the experiment of their trading strategy. PostQ4: ``What strategies did you use to avoid being recognized by observers as a trader with information?``.|
 |OpinionPenalty| Self-description of participants at the end of the experiment about their opinion on the appropriateness of the penalty. PostQ5: ``If a trader with information is correctly selected by the observer, he loses his trading profit and must pay an additional penalty equal to the trading profit. Please indicate whether you consider this penalty to be appropriate, too low, or too high.``.|
 |RiskGeneral| Self-description of participants' risk tolerance at the end of the experiment. PostQ6: ``How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?``.|
@@ -410,8 +397,6 @@ The table ``observers`` summarizes data for each observer in each period, i.e. t
 |NumSelected| Number of traders incorrectly suspected to be informed after market closing.|
 |ProfitPeriod| Profit from market observation in Euro.|
 |ObserverStrategy| Self-description of observers at the end of the experiment how they use information: PostQ1: ``Please describe how you think the available information (1.\ volume limit; 2.\ volume limit deleted; 3.\ trading volume limit; 4.\ trading volume market; 5.\ volume purchased; 6.\ volume sold; 7.\ volume purchased - sold; 8.\ average price; 9.\ average volume) can be used to identify informed traders!``.|
-|ProbabilityDetected| Self-description of traders at the end of the experiment how they estimate the probability of a detection of informed traders. PostQ3: `` How high do you estimate the probability that an observer correctly identifies a trader with information as such.``.|
-|StrategyTrader| Self-description of traders at the end of the experiment of their trading strategy. PostQ4: ``What strategies did you use to avoid being recognized by observers as a trader with information?``.|
 |OpinionPenalty| Self-description of participants at the end of the experiment about their opinion on the appropriateness of the penalty. PostQ5: ``If a trader with information is correctly selected by the observer, he loses his trading profit and must pay an additional penalty equal to the trading profit. Please indicate whether you consider this penalty to be appropriate, too low, or too high.``.|
 |RiskGeneral| Self-description of participants' risk tolerance at the end of the experiment. PostQ6: ``How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?``.|
 |RiskFinancial| Self-description of participants' financial risk tolerance at the end of the experiment. PostQ7 ``People can behave differently in different situations. How would you rate your willingness to take risks in financial matters?``.|
