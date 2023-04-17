@@ -206,6 +206,7 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |rankPDbefore| Ordered rank of wealth change before redistribution and punishment within a single market from ``1`` (lowest) to ``14`` (highest).|
 |rankPDbeforeRole| Ordered rank of wealth change before redistribution and punishment within a single market by trader type from ``1`` (lowest) to ``10`` (highest, resp. ``4`` for informed traders).|
 |rankavgPDbeforeRole| Ordered rank of average wealth change before redistribution and punishment throughout the experiment by role from ``1`` (lowest) to ``14`` (highest).|
+|AvgPDbeforeRole| Arithmetic mean of wealth changes per transacted asset before redistribution and punishment in periods in the same trader type as in this period.|
 |Volume| Number of assets transacted in a single market.|
 |LimitVolume| Number of assets offered in limit orders in a single market.|
 |CancelledVolume| Number of offered assets withdrawn before market closing.|
@@ -544,3 +545,40 @@ The table ``orders`` summarizes data for each order, i.e. one observation per wi
 |orderStarttime| Time in seconds that has been passed since the start of the auction until the order was placed, i.e. since the limit order was placed or the last market order was executed.|
 |offertime| Time in seconds that has been passed since the start of the auction until the limit order was placed.|
 |offertimeEnd| Time in seconds that has been passed since the start of the auction until the end of the respective limit order, i.e., either at market closing, withdrawal, or when the limit order sold out.|
+
+## seconds
+The table ``seconds`` summarizes data for each second within each market, i.e. 180 observations per period and cohort.
+
+| Variable | Description |
+---| ---|
+|SessionID| ID variable, which uniquely identifies each session from ``1`` to ``24``.|
+|Date| Date and Program Starting Time of the experimental session in format yymmdd_hhmm.|
+|Period| Period index, ranging from ``1`` to ``12``.|
+|Period0| Period index, ranging from ``0`` to ``5``, indicating the distance to the phase’s first period, starting with 0 to facilitate the interpretation of the intercept.|
+|market| Market index, which is either ``Bottom`` or ``Top`` indicating the position on the screen.|
+|time| Time in seconds that has been passed since the start of the auction.|
+|Programme| Progress index, which is either ``1`` for the pre-experimental questionnaire, ``2`` for the training periods, and ``3`` for the actual experimental data.|
+|Treatment| Treatment index, which is either ``NN.NR.RR``, ``NN.RN.RR``, ``RR.NR.NN``, ``RR.NR.RR``, ``RR.RN.NN``, or ``RR.RN.RR``.|
+|regOrder| Treatment index specifying the order of market regulation in Phase 2, which is either ``NR``, or ``RN``.| 
+|embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
+|history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
+|Location| City index, which is either ``Graz`` or ``Vienna``.|
+|MA| Moving average of transaction volume, $$\frac{1}{2}^{(1,2,\ldots, 8, 9, 9)}$$.|
+|BBV| Buyback Value.|
+|BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
+|IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
+|othermarket| Regulatory index for the simultaneous opposite market, which is either ``REG`` for regulated markets or ``NOREG``.|
+|REGBoth| Regulatory index which is either ``1`` when both markets in a period apply regulation or ``0`` otherwise.|
+|REGSH| Regulatory index which is eiterh ``1`` when a market in Phase 2 applies regulation or ``0`` otherwise.|
+|BestBid| Active bid in the order book at this time which offered the highest bid price.|
+|BestAsk| Active ask in the order book at this time which offered assets for the lowest ask price.|
+|BAspread| Difference between best bid and best ask price each second.|
+|midpointBA| Midpoint between best bid and best ask price each second.|
+|last| Last transaction price in a market before this second.|
+|lnlastPrice| Log transformed last transaction price in a market.|
+|L.lnlastPrice| Log transformed price in a market in the previous second.|
+|return| Log-change in prices between last seconds.|
+|BestBidwins| Active bid in the order book at this time which offered the highest bid price after a symmetric 90% winsorization of prices.|
+|BestAskwins| Active ask in the order book at this time which offered assets for the lowest ask price after a symmetric 90% winsorization of prices.|
+|BAspreadwins| Difference between best bid and best ask price each second after a symmetric 90% winsorization of prices.|
+|BAspreadwins2| Difference between best bid and best ask price each second after a symmetric 90% winsorization of spreads.|
