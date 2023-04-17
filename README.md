@@ -211,6 +211,8 @@ The table ``subjectsummary`` summarizes data for each individual in each market,
 |CancelledVolume| Number of offered assets withdrawn before market closing.|
 |VolumeMarketOrder| Number of accepted assets in market orders in a single market.|
 |VolumeLimitOrder| Number of offered assets accepted by another trader in a single market.|
+|VolumeSold| Number of assets sold in a single market.|
+|VolumePurchased| Number of assets purchased in a single market.|
 |activeTrader| Binary variable which identifies whether this trader placed any limit order or accepted any market order.|
 |transacted| Binary variable which identifies whether this trader accepted any market order.|
 |offered| Binary variable which identifies whether this trader placed any limit order.|
