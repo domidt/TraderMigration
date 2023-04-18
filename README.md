@@ -1,7 +1,7 @@
 # TraderMigration
 This repository provides all data and analyses code used in the JFM paper
 
-The file ``Data.RData`` consists of six data tables:
+The file ``Data.RData`` consists of nine data tables:
 
 ## marketsummary
 The table ``marketsummary`` summarizes data for each market, i.e. two observations per period and cohort.
