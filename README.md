@@ -598,7 +598,7 @@ The table ``seconds`` summarizes data for each second within each market, i.e. 1
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either``NN.RR'', ``RR.NN'', or ``RR.RR``.|
 |history| Treatment index specifying the regulation in previous Phases, which is either ``1`` for markets in Phase 1, ``N`` (resp. ``R``) for markets in Phase 2 which succeeded NOREG (REG) markets, ``N.N``, ``N.R``, ``R.N``, or ``R.R`` for markets in Phase 3.| 
 |Location| City index, which is either ``Graz`` or ``Vienna``.|
-|MA| Moving average of transaction volume with past volume being weighted by $$\left\{\frac{1}{2}^n\quad\vert\quad n\in\{(1,2,\ldots, 8, 9, 9)\}\right\}$$.|
+|MA| Moving average of transaction volume with past volume being weighted by $$\{\frac{1}{2}^n\quad\vert\quad n\in\{(1,2,\ldots, 8, 9, 9)\}\}$$.|
 |BBV| Buyback Value.|
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
 |IsREG| Regulatory index, which is either ``REG`` for regulated markets or ``NOREG``.|
