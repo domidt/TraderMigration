@@ -109,9 +109,44 @@ The table ``marketsummary`` summarizes data for each market, i.e. two observatio
 |oddsInfmax2| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the transacted volume over 1.|
 |oddsInfmax3| Ratio of transacted volume involving uninformed traders over the transacted volume involving uninformed traders in the other, simultaneously operating market such that markets with all market share are associated with the highest observed ratio in the same phase.|
 |oddswins| odds after 90% winsorization.|
-|oddsLimitwins| limit order odds after 90% winsorization.|
+|oddsLimitwins| Limit order odds after 90% winsorization.|
 |oddsInfwins| odds involving informed traders after 90% winsorization.|
 |oddsUninfwins| odds involving uninformed traders after 90% winsorization.|
+|oddsLimitUninf|  Limit order odds involving uninformed traders.|
+|oddsLimitInf| Limit order odds involving informed traders.|
+|geomodds_start| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1.|
+|geomodds_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 2.|
+|geomodds_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1.|
+|absgeomodds_start| Absolute geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1.|
+|absgeomodds_middle| Absolute geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 2.|
+|absgeomodds_end| Absolute geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 3.|
+|geomoddsInf_start| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 1.|
+|geomoddsInf_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 2.|          
+|geomoddsInf_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 3.|
+|geomoddsUni_start| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 1.|
+|geomoddsUni_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 1.|
+|geomoddsUni_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 3.|
+|geomoddswins_start"| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1 after 90% winsorization of odds.|
+|geomoddswins_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 2 after 90% winsorization of odds.|
+|geomoddswins_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 3 after 90% winsorization of odds.|
+|geomoddsInfwins_start| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 1 after 90% winsorization of odds.|
+|geomoddsInfwins_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 2 after 90% winsorization of odds.|
+|geomoddsInfwins_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 3 after 90% winsorization of odds.|
+|geomoddsUniwins_start| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 1 after 90% winsorization of odds.|
+|geomoddsUniwins_middle| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 2 after 90% winsorization of odds.|
+|geomoddsUniwins_end| Geometric ratio of transacted volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 3 after 90% winsorization of odds.|
+|geomoddsLimitInf_start| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 1.|
+|geomoddsLimitInf_middle| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 2.|
+|geomoddsLimitInf_end| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving informed traders in Phase 3.|
+|geomoddsLimitUni_start| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 1.|
+|geomoddsLimitUni_middle| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 2.|
+|geomoddsLimitUni_end| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) involving uninformed traders in Phase 3.|
+|geomoddsLimit_start| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1.|
+|geomoddsLimit_middle| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 2.|
+|geomoddsLimit_end| Geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 3.|
+|absgeomoddsLimit_start| Absolute geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 1.|
+|absgeomoddsLimit_middle| Absolute geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 2.|
+|absgeomoddsLimit_end| Absolute geometric ratio of limit order volume over the transacted volume in the other, simultaneously operating markets (geometric averages) in Phase 3.|
 |unprofittime| Unexectued Profitable Orders per Time - Money on the table times the time on the market, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market.|
 |RUPT| Relative Unexecuted Profitable Orders per Time - relative money on the table, i.e., profitable price difference between an offer and the fundamental value times the remaining volume times the timespan the order is on the market divided by the fundamental value and divided by the sum of time times volume of all limit orders.|
 |shortsells| Number of assets sold with negative asset endowment using the short limit capacity.|
