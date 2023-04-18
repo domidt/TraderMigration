@@ -613,8 +613,8 @@ marketsummary <- merge(marketsummary, subset(marketprofitAbility120, select = c(
 marketsummary$rGAD120 <- 1-marketsummary$GAD120/marketsummary$GADhyp120
 
 ## Sum over both markets in a period / odds ###################################
-summarkets <- aggregate(cbind(Volume, LimitVolume, VolumeInf, VolumeUni) ~ SessionID + Programme + Period, data=marketsummary, function(x) sum(x, na.rm=T), na.action = NULL)
-colnames(summarkets) <- c("SessionID", "Programme", "Period", "TotVolume", "TotLimitVolume", "TotVolumeInf", "TotVolumeUni")
+summarkets <- aggregate(cbind(Volume, LimitVolume, VolumeInf, VolumeUni, LimitVolumeInf, LimitVolumeUni) ~ SessionID + Programme + Period, data=marketsummary, function(x) sum(x, na.rm=T), na.action = NULL)
+colnames(summarkets) <- c("SessionID", "Programme", "Period", "TotVolume", "TotLimitVolume", "TotVolumeInf", "TotVolumeUni", "TotLimitVolumeInf", "TotLimitVolumeUni")
 marketsummary <- merge(marketsummary, summarkets, by = c("SessionID", "Programme", "Period"))
 marketsummary$marketshare <- marketsummary$Volume / marketsummary$TotVolume
 marketsummary$marketshareLimit <- marketsummary$LimitVolume/marketsummary$TotLimitVolume
@@ -628,6 +628,8 @@ marketsummary$oddsLimit <- marketsummary$LimitVolume / (marketsummary$TotLimitVo
 ## odds by trader type
 marketsummary$oddsUninf <- marketsummary$VolumeUni / (marketsummary$TotVolumeUni - marketsummary$VolumeUni)
 marketsummary$oddsInf <- marketsummary$VolumeInf / (marketsummary$TotVolumeInf - marketsummary$VolumeInf)
+marketsummary$oddsLimitUninf <- marketsummary$LimitVolumeUni / (marketsummary$TotLimitVolumeUni - marketsummary$LimitVolumeUni)
+marketsummary$oddsLimitInf <- marketsummary$LimitVolumeInf / (marketsummary$TotLimitVolumeInf - marketsummary$LimitVolumeInf)
 ## replace missing odds because of no-trade
 marketsummary$oddsInfmax <- marketsummary$oddsInf
 marketsummary$oddsInfmax[marketsummary$oddsInf==Inf] <- max(marketsummary$oddsInf[marketsummary$oddsInf!=Inf])
@@ -661,8 +663,8 @@ sumperiods <- subset(marketsummary, Market==1, select = c("SessionID", "Programm
 periodsummary <- merge(periodsummary, sumperiods, by = c("SessionID", "Programme", "Period"))
 
 ## Calculate odds by Phase ####################################################
-ms <- aggregate(cbind(log(odds), log(oddswins), log(oddsLimit), log(oddsUninf), log(oddsUninfwins), log(oddsInf), log(oddsInfwins), abs(log(odds)),abs(log(oddsLimit)), log(marketshare), log(marketshareLimit), (marketshare), (marketshareLimit), abs(log(marketshare+.5)), abs(log(marketshareLimit+.5))) ~ Part + SessionID + market, data = subset(marketsummary), function(x) mean(x))
-colnames(ms) <- c("Part", "SessionID", "market", "geomodds", "geomoddswins", "geomoddsLimit", "geomoddsUni", "geomoddsUniwins", "geomoddsInf", "geomoddsInfwins", "absgeomodds", "absgeomoddsLimit", "lnmarketshare", "lnmarketshareLimit", "marketshare", "marketshareLimit","abslnmarketshare", "abslnmarketshareLimit" )
+ms <- aggregate(cbind(log(odds), log(oddswins), log(oddsLimit), log(oddsUninf), log(oddsUninfwins), log(oddsInf), log(oddsInfwins), log(oddsLimitUninf), log(oddsLimitInf), abs(log(odds)),abs(log(oddsLimit)), log(marketshare), log(marketshareLimit), (marketshare), (marketshareLimit), abs(log(marketshare+.5)), abs(log(marketshareLimit+.5))) ~ Part + SessionID + market, data = subset(marketsummary), function(x) mean(x))
+colnames(ms) <- c("Part", "SessionID", "market", "geomodds", "geomoddswins", "geomoddsLimit", "geomoddsUni", "geomoddsUniwins", "geomoddsInf", "geomoddsInfwins", "geomoddsLimitUni", "geomoddsLimitInf", "absgeomodds", "absgeomoddsLimit", "lnmarketshare", "lnmarketshareLimit", "marketshare", "marketshareLimit","abslnmarketshare", "abslnmarketshareLimit" )
 ms$Avgmarketshare <- exp(ms$lnmarketshare)
 ms$AvgmarketshareLimit <- exp(ms$lnmarketshareLimit)
 a1 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("lnmarketshare") + Part, value.var = "lnmarketshare", drop = FALSE)
@@ -678,6 +680,8 @@ a10 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsUni") + 
 a11 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsUniwins") + Part, value.var = "geomoddsUniwins", drop = FALSE)
 a12 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsInf") + Part, value.var = "geomoddsInf", drop = FALSE)
 a13 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsInfwins") + Part, value.var = "geomoddsInfwins", drop = FALSE)
+a14 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsLimitUni") + Part, value.var = "geomoddsLimitUni", drop = FALSE)
+a15 <- reshape2::dcast(subset(ms), SessionID + market ~ paste0("geomoddsLimitInf") + Part, value.var = "geomoddsLimitInf", drop = FALSE)
 marketsummary <- merge(marketsummary, a1, by = c("SessionID", "market"))
 marketsummary <- merge(marketsummary, a2, by = c("SessionID", "market"))
 marketsummary <- merge(marketsummary, a3, by = c("SessionID", "market"))
@@ -691,6 +695,8 @@ marketsummary <- merge(marketsummary, a10, by = c("SessionID", "market"))
 marketsummary <- merge(marketsummary, a11, by = c("SessionID", "market"))
 marketsummary <- merge(marketsummary, a12, by = c("SessionID", "market"))
 marketsummary <- merge(marketsummary, a13, by = c("SessionID", "market"))
+marketsummary <- merge(marketsummary, a14, by = c("SessionID", "market"))
+marketsummary <- merge(marketsummary, a15, by = c("SessionID", "market"))
 ## one period lag
 lag <- subset(marketsummary, select = c(SessionID, market, Period, Volume, LimitVolume, marketshare, marketshareLimit, odds, oddsLimit))
 colnames(lag) <- c("SessionID", "market", "Period", "lagVolume", "lagLimitVolume", "lagmarketshare", "lagmarketshareLimit", "lagodds", "lagoddsLimit")
@@ -1337,11 +1343,12 @@ marketsummary <- subset(marketsummary, select = c("SessionID", "Date", "Period",
                                                   "LimitVolume", "lagLimitVolume", "LimitVolumeInf", "LimitVolumeUni", "NumTransactions",
                                                   "Countoffers", "CountSelloffers", "CountBuyoffers", "CancelledVolume", "remainingVol", "SellLimitVolume","BuyLimitVolume",
                                                   "ProfitPotential", "GD", "GAD", "GADhyp", "rGAD", "RD", "RAD", "GD120", "GAD120", "RD120", "RAD120",  "Price", "Price120",
-                                                  "marketshare", "lagmarketshare", "marketshareLimit", "lagmarketshareLimit", "AssetTurnover",  "TransactionSize", "LimitOrderTurnover",  "LimitOrderSize",
-                                                  "odds", "lagodds", "oddsLimit", "lagoddsLimit", "oddsUninf", "oddsInf", "oddsInfmax", "oddsInfmax2", "oddsInfmax3","oddswins", "oddsLimitwins", "oddsInfwins", "oddsUninfwins",
-                                                  #"geomodds_start", "geomodds_middle", "geomodds_end", "absgeomodds_start", "absgeomodds_middle", "absgeomodds_end", "geomoddsInf_start", "geomoddsInf_middle", "geomoddsInf_end", "geomoddsUni_start", "geomoddsUni_middle", "geomoddsUni_end",
-                                                  #"geomoddswins_start", "geomoddswins_middle", "geomoddswins_end",  "geomoddsInfwins_start", "geomoddsInfwins_middle", "geomoddsInfwins_end", "geomoddsUniwins_start", "geomoddsUniwins_middle", "geomoddsUniwins_end",
-                                                  #"geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "absgeomoddsLimit_start", "absgeomoddsLimit_middle", "absgeomoddsLimit_end", 
+                                                  "marketshare", "lagmarketshare", "marketshareLimit", "lagmarketshareLimit", "AssetTurnover",  "TransactionSize", "LimitOrderTurnover",  "LimitOrderSize", "relCancelledVolume",
+                                                  "odds", "lagodds", "oddsLimit", "lagoddsLimit", "oddsUninf", "oddsInf", "oddsInfmax", "oddsInfmax2", "oddsInfmax3","oddswins", "oddsLimitwins", "oddsInfwins", "oddsUninfwins", "oddsLimitUninf", "oddsLimitInf", 
+                                                  "geomodds_start", "geomodds_middle", "geomodds_end", "absgeomodds_start", "absgeomodds_middle", "absgeomodds_end", "geomoddsInf_start", "geomoddsInf_middle", "geomoddsInf_end", "geomoddsUni_start", "geomoddsUni_middle", "geomoddsUni_end",
+                                                  "geomoddswins_start", "geomoddswins_middle", "geomoddswins_end",  "geomoddsInfwins_start", "geomoddsInfwins_middle", "geomoddsInfwins_end", "geomoddsUniwins_start", "geomoddsUniwins_middle", "geomoddsUniwins_end",
+                                                  "geomoddsLimitInf_start", "geomoddsLimitInf_middle", "geomoddsLimitInf_end", "geomoddsLimitUni_start", "geomoddsLimitUni_middle", "geomoddsLimitUni_end",
+                                                  "geomoddsLimit_start", "geomoddsLimit_middle", "geomoddsLimit_end", "absgeomoddsLimit_start", "absgeomoddsLimit_middle", "absgeomoddsLimit_end", 
                                                   "unprofittime",  "RUPT", "shortsells", "marginbuysTaler", "marginbuysAsset", "marginbuys", "shortsells_Informed", "shortsells_Uninformed", "marginbuys_Informed", "marginbuys_Uninformed", "marginbuysAsset_Informed", "marginbuysAsset_Uninformed",
                                                   "NumActiveTrader", "NumTransactingTraders", "NumOfferingTraders", "ParticipationRate_Uninf", "ParticipationRate_Inf",
                                                   "HHInitialAssets", "HHEndAssets", "HHInitialEndowment", "HHEndEndowment", "HHEndEndowmentPun", "HHVolume", "HHPDbefore", "HHPDPun",
@@ -1352,12 +1359,13 @@ subjectsummary <- subset(subjectsummary, select = c("subjectID", "SessionID", "D
                                                     "BBV", "BBVCent", "IsREG", "othermarket", "REGBoth", "REGSH", "Role", 
                                                     "InitialAssets", "Assets", "InitialCash", "Cash", "InitialEndowment", "EndVermoegen", "EndEndowmentPun", "InitialEndowmentUnits", "EndEndowmentUnits", "EndEndowmentUnitsPun",
                                                     "Punished", "PunishmentReceived","TradingProfit", "TPRedist", "TPPun", "TPUnits", "TPUnitsRedist", "TPUnitsPun", 
-                                                    "ProfitPeriod", "PDbefore", "PDRedist", "PDPun", "PDbeforeVol", "PDRedistVol", "PDPunVol", "rankPDbefore", "rankPDbeforeRole", "rankavgPDbeforeRole",
-                                                    "Volume", "LimitVolume", "CancelledVolume", "VolumeMarketOrder", "VolumeLimitOrder", "activeTrader", "transacted", "offered",
+                                                    "ProfitPeriod", "PDbefore", "PDRedist", "PDPun", "PDbeforeVol", "PDRedistVol", "PDPunVol", "rankPDbefore", "rankPDbeforeRole", "rankavgPDbeforeRole", "AvgPDbeforeRole",
+                                                    "Volume", "LimitVolume", "CancelledVolume", "VolumeMarketOrder", "VolumeLimitOrder", "VolumeSold", "VolumePurchased", "activeTrader", "transacted", "offered",
+                                                    "TPUnProfitTransaction", "VolUnprofitTransaction", "NumUnprofitTransactions",
                                                     "marketshare", "odds", "oddsLimit",
                                                     "shortsells", "marginbuysTaler", "marginbuysAsset", "marginbuys", 
                                                     "ParticipationRate_Uninf", "ParticipationRate_Inf",
-                                                    "ObserverStrategy", "ProbabilityDetected", "StrategyTrader", "OpinionPenalty", "RiskGeneral", "RiskFinancial", "LossAversion", "Department", "MajorOther", "Age", "Female", "GeneralComments", "gender"))
+                                                    "ObserverStrategy", 'WhichMarket', "ProbabilityDetected", "StrategyTrader", "OpinionPenalty", "RiskGeneral", "RiskFinancial", "LossAversion", "Department", "MajorOther", "Age", "Female", "GeneralComments", "gender"))
 
 phasesummary <- subset(phasesummary, select = c("SessionID", "Role", "Phase", "market", "Programme", "Treatment", "regOrder", "embTreatment", "history", "Location",
                                                 "IsREG", "othermarket", "REGBoth", "REGSH", 
@@ -1369,7 +1377,16 @@ phasesummary <- subset(phasesummary, select = c("SessionID", "Role", "Phase", "m
 
 observers <- subset(observers, select = c("subjectID", "SessionID", "Date", "client", "Period", "Phase", "market", "Programme", "Treatment", "regOrder", "embTreatment", "Location",
                                           "IsREG", "Role", "NumSelected", "NumDetections", "NumPunished", "NumMissuspected", "ProfitPeriod", 
-                                          "ObserverStrategy", "ProbabilityDetected", "StrategyTrader", "OpinionPenalty", "RiskGeneral", "RiskFinancial", "LossAversion", "Department", "MajorOther", "Age", "Female", "GeneralComments", "gender"))
+                                          "ObserverStrategy", "OpinionPenalty", "RiskGeneral", "RiskFinancial", "LossAversion", "Department", "MajorOther", "Age", "Female", "GeneralComments", "gender"))
+
+subjects <- subset(subjects, select = c("subjectID", "SessionID", "Date", "Subject", "Group", "client", "Period", "Programme", "Treatment", "regOrder", "embTreatment", "Location",
+                                        "Role", "IsInsider", "IsExperimenter", "IsAuthority",
+                                        "InitialAssets[1]", "Assets[1]", "InitialCash", "Cash", "InitialEndowment", "EndVermoegen", "EndEndowmentPun",
+                                        "Punished[1]", "Punished[2]","TradingProfit[1]", "TradingProfit[2]", "CompensationReceived[1]", "CompensationReceived[2]",
+                                        "ProfitPeriod", "PD",
+                                        "VolumeTransactions[1]", "VolumeTransactions[2]", "LimitVol[1]", "LimitVol[1]", "CancelledVol[1]", "CancelledVol[2]", "VolMarketTran[1]", "VolMarketTran[2]", "VolLimitTran[1]", "VolLimitTran[1]", "Transactions[1]", "Transactions[2]", "VolPurch[1]", "VolPurch[2]", "VolSold[1]", "VolSold[2]",
+                                        "TotalProfit", 
+                                        "ObserverStrategy", "WhichMarket", "ProbabilityDetected", "StrategyTrader", "OpinionPenalty", "RiskGeneral", "RiskFinancial", "LossAversion", "Department", "MajorOther", "Age", "Female", "GeneralComments", "gender"))
 
 transactions <- subset(transactions, select = c("transactionID", "SessionID", "Date", "Period", "Phase", "market", "Programme", "Treatment", "regOrder", "embTreatment", "Location", 
                                                 "BBV", "BBVCent", "IsREG", "othermarket", "REGBoth", "REGSH",
@@ -1388,5 +1405,10 @@ orders <- subset(orders, select = c("orderID", "offerID", "transactionID", "Sess
                                     "type", "makerID", "takerID", "status", "Price", "Volume", "LimitVolume", "transactionVol", "totTransacted", "remainingVolExPost", "remainingVolExAnte",  
                                     "AuctionStartTime", "AuctionEndTime", "ordertime", "orderStarttime", "offertime", "offertimeEnd"))
 
-save(file = "Data.RData", list = c("marketsummary", "subjectsummary", "phasesummary", "observers", "transactions", "offers", "orders"))
+seconds <- subset(seconds, select = c("SessionID", "market", "time", "Period", "Period0", "Programme", "Date", "Treatment", "regOrder", "embTreatment", "history", "Location", 
+                                      "MA", "BBV", "BBVCent", "IsREG", "othermarket", "REGBoth", "REGSH", 
+                                      "BestBid", "BestAsk", "BAspread", "midpointBA", "lastPrice", "lnlastPrice", "L.lnlastPrice", "return", 
+                                      "BestAskwins", "BestBidwins", "BAspreadwins", "BAspreadwins2"))
+
+save(file = "Data.RData", list = c("marketsummary", "subjectsummary", "subjects", "phasesummary", "observers", "transactions", "offers", "orders", "seconds"))
 
