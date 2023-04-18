@@ -51,7 +51,7 @@ load("Data.RData")
 
 ## Variable description
 
-The file 'Data.RData' consists of six data tables:
+The file 'Data.RData' consists of nine data tables:
 
 ### marketsummary
 The table 'marketsummary' summarizes data for each market, i.e. two observations per period and cohort.
@@ -648,7 +648,7 @@ The table 'seconds' summarizes data for each second within each market, i.e. 180
 |embTreatment| Treatment index specifying the regulation in Phase 1 and 3, which is either'NN.RR'', 'RR.NN'', or 'RR.RR'.|
 |history| Treatment index specifying the regulation in previous Phases, which is either '1' for markets in Phase 1, 'N' (resp. 'R') for markets in Phase 2 which succeeded NOREG (REG) markets, 'N.N', 'N.R', 'R.N', or 'R.R' for markets in Phase 3.| 
 |Location| City index, which is either 'Graz' or 'Vienna'.|
-|MA| Moving average of transaction volume with past volume being weighted by $$\{\frac{1}{2}^n\vert\quad n\in{(1,2,\ldots, 8, 9, 9)}\}$$.|
+|MA| Moving average of transaction volume with past volume being weighted by $$\left\{\frac{1}{2}^n\quad\vert\quad n\in\{1,2,\ldots, 8, 9, 9\}\right\}$$.|
 |BBV| Buyback Value.|
 |BBVCent| Buyback Value centralized by the unconditional expected value of 57.5.|
 |IsREG| Regulatory index, which is either 'REG' for regulated markets or 'NOREG'.|
@@ -3549,7 +3549,7 @@ dat_margin <- data.frame( c(emarginInf2, tmarginInf2, emarginUni2, tmarginUni2),
 
 dat_margin <- t(dat_margin)
 colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
-row.names(dat_margin) <- c("Margin buys all phases", "Margin buyx Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin sells Phase 1 & 3")
+row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
 
 dat_margin
 ```
@@ -3561,7 +3561,7 @@ dat_margin <- data.frame( c(emarginInf, tmarginInf, emarginUni, tmarginUni), c(e
 
 dat_margin <- t(dat_margin)
 colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
-row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin sells Phase 1 & 3")
+row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
 
 dat_margin
 ```
