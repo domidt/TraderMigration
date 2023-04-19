@@ -1,6 +1,12 @@
 
 ---
-title: "Analysis: Two Markets"
+title: "Insider trading regulation and trader migration."
+subtitle: "Data analyses script"
+author: 
+  - Robert Merl
+  - Stefan Palan
+  - Dominik Schmidt
+  - Thomas St"ockl
 output:
   pdf_document:
     fig_caption: yes
@@ -39,7 +45,7 @@ library("pscl")
 # library("lme4")
 
 ### setwd ####
-setwd("C:/Users/domin/Dropbox/2019_Insider_Trading_Markets (1)/Evaluation_Twomarkets")
+setwd(getwd())
 #setwd("C:/Users/DMSCHMIDT/Dropbox/2019_Insider_Trading_Markets (1)/Evaluation_TwoMarkets")
 
 ### collect data ####

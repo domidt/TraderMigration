@@ -1,4 +1,6 @@
 # Data Preparation Script - 2 Markets #########################################
+### Please cite #####
+# Insider trading regulation and trader migration.
 
 ## Preparing workspace and necessary packages #################################
 
@@ -8,8 +10,7 @@ library("zTree")
 #source("http://www.kirchkamp.de/lab/zTree.R") # Loads R import script by Oliver Kirchkamp (https://www.kirchkamp.de//lab/zTree.html#zTreeR)
 library("stringr")
 library("mgcv")
-setwd("C:/Users/domin/Dropbox/2019_Insider_Trading_Markets (1)/Evaluation_TwoMarkets")
-setwd("C:/Users/DMSCHMIDT/Dropbox/2019_Insider_Trading_Markets (1)/Evaluation_TwoMarkets")
+setwd(getwd())
 
 QSourceFiles<-list.files("./DataExcel.",pattern="^19(10|11)(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)(_)(07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24)(0|1|2|3|4|5)(0|1|2|3|4|5|6|7|8|9).sbj",full.names=T,recursive=F)
 
