@@ -46,7 +46,6 @@ library("pscl")
 
 ### setwd ####
 setwd(getwd())
-#setwd("C:/Users/DMSCHMIDT/Dropbox/2019_Insider_Trading_Markets (1)/Evaluation_TwoMarkets")
 
 ### collect data ####
 load("Data.RData")
@@ -733,8 +732,9 @@ table <- lapply( subjectsummary[c("Volume", "LimitVolume", "TradingProfit", "Pro
 data.frame(table)
 ```
 
-### Socio demographics between treatments
+### raders’ demographics by treatment (Table WA13).
 ```{r destablemarkets, echo=FALSE}
+#### Table WA13 ####
 tableTrader <- t(aggregate(cbind((gender=="female"), (gender=="male"), (Department=="SOWI"), Age, RiskGeneral, RiskFinancial, LossAversion, ProbabilityDetected, OpinionPenalty) ~ embTreatment, data=subjectsummary, function(x) mean(x)))[2:10,]
 tableTrader <- data.frame(tableTrader)
 colnames(tableTrader) <- c("NN.RR", "RR.NN", "RR.RR")
@@ -764,7 +764,7 @@ colnames(tableDist) <- c("NN.RR", "RR.NN", "RR.RR")
 data.frame(tableDist)
 ```
 
-### Informed traders' activity
+### Informed traders' activity per trader
 ```{r destableuninformed, echo=FALSE}
 table <- lapply(subset(subjectsummary, Role=="Informed trader", select = c("Volume", "LimitVolume", "TradingProfit", "ProfitPeriod", "Active", "TPUnProfitTransaction", "VolUnprofitTransaction", "NumUnprofitTransactions")), function(x) rbind( mean = mean(x) ,
                                          sd = sd(x) ,
@@ -775,7 +775,7 @@ table <- lapply(subset(subjectsummary, Role=="Informed trader", select = c("Volu
 data.frame(table)
 ```
 
-### Uninformed traders' activity
+### Uninformed traders' activity per trader
 ```{r destableinformed, echo=FALSE}
 table <- lapply(subset(subjectsummary, Role=="Uninformed trader", select = c("Volume", "LimitVolume", "TradingProfit", "ProfitPeriod", "Active", "TPUnProfitTransaction", "VolUnprofitTransaction", "NumUnprofitTransactions")), function(x) rbind( mean = mean(x) ,
                                          sd = sd(x) ,
@@ -786,8 +786,9 @@ table <- lapply(subset(subjectsummary, Role=="Uninformed trader", select = c("Vo
 data.frame(table)
 ```
 
-### Observers' success rates
+### Observers' performance by treatment (Table WA12). 
 ```{r destableobservers, echo=FALSE}
+### Table WA12 ####
 tableObs <- t(aggregate(cbind(NumSelected/14, (NumSelected>0),NumDetections/4, (NumDetections>0)) ~ embTreatment, data=observers, function(x) mean(x)))[2:5,]
 tableObs <- data.frame(tableObs)
 colnames(tableObs) <- c("NN.RR", "RR.NN", "RR.RR")
@@ -811,7 +812,9 @@ data.frame(tableObs)
 Traders are active, if they either placed a limit order or accepted a market order..
 
 
-```{r activetrader, echo=FALSE ,fig.cap="Participation rates and traders’ mean trading volume in a market by regulatory regime, trader type, and phase.", warning=F}
+```{r activetrader, echo=FALSE ,fig.cap="Participation rates and traders’ mean trading volume in a market by regulatory regime, trader type, and phase (Figure 1).", warning=F}
+### Figure 1 ####
+# Data for Figure 5 ##
 avgtraderphasesummary <- aggregate(cbind(Volume, LimitVolume, TradingProfit, TPUnits, TPUnitsPun, ProfitPeriod, (Volume > 0 | LimitVolume > 0), PDbefore, PDPun, PDRedist, PDbeforeVol, PDPunVol, PDRedistVol, PDbefore*as.numeric(PDbefore>0), PDPun*as.numeric(PDPun>0), PDRedist*as.numeric(PDRedist>0), PDbefore*as.numeric(PDbefore<0), PDPun*as.numeric(PDPun<0), PDRedist*as.numeric(PDRedist<0), shortsells, marginbuys, marginbuysAsset, VolumeSold, VolumePurchased) ~ Role + Phase + IsREG, data=subjectsummary, function(x) mean(x))
 colnames(avgtraderphasesummary)[colnames(avgtraderphasesummary) == "V7"] <- "PR"
 avgtraderphasesummary2 <- reshape2::melt(subset(avgtraderphasesummary), id.vars = c("Phase", "IsREG", "Role"))
@@ -899,7 +902,7 @@ avgtraderphasesummary2$Variable[avgtraderphasesummary2$variable == "V18"] <- "PD
 avgtraderphasesummary2$Variable[avgtraderphasesummary2$variable == "V16"] <- "PDRedisPos"
 avgtraderphasesummary2$Variable[avgtraderphasesummary2$variable == "V19"] <- "PDRedisPos"
 
-
+## Data for Table WA1
 tPRInf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPRUni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPR1Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
@@ -954,8 +957,9 @@ ggplot(data=subset(avgtraderphasesummary2, variable == "Volume" | variable =="PR
 #dev.off()
 ```
 
-### Informed traders participation rates
+### Participation rates and traders’ mean volumes by regulatory regime, trader type, and phase (Table WA1).
 ```{r activetradermarket, echo = F}
+### Table WA1 ####
 ePRInf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 ePRUni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 ePR1Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -1001,7 +1005,7 @@ dat_PR
 ```
 
 
-### Uninformed traders participation rates
+### Proportions test for traders' participation rates
 ```{r ttestactiveall, echo = F}
 t1 <- sum(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
@@ -1062,6 +1066,7 @@ dat_PR2
 ```
 
 ```{r PRtableAll, echo=F, results = 'asis', warning=F}
+### Table WA2 ####
 lnPRmiddleUninf <- lm(ParticipationRate_Uninf ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period < 10))
 lnPRmiddleInf <- lm(ParticipationRate_Inf ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period < 10))
 lnPRbeginningUninf <- lm(ParticipationRate_Uninf ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period <=3))
@@ -1108,7 +1113,7 @@ p_lnPRallInf <- coeftest(lnPRallInf, vcov. = vcovCL(lnPRallInf, cluster = ~ Sess
 texreg(list(lnPRbeginning, lnPRmiddle, lnPRend,lnPRbeginningInf, lnPRmiddleInf, lnPRendInf, lnPRbeginningUninf, lnPRmiddleUninf, lnPRendUninf), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE,   omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"), custom.header = list("All traders" = 1:3, "Informed trader" = 4:6, "Uninformed trader" = 7:9),
-       caption = "Regressions of participation rate by trader type and phase", override.se=list(se_lnPRbeginning, se_lnPRmiddle, se_lnPRend, se_lnPRbeginningInf, se_lnPRmiddleInf, se_lnPRendInf, se_lnPRbeginningUninf, se_lnPRmiddleUninf, se_lnPRendUninf), 
+       caption = "Regressions of participation rate by trader type and phase (Table WA2).", override.se=list(se_lnPRbeginning, se_lnPRmiddle, se_lnPRend, se_lnPRbeginningInf, se_lnPRmiddleInf, se_lnPRendInf, se_lnPRbeginningUninf, se_lnPRmiddleUninf, se_lnPRendUninf), 
        override.p = list(p_lnPRbeginning, p_lnPRmiddle, p_lnPRend, p_lnPRbeginningInf, p_lnPRmiddleInf, p_lnPRendInf, p_lnPRbeginningUninf, p_lnPRmiddleUninf, p_lnPRendUninf))
 
 ```
@@ -1148,6 +1153,7 @@ ggplot(data=subset(marketsummary, Programme==3 & Period>3 & Period < 10), aes(Vo
  
 ```
 
+### Aggregated mean volumes by regulatory regime, trader type, and phase.
 ```{r Volumemarket, echo = F}
 tVolM <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tVol1M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
@@ -1248,7 +1254,7 @@ dat_Vol
 
 
 ```{r RoleTreatTrade, echo=F, fig.cap = "Mean market trading volume by combination of trading partners, regulatory regime, phase, and treatment.", warning=F}
-
+# Data Figure 2 and Figure WA1
 u <- aggregate(cbind(Volume_Informed_Informed) ~ Phase + embTreatment + IsREG, data = subset(marketsummary), function(x) mean(x[x < Inf & x > -Inf], na.rm = TRUE))
 colnames(u)[4] <- "Volume"
 un <- aggregate(cbind(Volume_Informed_Informed) ~ Phase + embTreatment + IsREG, data = subset(marketsummary), function(x) length(x[x < Inf & x > -Inf]))
@@ -1328,7 +1334,8 @@ ggplot(data=u, aes(y= Volume, x= type, group=interaction(embTreatment, IsREG), f
 #dev.off()
 ```
 
-```{r RoleTrade, echo=F, fig.cap = "Mean market trading volume by combination of trading partners and regulatory regime, in Phase 2.", warning=F}
+```{r RoleTrade, echo=F, fig.cap = "Mean market trading volume by combination of trading partners and regulatory regime, in Phase 2 (Figure 2).", warning=F}
+### Figure 2 ####
 uT2 <- aggregate(cbind(Volume_Informed_Informed, Volume_Uninformed_Informed, Volume_Informed_Uninformed, Volume_Uninformed_Uninformed) ~ Phase + IsREG, data = subset(marketsummary), function(x) mean(x[x < Inf & x > -Inf], na.rm = TRUE))
 uT <- reshape2::melt(subset(uT2), id.vars = c("Phase", "IsREG"))
 colnames(uT)[colnames(uT) == "value"] <- "Volume"
@@ -1366,6 +1373,7 @@ ggplot(data=subset(uT, Phase == "Phase 2"), aes(y= Volume, x= type, group=intera
 
 
 ```{r volumetableAll, echo=F, results = 'asis', warning=F}
+### Table 3 ####
 lnmiddleUninf <- lm(log(VolumeUni) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period < 10))
 lnmiddleInf <- lm(log(VolumeInf) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, VolumeInf>0 & Programme==3 & Period>3 & Period < 10))
 lnbeginningUninf <- lm(log(VolumeUni) ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period <=3))
@@ -1419,7 +1427,7 @@ p_ln13Uninf <- coeftest(ln13Uninf, vcov. = vcovCL(ln13Uninf, cluster = ~ Session
 texreg(list(lnbeginning, lnmiddle, lnend,lnbeginningInf, lnmiddleInf, lnendInf, lnbeginningUninf, lnmiddleUninf, lnendUninf), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE,   omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Regressions of trading volume (‘ln(transaction volume)’) by trader type and phase.", custom.header = list("All traders" = 1:3, "Informed trader" = 4:6, "Uninformed trader" = 7:9), override.se=list(se_lnbeginning, se_lnmiddle, se_lnend, se_lnbeginningInf, se_lnmiddleInf, se_lnendInf, se_lnbeginningUninf, se_lnmiddleUninf, se_lnendUninf), 
+       caption = "Regressions of trading volume (‘ln(transaction volume)’) by trader type and phase (Table 3).", custom.header = list("All traders" = 1:3, "Informed trader" = 4:6, "Uninformed trader" = 7:9), override.se=list(se_lnbeginning, se_lnmiddle, se_lnend, se_lnbeginningInf, se_lnmiddleInf, se_lnendInf, se_lnbeginningUninf, se_lnmiddleUninf, se_lnendUninf), 
        override.p = list(p_lnbeginning, p_lnmiddle, p_lnend, p_lnbeginningInf, p_lnmiddleInf, p_lnendInf, p_lnbeginningUninf, p_lnmiddleUninf, p_lnendUninf))
 
 ```
@@ -1476,6 +1484,7 @@ ggplot(data=subset(marketsummary, Programme==3 & Period>3 & Period<10), aes((Lim
 ```
 
 ```{r histogramoffersVolTrader, echo=FALSE ,fig.cap="Mean market limit order volume, short selling volume and margin buys by trader type, regulatory regime, phase"}
+# Data for Table WA4 #
 eshortInf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 eshortUni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 eshort1Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -1548,6 +1557,7 @@ ggplot(data=subset(avgtraderphasesummary2, variable == "LimitVolume" | variable 
 
 
 ```{r offervolumetableAll, echo=F, results = 'asis', warning=F}
+### Table WA3 ####
 lnoffermiddleUninf <- lm(log(LimitVolumeUni) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 lnoffermiddleInf <- lm(log(LimitVolumeInf) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, LimitVolume>0 & Programme==3 & Period>3 & Period<10))
 lnofferbeginningUninf <- lm(log(LimitVolumeUni) ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period<=3))
@@ -1602,7 +1612,7 @@ texreg(list(lnofferbeginning, lnoffermiddle, lnofferend,lnofferbeginningInf, lno
        custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"),
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Regressions of offered volume (‘ln(limit volume)’) by trader type and phase.", custom.header = list('All traders' = 1:3, 'Informed trader' = 4:6, 'Uninformed trader' = 7:9), override.se=list(se_lnofferbeginning, se_lnoffermiddle, se_lnofferend, se_lnofferbeginningInf, se_lnoffermiddleInf, se_lnofferendInf, se_lnofferbeginningUninf, se_lnoffermiddleUninf, se_lnofferendUninf), 
+       caption = "Regressions of offered volume (‘ln(limit volume)’) by trader type and phase (Table WA3).", custom.header = list('All traders' = 1:3, 'Informed trader' = 4:6, 'Uninformed trader' = 7:9), override.se=list(se_lnofferbeginning, se_lnoffermiddle, se_lnofferend, se_lnofferbeginningInf, se_lnoffermiddleInf, se_lnofferendInf, se_lnofferbeginningUninf, se_lnoffermiddleUninf, se_lnofferendUninf), 
        override.p = list(p_lnofferbeginning, p_lnoffermiddle, p_lnofferend, p_lnofferbeginningInf, p_lnoffermiddleInf, p_lnofferendInf, p_lnofferbeginningUninf, p_lnoffermiddleUninf, p_lnofferendUninf))
 
 ```
@@ -1664,7 +1674,9 @@ ggplot(data=subset(phasesummary, Phase == "Phase 2" & market =="Top"), aes(log(o
  
 ```
 
-```{r plotodds, echo=F, results = 'asis', warning=F, fig.cap="Volume migration between phases by trader type and treatment."}
+```{r plotodds, echo=F, results = 'asis', warning=F, fig.cap="Volume migration between phases by trader type and treatment (Figure WA2)."}
+### Figure WA2 ####
+# Data for Figure 3, Figure WA2, and Figure WA3 ## 
 v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit_start), geomodds-geomodds_start, geomoddsLimit-geomoddsLimit_start, geomodds)  ~ Role + embTreatment, data = subset(phasesummary, Phase == "Phase 2" & IsREG == "NOREG"), function(x) mean(x))
   vn <- aggregate(cbind(log(odds) - log(odds_start)) ~ Role + embTreatment, data = subset(phasesummary, Phase == "Phase 2"& IsREG == "NOREG"), function(x) length(x))
   colnames(vn) <- c("Role", "embTreatment", "n")
@@ -1750,7 +1762,7 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
 #dev.off()
 ```
 
-```{r plotoddsAllT, echo=F, results = 'asis', warning=F, fig.cap="Mean volume migration between phases by trader type."}
+```{r plotoddsAllT, echo=F, results = 'asis', warning=F, fig.cap="Mean volume migration between phases by trader type (Figure 3)."}
 #postscript("Figures/Graphmigration2.eps")
 ggplot(data=subset(v, embTreatment == "All treatments"), aes(y=d, x= Role, group=y, fill = Role)) +
   geom_bar(stat="identity") +
@@ -1999,7 +2011,7 @@ ggplot(data=w, aes(y=dwins, x= Role, group=interaction(embTreatment,y), fill = R
 ```
 
 
-```{r plotgeomodds2, echo=F, results = 'asis', warning=F, fig.cap="Geometric volume migration between phases by trader type and treatment."}
+```{r plotgeomodds2, echo=F, results = 'asis', warning=F, fig.cap="Geometric volume migration between phases by trader type and treatment (Figure WA3)."}
 #postscript("Figures/Graphgeomodds.eps") 
   ggplot(data=subset(v, embTreatment != "All treatments"), aes(y=dP, x= Role, group=interaction(embTreatment,y), fill = Role)) +
   geom_bar(stat="identity") +  
@@ -2209,6 +2221,7 @@ rownames(tageomodds) <- c("market", "Informed traders", "Uninformed traders", "R
 format(t(tageomodds), digits = 1, scientific = 5)
 ```
 
+### Geometric odds (market ‘log(odds)’) by trader type, treatment, and phase (Table WA8).
 ```{r toddsstartTreat, echo = F}
 dat_oddsTreat <- matrix(data = NA, ncol = 9, nrow = 4)
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -2458,6 +2471,7 @@ ggplot(data=subset(marketsummary, Programme==3 & Period>3 & Period<10), aes(GAD,
 
 
 ```{r GDtable, echo=F, results = 'asis', warning=F}
+### Table 4 ####
 GDmiddle <- lm(GD ~ history + REGSH + REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 GDbeginning <- lm(GD ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period<=3))
 GDend <- lm(GD ~ history + REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>=10 ))
@@ -2508,7 +2522,7 @@ p_rGADall <- coeftest(rGADall, vcov. = vcovCL(rGADall, cluster = ~ SessionID, ty
 texreg(list(GDbeginning, GDmiddle, GDend, GADbeginning, GADmiddle, GADend, rGADbeginning, rGADmiddle, rGADend), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3", "Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Regressions of measures for the informational efficiency of prices (‘GD’, ‘GAD’, adn 'Efficiency') by phase.", custom.header = list('GD' = 1:3, 'GAD' = 4:6, 'Efficiency' = 7:9),
+       caption = "Regressions of measures for the informational efficiency of prices (‘GD’, ‘GAD’, and 'Efficiency') by phase (Table 4).", custom.header = list('GD' = 1:3, 'GAD' = 4:6, 'Efficiency' = 7:9),
        override.se=list(se_GDbeginning, se_GDmiddle,se_GDend, se_GADbeginning, se_GADmiddle,se_GADend, se_rGADbeginning, se_rGADmiddle, se_rGADend), 
        override.p=list(p_GDbeginning, p_GDmiddle,p_GDend, p_GADbeginning, p_GADmiddle,p_GADend, p_rGADbeginning, p_rGADmiddle, p_rGADend))
 ```
@@ -2583,9 +2597,10 @@ texreg(list(GDbeginning, GDbeginningshort, GDmiddle, GDmiddleshort, GDend, GDend
 vif(GDbeginningshort)
 ```
 
-#### Mean GADA and Efficiency by phase and time range. 
+#### Mean GADA and Efficiency by phase and time range (Table 5). 
 
 ```{r tableEfficiency, echo = F}
+### Table 5 ####
 sGADfv <- aggregate(cbind(Volume, abs(log(57.5/BBV))*transactionVol) ~ SessionID + BBV + Period + market + IsREG, data = transactions, function(x) sum(x))
 
 sGADfv$GADhyp <- exp(1/sGADfv$Volume*sGADfv$V2)-1
@@ -2705,6 +2720,7 @@ ggplot(data=subset(marketsummary, Programme==3 & Period>3 & Period<10), aes(mean
 
 
 ```{r lmBAspreadtable, echo=F, results = 'asis'}
+### Table 6 ####
 BAspreadwins_middle <- lm(meanBAspreadwins2 ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 BAspreadwins_beginning <- lm(meanBAspreadwins2 ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period<=3))
 BAspreadwins_end <- lm(meanBAspreadwins2 ~ history + REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(marketsummary, Programme==3 & Period>=10))
@@ -2752,7 +2768,7 @@ texreg(list(BAspreadwins_beginning, BAspreadwins_middle, BAspreadwins_end, volat
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3", "Phase 1", "Phase 2", "Phase 3"),
         custom.header = list('Spread' = 1:3, 'Volatility' = 4:6),
-       caption = "Regressions of ‘Spread ’ and ‘Volatility’ by phase.", override.se=list(se_BAspreadwins_beginning, se_BAspreadwins_middle, se_BAspreadwins_end, se_volatility_beginning, se_volatility_middle, se_volatility_end), 
+       caption = "Regressions of ‘Spread’ and ‘Volatility’ by phase (Table 6).", override.se=list(se_BAspreadwins_beginning, se_BAspreadwins_middle, se_BAspreadwins_end, se_volatility_beginning, se_volatility_middle, se_volatility_end), 
        override.p = list(p_BAspreadwins_beginning, p_BAspreadwins_middle, p_BAspreadwins_end, p_volatility_beginning, p_volatility_middle, p_volatility_end))
 
 ## wins
@@ -2842,7 +2858,8 @@ texreg(list(BAspreadwins_beginning, BAspreadwins_beginningshort, BAspreadwins_mi
 
 ```
 
-```{r bagraph2, echo=F, fig.cap = "GAM-smoothed development of predicted ‘Spread’ over time."}
+```{r bagraph2, echo=F, fig.cap = "GAM-smoothed development of predicted ‘Spread’ over time (Figure 4)."}
+### Figure 4 ####
 seconds$SessionID2 <- as.factor(seconds$SessionID)
 
 data <- subset(seconds, Programme==3)
@@ -2883,7 +2900,9 @@ ggplot(data = fitbash2) +
     PD^{After\, punishment}=PD^{After\,redistribution}-\cdot\frac{Pen}{W_{t=0}},
 \end{align}
 
-```{r TP graph, echo=FALSE ,fig.cap="Mean gross trading profits per trader (‘PD’) by regulatory regime, trader type, and phase.", warning=F}
+```{r TP graph, echo=FALSE ,fig.cap="Mean gross trading profits per trader (‘PD’) by regulatory regime, trader type, and phase (Figure 5).", warning=F}
+### Figure 5 ####
+# Data for Table WA9 ##
 tPDbeforeInf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPDbeforeUni <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPDbefore1Inf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
@@ -2963,6 +2982,7 @@ ggplot(data=subset(subjectsummary), aes(x = PDbefore*100, group = IsREG, fill = 
 ```
 
 ```{r histrank, echo = FALSE, fig.cap="Mean gross trading profits per trader (‘PD’) by trader type, phase, and profit rank."}
+### Figure 6 ####
 avgtraderphasesummaryRank <- aggregate(cbind(Volume, LimitVolume, TradingProfit, TPUnits, TPUnitsPun, ProfitPeriod, (Volume > 0 | LimitVolume > 0), PDbefore, PDPun, PDRedist, PDbeforeVol, PDPunVol, PDRedistVol, PDbefore*as.numeric(PDbefore>0), PDPun*as.numeric(PDPun>0), PDRedist*as.numeric(PDRedist>0), PDbefore*as.numeric(PDbefore<0), PDPun*as.numeric(PDPun<0), PDRedist*as.numeric(PDRedist<0), shortsells, marginbuys, marginbuysAsset) ~ Role + ceiling(rankavgPDbeforeRole/2) + Phase + IsREG, data=subjectsummary, function(x) mean(x))
 colnames(avgtraderphasesummaryRank)[colnames(avgtraderphasesummaryRank) == "V7"] <- "PR"
 colnames(avgtraderphasesummaryRank)[2] <- "rank"
@@ -3015,7 +3035,7 @@ avgtraderphasesummaryRank$uplmarginbuys <- avgtraderphasesummaryRank$marginbuys+
 avgtraderphasesummaryRank$dolmarginbuys <- avgtraderphasesummaryRank$marginbuys+qt(.025,avgtraderphasesummaryRank$n-1)*avgtraderphasesummaryRank$sdmarginbuys/sqrt(avgtraderphasesummaryRank$n)
 avgtraderphasesummaryRank$uplmarginbuysAsset <- avgtraderphasesummaryRank$marginbuysAsset+qt(.975,avgtraderphasesummaryRank$n-1)*avgtraderphasesummaryRank$sdmarginbuysAsset/sqrt(avgtraderphasesummaryRank$n)
 avgtraderphasesummaryRank$dolmarginbuysAsset <- avgtraderphasesummaryRank$marginbuysAsset+qt(.025,avgtraderphasesummaryRank$n-1)*avgtraderphasesummaryRank$sdmarginbuysAsset/sqrt(avgtraderphasesummaryRank$n)
-avgtraderphasesummaryRank$Phase <- factor(avgtraderphasesummaryRank$Phase, levels = c("start", "middle", "end"), label = c("Phase 1", "Phase 2", "Phase 3"))
+avgtraderphasesummaryRank$Phase <- factor(avgtraderphasesummaryRank$Phase, levels = c("Phase 1", "Phase 2", "Phase 3"))
 avgtraderphasesummaryRank$maxV <- max(avgtraderphasesummaryRank$uplVolume)
 avgtraderphasesummaryRank$Role <- factor(avgtraderphasesummaryRank$Role, labels = c("Informed\ntraders","Uninformed\ntraders"))
 avgtraderphasesummaryRank$Role <- ordered(avgtraderphasesummaryRank$Role, levels = c("Informed\ntraders","Uninformed\ntraders"))
@@ -3024,7 +3044,7 @@ avgtraderphasesummaryRank2 <- merge(avgtraderphasesummaryRank2, avgtraderphasesu
 avgtraderphasesummaryRank2 <- merge(avgtraderphasesummaryRank2, avgtraderphasesummaryRankn, by = c("Role", "rank", "Phase","IsREG"))
 avgtraderphasesummaryRank2$upl <- avgtraderphasesummaryRank2$value+qt(.975,avgtraderphasesummaryRank2$n-1)*avgtraderphasesummaryRank2$sd/sqrt(avgtraderphasesummaryRank2$n)
 avgtraderphasesummaryRank2$dol <- avgtraderphasesummaryRank2$value+qt(.025,avgtraderphasesummaryRank2$n-1)*avgtraderphasesummaryRank2$sd/sqrt(avgtraderphasesummaryRank2$n)
-avgtraderphasesummaryRank2$Phase <- factor(avgtraderphasesummaryRank2$Phase, levels = c("start", "middle", "end"), label = c("Phase 1", "Phase 2", "Phase 3"))
+avgtraderphasesummaryRank2$Phase <- factor(avgtraderphasesummaryRank2$Phase, levels = c("Phase 1", "Phase 2", "Phase 3"))
 avgtraderphasesummaryRank2$Role <- factor(avgtraderphasesummaryRank2$Role, labels = c("Informed\ntraders","Uninformed\ntraders"))
 avgtraderphasesummaryRank2$Role <- ordered(avgtraderphasesummaryRank2$Role, levels = c("Informed\ntraders","Uninformed\ntraders"))
 avgtraderphasesummaryRank2$Variable <- as.character(avgtraderphasesummaryRank2$variable)
@@ -3090,6 +3110,7 @@ colnames(table) <- c("N", "Any positive rounds", "No positive rounds", "No neutr
 \end{align}
 
 ```{r TPVolgraph, echo=FALSE ,fig.cap="Mean gross trading profits per trader per share (‘$\\pi$’) by regulatory regime, trader type, and phase.", warning=F}
+# Data for Table WA10 ##
 tPDbeforeVolInf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPDbeforeVolUni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
 tPDbeforeVol1Inf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
@@ -3152,6 +3173,7 @@ ggplot(data=subset(avgtraderphasesummary2, variable == "PDbeforeVol" | ( IsREG !
 
 
 ```{r TPtableInf, echo=F, results = 'asis', warning=F}
+### Table 7, Table 8, and Table 11 ####
 PDmiddleInfsVol <- lm((PDbeforeVol) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(subjectsummary, Programme==3 & Period>3 & Period<10 & Role=="Informed trader"))
 PDmiddleUnInfsVol <- lm((PDbeforeVol) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, data = subset(subjectsummary, Programme==3 & Period>3 & Period<10 & Role=="Uninformed trader"))
 PDbeginningInfsVol <- lm(PDbeforeVol ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, data = subset(subjectsummary, Programme==3 & Period<=3 & Role=="Informed trader"))
@@ -3250,7 +3272,7 @@ se_PDRedistallVol<- coeftest(PDRedistallVol, vcov. = vcovCL(PDRedistallVol, clus
 
 texreg(list(PDbeginningInfsVol, PDRedistbeginningInfsVol,PDPunbeginningInfsVol, PDmiddleInfsVol, PDPunmiddleInfsVol, PDRedistmiddleInfsVol, PDendInfsVol, PDPunendInfsVol, PDRedistendInfsVol), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)",
-       caption = "Regressions of trading profits per share (‘$\\pi$’) of informed traders by phase.", 
+       caption = "Regressions of trading profits per share (‘$\\pi$’) of informed traders by phase (Table 7).", 
        custom.model.names = c("before", "after redist", "after pun","before", "after redist", "after pun","before", "after redist", "after pun"),
        custom.header = list('Phase 1' = 1:3, 'Phase 2' = 4:6, 'Phase 3' = 7:9),
        override.se=list(se_PDbeginningInfsVol, se_PDPunbeginningInfsVol, se_PDRedistbeginningInfsVol, se_PDmiddleInfsVol, se_PDRedistmiddleInfsVol, se_PDPunmiddleInfsVol, se_PDendInfsVol, se_PDRedistendInfsVol, se_PDPunendInfsVol), 
@@ -3258,7 +3280,7 @@ texreg(list(PDbeginningInfsVol, PDRedistbeginningInfsVol,PDPunbeginningInfsVol, 
 
 texreg(list(PDbeginningUnInfsVol, PDRedistbeginningUnInfsVol, PDmiddleUnInfsVol, PDRedistmiddleUnInfsVol, PDendUnInfsVol, PDRedistendUnInfsVol), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
-      caption = "Regressions of trading profits per share (‘$\\pi$’) of uninformed traders by phase.", 
+      caption = "Regressions of trading profits per share (‘$\\pi$’) of uninformed traders by phase (Table 8).", 
        custom.model.names = c("before", "after redist", "after pun","before", "after redist", "after pun"), 
        custom.header = list('Phase 1' = 1:2, 'Phase 2' = 3:4, 'Phase 3' = 5:6),
       override.se=list(se_PDbeginningUnInfsVol, se_PDRedistbeginningUnInfsVol, se_PDmiddleUnInfsVol, se_PDRedistmiddleUnInfsVol, se_PDendUnInfsVol, se_PDRedistendUnInfsVol), 
@@ -3266,7 +3288,7 @@ texreg(list(PDbeginningUnInfsVol, PDRedistbeginningUnInfsVol, PDmiddleUnInfsVol,
 
 texreg(list(PDbeginningVol, PDRedistbeginningVol, PDmiddleVol, PDRedistmiddleVol, PDendVol, PDRedistendVol), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
-       caption = "Regressions of trading profits per share (‘$\\pi$’) of both trader types by phase.", 
+       caption = "Regressions of trading profits per share (‘$\\pi$’) of both trader types by phase (Table 11)", 
        custom.model.names = c("before", "after redist", "before", "after redist", "before", "after redist"),
        custom.header = list('Phase 1' = 1:2, 'Phase 2' = 3:4, 'Phase 3' = 5:6),
        override.se=list(se_PDbeginningVol[,2], se_PDRedistbeginningVol[,2], se_PDmiddleVol[,2], se_PDRedistmiddleVol[,2], se_PDendVol[,2], se_PDRedistendVol[,2]), 
@@ -3349,8 +3371,9 @@ ggplot(data=subset(coefProfitRank), aes(y= Estimate, x= Rank, group=(variable)))
 
 ```
 
-#### Mean trading profts (`PD') by regulatory regime, trader type, and phase.
+#### Mean trading profts (`PD') by regulatory regime, trader type, and phase (Table WA9).
 ```{r profittrader, echo = F}
+### Table WA 9 ####
 dat_profit <- data.frame( c(ePDbeforeInf, tPDbeforeInf, ePDPunInf, tPDPunInf), 
                           c(ePDbeforeUni, tPDbeforeUni, ePDPunUni, tPDPunUni),
                           c(ePDbefore1Inf, tPDbefore1Inf, ePDPun1Inf, tPDPun1Inf), 
@@ -3388,6 +3411,7 @@ dat_profitS
 ```
 
 ```{r profitshare, echo = F}
+### Table WA10 ####
 dat_profit <- data.frame( c(ePDbeforeVolInf, tPDbeforeVolInf, ePDPunVolInf, tPDPunVolInf), 
                           c(ePDbeforeVolUni, tPDbeforeVolUni, ePDPunVolUni, tPDPunVolUni),
                           c(ePDbeforeVol1Inf, tPDbeforeVol1Inf, ePDPunVol1Inf, tPDPunVol1Inf), 
@@ -3424,8 +3448,9 @@ row.names(dat_profitS) <- c("Inf Phase 1", "Uni Phase 1", "Inf Phase 2", "Uni Ph
 dat_profitS
 ```
 
-#### Mean trading profits per share (`$\\pi$') by regulatory regime, trader type, and phase.
+#### Mean trading profits per share (`$\pi$') by regulatory regime, trader type, and phase (Table WA10).
 ```{r profittype, echo=F}
+### Table WA10 ####
 dat_profitT<- matrix(data = NA, ncol = 3, nrow = 3)
 i <- 1
 while(i<4){
@@ -3446,10 +3471,11 @@ dat_profitT
 *****************************************************************
 \newpage
 
-## Short selling activity
+## Short selling and margin buying activity
 
-#### Mean short selling activity by regulatory regime, trader type, and phase.
+#### Mean short selling activity by regulatory regime, trader type, and phase (Table WA4).
 ```{r shorttradermarket, echo = F}
+### Table WA4 ####
 dat_short <- data.frame( c(eshortInf, tshortInf, eshortUni, tshortUni), c(eshort1Inf, tshort1Inf, eshort1Uni, tshort1Uni), c(eshort2Inf, tshort2Inf, eshort2Uni, tshort2Uni),  c(eshort3Inf, tshort3Inf, eshort3Uni, tshort3Uni), c(eshort13Inf, tshort13Inf, eshort13Uni, tshort13Uni)
                       )
 
@@ -3460,7 +3486,55 @@ row.names(dat_short) <- c("Short sells all phases", "Short sells Phase 1", "Shor
 dat_short
 ```
 
+#### Mean short margin buying at BBV activity by regulatory regime, trader type, and phase (Table WA4).
+```{r margintradermarket, echo = F}
+### Table WA4 ####
+emarginInf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emarginUni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin1Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin1Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin2Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin2Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+emargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
+tmarginInf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmarginUni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin1Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin1Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin2Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+tmargin2Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+tmargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+
+dat_margin <- data.frame( c(emarginInf2, tmarginInf2, emarginUni2, tmarginUni2), c(emargin1Inf2, tmargin1Inf2, emargin1Uni2, tmargin1Uni2), c(emargin2Inf2, tmargin2Inf2, emargin2Uni2, tmargin2Uni2), c(emargin3Inf2, tmargin3Inf2, emargin3Uni2, tmargin3Uni2), c(emargin13Inf2, tmargin13Inf2, emargin13Uni2, tmargin13Uni2)
+                      )
+
+dat_margin <- t(dat_margin)
+colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
+row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
+
+dat_margin
+```
+
+#### Mean short margin buying at market prices activity by regulatory regime, trader type, and phase (Table WA4).
+```{r marginAssettradermarket, echo = F}
+### Table WA4 ####
+dat_margin <- data.frame( c(emarginInf, tmarginInf, emarginUni, tmarginUni), c(emargin1Inf, tmargin1Inf, emargin1Uni, tmargin1Uni), c(emargin2Inf, tmargin2Inf, emargin2Uni, tmargin2Uni), c(emargin3Inf, tmargin3Inf, emargin3Uni, tmargin3Uni), c(emargin13Inf, tmargin13Inf, emargin13Uni, tmargin13Uni)
+                     )
+
+dat_margin <- t(dat_margin)
+colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
+row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
+
+dat_margin
+```
+
 ```{r shortingtableAll, echo=F, results = 'asis', warning=F}
+### Table WA5 ####
 shortmiddleUninf <- zeroinfl((shortsells_Uninformed) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 shortmiddleInf <- zeroinfl((shortsells_Informed) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 shortbeginningUninf <- zeroinfl((shortsells_Uninformed) ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period<=3))
@@ -3510,7 +3584,7 @@ se_shortendInf <- coeftest(shortendInf, vcov. = vcovCL(shortendInf, cluster = ~ 
 texreg(list(shortbeginning, shortmiddle, shortend,shortbeginningInf, shortmiddleInf, shortendInf, shortbeginningUninf, shortmiddleUninf, shortendUninf), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Zero inflated negative binomial model for short selling", 
+       caption = "Zero inflated negative binomial model for short selling (Table WA5).", 
        custom.header = list('All traders' = 1:3, 'Informed traders' = 4:6, 'Uninformed traders' = 7:9),
        override.se=list(se_shortbeginning[,2], se_shortmiddle[,2], se_shortend[,2], se_shortbeginningInf[,2], se_shortmiddleInf[,2], se_shortendInf[,2], se_shortbeginningUninf[,2], se_shortmiddleUninf[,2], se_shortendUninf[,2]), override.p=list(se_shortbeginning[,4], se_shortmiddle[,4], se_shortend[,4], se_shortbeginningInf[,4], se_shortmiddleInf[,4], se_shortendInf[,4], se_shortbeginningUninf[,4], se_shortmiddleUninf[,4], se_shortendUninf[,4]), 
        custom.gof.rows = list("Hurdle test p-value" = c(shortbeginningtest$`Pr(>Chisq)`[2], shortmiddletest$`Pr(>Chisq)`[2], shortendtest$`Pr(>Chisq)`[2],shortbeginningInftest$`Pr(>Chisq)`[2], shortmiddleInftest$`Pr(>Chisq)`[2], shortendInftest$`Pr(>Chisq)`[2], shortbeginningUninftest$`Pr(>Chisq)`[2], shortmiddleUninftest$`Pr(>Chisq)`[2], shortendUninftest$`Pr(>Chisq)`[2]), 
@@ -3522,57 +3596,9 @@ texreg(list(shortbeginning, shortmiddle, shortend,shortbeginningInf, shortmiddle
 
 ```
 
-*****************************************************************
-\newpage
-
-## Margin buying activity
-
-#### Mean short margin buying at BBV activity by regulatory regime, trader type, and phase.
-```{r margintradermarket, echo = F}
-emarginInf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emarginUni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin1Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin1Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin2Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin2Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-emargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-tmarginInf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmarginUni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-
-dat_margin <- data.frame( c(emarginInf2, tmarginInf2, emarginUni2, tmarginUni2), c(emargin1Inf2, tmargin1Inf2, emargin1Uni2, tmargin1Uni2), c(emargin2Inf2, tmargin2Inf2, emargin2Uni2, tmargin2Uni2), c(emargin3Inf2, tmargin3Inf2, emargin3Uni2, tmargin3Uni2), c(emargin13Inf2, tmargin13Inf2, emargin13Uni2, tmargin13Uni2)
-                      )
-
-dat_margin <- t(dat_margin)
-colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
-row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
-
-dat_margin
-```
-
-#### Mean short margin buying at market prices activity by regulatory regime, trader type, and phase.
-```{r marginAssettradermarket, echo = F}
-dat_margin <- data.frame( c(emarginInf, tmarginInf, emarginUni, tmarginUni), c(emargin1Inf, tmargin1Inf, emargin1Uni, tmargin1Uni), c(emargin2Inf, tmargin2Inf, emargin2Uni, tmargin2Uni), c(emargin3Inf, tmargin3Inf, emargin3Uni, tmargin3Uni), c(emargin13Inf, tmargin13Inf, emargin13Uni, tmargin13Uni)
-                     )
-
-dat_margin <- t(dat_margin)
-colnames(dat_margin) <- c("NOREG", "REG", "pvalues_Informed","NOREG", "REG", "pvalues_Uninformed")
-row.names(dat_margin) <- c("Margin buys all phases", "Margin buys Phase 1", "Margin buys Phase 2", "Margin buys Phase 3", "Margin buys Phase 1 & 3")
-
-dat_margin
-```
 
 ```{r marginingtableAll, echo=F, results = 'asis', warning=F}
+### Table WA6 ####
 marginmiddleUninf <- zeroinfl((ceiling(marginbuys_Uninformed)) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 marginmiddleInf <- zeroinfl((ceiling(marginbuys_Informed)) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 marginbeginningUninf <- zeroinfl((ceiling(marginbuys_Uninformed)) ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period<=3))
@@ -3622,7 +3648,7 @@ se_marginendInf <- coeftest(marginendInf, vcov. = vcovCL(marginendInf, cluster =
 texreg(list(marginbeginning, marginmiddle, marginend,marginbeginningInf, marginmiddleInf, marginendInf, marginbeginningUninf, marginmiddleUninf, marginendUninf), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Zero inflated negative binomial model for margin buying evaluated at BBV",
+       caption = "Zero inflated negative binomial model for margin buying evaluated at BBV (Table WA6).",
        custom.header = list('All traders' = 1:3, 'Informed traders' = 4:6, 'Uninformed traders' = 7:9),
        override.se=list(se_marginbeginning[,2], se_marginmiddle[,2], se_marginend[,2], se_marginbeginningInf[,2], se_marginmiddleInf[,2], se_marginendInf[,2], se_marginbeginningUninf[,2], se_marginmiddleUninf[,2], se_marginendUninf[,2]), override.p=list(se_marginbeginning[,4], se_marginmiddle[,4], se_marginend[,4], se_marginbeginningInf[,4], se_marginmiddleInf[,4], se_marginendInf[,4], se_marginbeginningUninf[,4], se_marginmiddleUninf[,4], se_marginendUninf[,4]), 
        custom.gof.rows = list("Hurdle test p-value" = c(marginbeginningtest$`Pr(>Chisq)`[2], marginmiddletest$`Pr(>Chisq)`[2], marginendtest$`Pr(>Chisq)`[2],marginbeginningInftest$`Pr(>Chisq)`[2], marginmiddleInftest$`Pr(>Chisq)`[2], marginendInftest$`Pr(>Chisq)`[2], marginbeginningUninftest$`Pr(>Chisq)`[2], marginmiddleUninftest$`Pr(>Chisq)`[2], marginendUninftest$`Pr(>Chisq)`[2]), 
@@ -3637,6 +3663,7 @@ texreg(list(marginbeginning, marginmiddle, marginend,marginbeginningInf, marginm
 
 
 ```{r marginAssetingtableAll, echo=F, results = 'asis', warning=F}
+### Table WA7 ####
 marginAssetmiddleUninf <- zeroinfl((ceiling(marginbuysAsset_Uninformed)) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 marginAssetmiddleInf <- zeroinfl((ceiling(marginbuysAsset_Informed)) ~ history + REGSH + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period>3 & Period<10))
 marginAssetbeginningUninf <- zeroinfl((ceiling(marginbuysAsset_Uninformed)) ~ REGBoth + BBVCent + abs(BBVCent) + market + Period0, dist = "negbin", link = "logit", data = subset(marketsummary, Programme==3 & Period<=3))
@@ -3686,7 +3713,7 @@ se_marginAssetendInf <- coeftest(marginAssetendInf, vcov. = vcovCL(marginAsseten
 texreg(list(marginAssetbeginning, marginAssetmiddle, marginAssetend,marginAssetbeginningInf, marginAssetmiddleInf, marginAssetendInf, marginAssetbeginningUninf, marginAssetmiddleUninf, marginAssetendUninf), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001, 0.01, 0.05), digits = 2, leading.zero = TRUE, omit.coef = "(Session)|(subject)", 
        custom.model.names = c("Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-       caption = "Zero inflated negative binomial model for margin buying evaluated at market prices",
+       caption = "Zero inflated negative binomial model for margin buying evaluated at market prices (Table WA7).",
        custom.header = list('All traders' = 1:3, 'Informed traders' = 4:6, 'Uninformed traders' = 7:9), override.se=list(se_marginAssetbeginning[,2], se_marginAssetmiddle[,2], se_marginAssetend[,2], se_marginAssetbeginningInf[,2], se_marginAssetmiddleInf[,2], se_marginAssetendInf[,2], se_marginAssetbeginningUninf[,2], se_marginAssetmiddleUninf[,2], se_marginAssetendUninf[,2]), override.p=list(se_marginAssetbeginning[,4], se_marginAssetmiddle[,4], se_marginAssetend[,4], se_marginAssetbeginningInf[,4], se_marginAssetmiddleInf[,4], se_marginAssetendInf[,4], se_marginAssetbeginningUninf[,4], se_marginAssetmiddleUninf[,4], se_marginAssetendUninf[,4]), 
        custom.gof.rows = list("Hurdle test p-value" = c(marginAssetbeginningtest$`Pr(>Chisq)`[2], marginAssetmiddletest$`Pr(>Chisq)`[2], marginAssetendtest$`Pr(>Chisq)`[2],marginAssetbeginningInftest$`Pr(>Chisq)`[2], marginAssetmiddleInftest$`Pr(>Chisq)`[2], marginAssetendInftest$`Pr(>Chisq)`[2], marginAssetbeginningUninftest$`Pr(>Chisq)`[2], marginAssetmiddleUninftest$`Pr(>Chisq)`[2], marginAssetendUninftest$`Pr(>Chisq)`[2]), 
        "$sum_i hat{f}_i(0)$" = c(round(sum(predict(marginAssetbeginning, type = "prob")[,1])),round(sum(predict(marginAssetmiddle, type = "prob")[,1])), round(sum(predict(marginAssetend, type = "prob")[,1])), round(sum(predict(marginAssetbeginningInf, type = "prob")[,1])),round(sum(predict(marginAssetmiddleInf, type = "prob")[,1])), round(sum(predict(marginAssetendInf, type = "prob")[,1])), round(sum(predict(marginAssetbeginningUninf, type = "prob")[,1])),round(sum(predict(marginAssetmiddleUninf, type = "prob")[,1])), round(sum(predict(marginAssetendUninf, type = "prob")[,1]))),
