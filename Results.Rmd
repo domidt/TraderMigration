@@ -6,7 +6,7 @@ author:
   - Robert Merl
   - Stefan Palan
   - Dominik Schmidt
-  - Thomas St"ockl
+  - Thomas Stöckl
 output:
   pdf_document:
     fig_caption: yes
