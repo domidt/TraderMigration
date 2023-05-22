@@ -1,5 +1,5 @@
 # TraderMigration
-This repository provides all data and analyses code used in the JFM paper. Using the data, please cite the paper:
+This repository provides all data and analyses code used in the JFM [paper](https://www.sciencedirect.com/science/article/pii/S138641812300037X). Using the data, please cite the paper 
 
 The file ``Data.RData`` consists of nine data tables:
 
