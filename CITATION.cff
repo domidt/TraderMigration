@@ -1,5 +1,6 @@
 cff-version: 1.2.0
 message: "Using the data, please cite it as below."
+type: article
 authors:
 - family-names: "Merl"
   given-names: "Robert"
