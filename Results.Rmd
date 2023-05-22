@@ -42,6 +42,10 @@ library("dplyr")
 library("ggpubr")
 library("MASS")
 library("pscl")
+library("stringr")
+#library("extrafont")
+#loadfonts(device = "win")
+#font_import()
 # library("lme4")
 
 ### setwd ####
@@ -903,57 +907,61 @@ avgtraderphasesummary2$Variable[avgtraderphasesummary2$variable == "V16"] <- "PD
 avgtraderphasesummary2$Variable[avgtraderphasesummary2$variable == "V19"] <- "PDRedisPos"
 
 ## Data for Table WA1
-tPRInf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPRUni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR1Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR1Uni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR2Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPR2Uni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPR3Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR3Uni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR13Inf <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPR13Uni <- format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVolInf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVolUni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Inf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Uni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol2Inf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol2Uni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol3Inf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol3Uni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Inf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Uni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolInf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolUni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Inf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Uni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Inf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Uni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Inf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Uni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Inf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Uni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tPRInf <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPRUni <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR1Inf <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR1Uni <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR2Inf <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR2Uni <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR3Inf <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR3Uni <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR13Inf <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPR13Uni <- str_replace(as.character(format(round(t.test((LimitVolume>0 | Volume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVolInf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVolUni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Inf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Uni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Inf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Uni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Inf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Uni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Inf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Uni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolInf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolUni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Inf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Uni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Period < 4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Inf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Uni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>3 & Period < 10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Inf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Uni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Inf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Uni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase != "Phase 2" & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 dat_textPR <- data.frame(
-  label = c(paste0("p = ",tPR1Inf,""), paste0("p = ",tPR1Uni,""), paste0("p = ",tPR2Inf,""), paste0("p = ",tPR2Uni,""), paste0("p = ",tPR3Inf,""),paste0("p = ",tPR3Uni,""),paste0("p = ",tVol1Inf,""),paste0("p = ",tVol1Uni,""),paste0("p = ",tVol2Inf,""),paste0("p = ",tVol2Uni,""),paste0("p = ",tVol3Inf,""),paste0("p = ",tVol3Uni,"")),
+  label = c(paste0(" = ",tPR1Inf,""), paste0(" = ",tPR1Uni,""), paste0(" = .",tPR2Inf,"000"), paste0(" = ",tPR2Uni,""), paste0(" = ",tPR3Inf,""),paste0(" = ",tPR3Uni,""),paste0(" = ",tVol1Inf,""),paste0(" = ",tVol1Uni,""),paste0(" = .",tVol2Inf,"000"),paste0(" = .",tVol2Uni,"000"),paste0(" = ",tVol3Inf,""),paste0(" = ",tVol3Uni,"")),
   IsREG = c("REG", "REG", "NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG"),
   Role = c("Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders"),
   Phase = c("Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3", "Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3"),
   Variable = c("Participation rate", "Participation rate", "Participation rate","Participation rate","Participation rate","Participation rate","Traders' mean trading volume","Traders' mean trading volume","Traders' mean trading volume", "Traders' mean trading volume", "Traders' mean trading volume", "Traders' mean trading volume"),
-  vjust = c(0,0,0,0,0,0,20,20,20,20,20,20)
+  vjust = c(0,0,0,0,0,0,20,20,20,20,20,20),
+  p = c("p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p")
   )
 
 #postscript("Figures/GraphvolumePhaseallTreat.eps")
 ggplot(data=subset(avgtraderphasesummary2, variable == "Volume" | variable =="PR"), aes(y= value, x= Role, group=(IsREG), fill = IsREG)) +
-  geom_bar(stat="identity", position = position_dodge(width = 0.5))+ 
-  labs(y="") +
-  geom_text(data = subset(dat_textPR, Variable == "Participation rate"), mapping = aes(x = Role, y = 1.06 + 1.7*vjust, label = label), color = "black", size = 4) +
-  geom_text(data = subset(dat_textPR, Variable == "Traders' mean trading volume"), mapping = aes(x = Role, y = 1.06 + 1.7*vjust, label = label), color = "black", size = 4) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
-  facet_grid(Variable ~ Phase, scales = "free") +
-  scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
-  scale_color_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
-  geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', position=position_dodge(width=0.5))
+    geom_bar(stat="identity", position = position_dodge(width = 0.5))+ 
+    labs(y="") +
+    geom_text(data = subset(dat_textPR, Variable == "Participation rate"), mapping = aes(x = Role, y = 1.13 + 1.7*vjust, label = p), color = "black", size = 5, fontface = "italic", hjust = 4.5) +
+    geom_text(data = subset(dat_textPR, Variable == "Participation rate"), mapping = aes(x = Role, y = 1.13 + 1.7*vjust, label = label), color = "black", size = 5) +
+    geom_text(data = subset(dat_textPR, Variable == "Traders' mean trading volume"), mapping = aes(x = Role, y = 1.06 + 1.7*vjust, label = p), color = "black", size = 5, fontface = "italic", hjust = 4.5) +
+    geom_text(data = subset(dat_textPR, Variable == "Traders' mean trading volume"), mapping = aes(x = Role, y = 1.06 + 1.7*vjust, label = label), color = "black", size = 5) +
+    theme(text = element_text(size=18), axis.title.x = element_blank(), legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill = "transparent"), strip.text = element_text(size=18), strip.placement = "outside", strip.clip = "off") +
+    facet_grid(Variable ~ Phase, scales = "free", switch = "y") +
+    scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
+    scale_color_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
+    geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', position=position_dodge(width=0.5), linewidth = 0.7) + 
+    geom_blank(aes(y= 1.19))
 #dev.off()
 ```
 
@@ -1011,50 +1019,50 @@ t1 <- sum(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & I
 t1s <- length(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 0 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPRUni <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPRUni <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 0 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 0 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 0 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 0 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPRInf <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPRInf <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 
 t1 <- sum(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR1Uni <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR1Uni <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 0 & Period < 4 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR1Inf <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR1Inf <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR2Uni <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR2Uni <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 3 & Period < 10 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR2Inf <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR2Inf <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 9 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 9 & Role=="Uninformed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 9 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 9 & Role=="Uninformed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR3Uni <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR3Uni <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 t1 <- sum(with(subset(subjectsummary, Period > 9 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t1s <- length(with(subset(subjectsummary, Period > 9 & Role=="Informed trader" & IsREG == "REG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2s <- length(with(subset(subjectsummary, Period > 9 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
 t2 <- sum(with(subset(subjectsummary, Period > 9 & Role=="Informed trader" & IsREG == "NOREG"), as.numeric(LimitVolume>0 | Volume>0)))
-ptPR3Inf <- format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)
+ptPR3Inf <- str_replace(as.character(format(round(prop.test(c(t1,t2), c(t1s,t2s))$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 dat_PR2 <- data.frame( c(ePRInf, tPRInf, ptPRInf, ePRUni, tPRUni, ptPRUni), c(ePR1Inf, tPR1Inf, ptPR1Inf, ePR1Uni, tPR1Uni, ptPR1Uni), c(ePR2Inf, tPR2Inf, ptPR2Inf, ePR2Uni, tPR2Uni, ptPR2Uni), c(ePR3Inf, tPR3Inf, ptPR3Inf, ePR3Uni, tPR3Uni, ptPR3Uni)
                       )
@@ -1125,9 +1133,9 @@ i <- 1
 while(i<4){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eVolTreatInf <- format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatInf <- format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatInf <- str_replace(as.character(format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eVolTreatUni <- format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatUni <- format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatUni <- str_replace(as.character(format(round(t.test(as.numeric(Volume>0 & LimitVolume>0) ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_VolTreat[i,] <- as.numeric(c(eVolTreatInf, tVolTreatInf, eVolTreatUni, tVolTreatUni))
   i <- i + 1
 }}
@@ -1155,58 +1163,58 @@ ggplot(data=subset(marketsummary, Programme==3 & Period>3 & Period < 10), aes(Vo
 
 ### Aggregated mean volumes by regulatory regime, trader type, and phase.
 ```{r Volumemarket, echo = F}
-tVolM <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol2M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol3M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolM <- format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1M <- format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2M <- format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3M <- format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13M <- format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tVolM <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1M <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2M <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3M <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13M <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolM <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1M <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2M <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3M <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13M <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
-tVolInf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVolUni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol2Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol2Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol3Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol3Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolInf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolUni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tVolInf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVolUni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolInf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolUni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
-tVolInf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVolUni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol1Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol2Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol2Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tVol3Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol3Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Inf <- format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tVol13Uni <- format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolInf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVolUni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol1Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol2Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol3Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Inf <- format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tLimitVol13Uni <- format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tVolInf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVolUni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol1Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol2Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol3Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Inf <- str_replace(as.character(format(round(t.test(VolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tVol13Uni <- str_replace(as.character(format(round(t.test(VolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolInf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVolUni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol1Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol2Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>3 & Period < 10), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol3Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>9), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Inf <- str_replace(as.character(format(round(t.test(LimitVolumeInf ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tLimitVol13Uni <- str_replace(as.character(format(round(t.test(LimitVolumeUni ~ IsREG, data=subset(marketsummary, Period>0 & Phase != "Phase 2"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 eVolM <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 eVol1M <- format(round(t.test(Volume ~ IsREG, data=subset(marketsummary, Period>0 & Period < 4), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -1300,32 +1308,33 @@ u$ll <- u$Volume + qt(.025,u$n)*u$sd/sqrt(u$n)
 u$ul <- u$Volume + qt(.975,u$n)*u$sd/sqrt(u$n)
 u$Phase <- factor(u$Phase, levels = c("Phase 1", "Phase 2", "Phase 3"))
 
-dt1 <- format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt2 <- format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-dt3 <- format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt4 <- format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt5 <- format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-dt6 <- format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt7 <- format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt8 <- format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-dt9 <- format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt10 <- format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-dt11 <- format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-dt12 <- format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+dt1 <- str_replace(as.character(format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt2 <- str_replace(as.character(format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt3 <- str_replace(as.character(format(round(t.test(Volume_Informed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt4 <- str_replace(as.character(format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt5 <- str_replace(as.character(format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt6 <- str_replace(as.character(format(round(t.test(Volume_Informed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt7 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt8 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt9 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Informed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt10 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 1"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt11 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 2"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+dt12 <- str_replace(as.character(format(round(t.test(Volume_Uninformed_Uninformed ~ IsREG, data=subset(marketsummary, Phase == "Phase 3"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 dat_text <- data.frame(
-  label = c(paste0("p = ",dt1,""), paste0("p = ",dt2,""), paste0("p = ",dt3,""), paste0("p = ",dt4,""), paste0("p = ",dt5,""),paste0("p = ",dt6,""),paste0("p = ",dt7,""),paste0("p = ",dt8,""),paste0("p = ",dt9,""),paste0("p = ",dt10,""),paste0("p = ",dt11,""),paste0("p = ",dt12,"")),
+  label = c(paste0(" = ",dt1,""), paste0(" = ",dt2,""), paste0(" = ",dt3,""), paste0(" = ",dt4,""), paste0(" = .",dt5,"000"),paste0(" = ",dt6,""),paste0(" = ",dt7,""),paste0(" = .",dt8,"000"),paste0(" = ",dt9,""),paste0(" = ",dt10,""),paste0(" = ",dt11,"0"),paste0(" = ",dt12,"")),
   IsREG = c("REG", "REG", "NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG"),
   Phase = c("Phase 1", "Phase 2", "Phase 3", "Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3","Phase 1", "Phase 2", "Phase 3"),
-  type = c("ii", "ii", "ii", "iu", "iu", "iu", "ui", "ui", "ui", "uu", "uu", "uu")
+  type = c("ii", "ii", "ii", "iu", "iu", "iu", "ui", "ui", "ui", "uu", "uu", "uu"),
+  p = c("p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p")
 )
 
 #postscript("Figures/GraphvolumeRole.eps")
 ggplot(data=u, aes(y= Volume, x= type, group=interaction(embTreatment, IsREG), fill = IsREG, color = type)) +
   geom_bar(stat="identity", position = position_dodge(width = 0.5))+  
   labs(y="Markets' mean trading volume") +
-  geom_errorbar(aes(ymin = ll, ymax = ul), width=.2, color = 'black', position=position_dodge(width=0.5)) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "vertical", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
+  geom_errorbar(aes(ymin = ll, ymax = ul), width=.2, color = 'black', position=position_dodge(width=0.5), linewidth = 0.7) +
+  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "vertical", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.text = element_text(size = 18)) +
   facet_grid(embTreatment ~ Phase,scales = "free") +
   scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
   scale_colour_manual(name = "", values = c(0,0,0,0), labels = c("ii  = informed accepted from informed", "iu = informed accepted from uninformed", "ui = uninformed accepted from informed", "uu = uninformed accepted from uninformed")) +
@@ -1354,23 +1363,40 @@ uT$ll <- uT$Volume + qt(.025,uT$n)*uT$sd/sqrt(uT$n)
 uT$ul <- uT$Volume + qt(.975,uT$n)*uT$sd/sqrt(uT$n)
 uT$maxV <- max(uT$Volume)
 uT$Phase <- factor(uT$Phase, levels = c("Phase 1", "Phase 2", "Phase 3"))
+uT$variablename <- "Markets' mean trading volume"
 
 #postscript("Figures/GraphvolumeRolemiddleT.eps")
 ggplot(data=subset(uT, Phase == "Phase 2"), aes(y= Volume, x= type, group=interaction(IsREG), fill = IsREG, color = type)) +
+  labs(y = "") +
   geom_bar(stat="identity", position = position_dodge(width = 0.5))+  
-  labs(y="Markets' mean trading volume") +
-  geom_text(data = subset(dat_text, Phase == "Phase 2"), mapping = aes(x = type, y = 67, label = label), color = "black", size = 4) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "vertical", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
-  facet_grid(. ~ Phase,scales = "free") +
+  geom_text(data = subset(dat_text, Phase == "Phase 2"), mapping = aes(x = type, y = 67, label = p), color = "black", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(dat_text, Phase == "Phase 2"), mapping = aes(x = type, y = 67, label = label), color = "black", size = 5) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.title = element_blank(), legend.position = "bottom", legend.direction = "vertical", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill="transparent"), strip.text = element_text(size=18), strip.placement = "outside") +
+  facet_grid(variablename ~ Phase,scales = "free", switch = "y") +
   scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
   scale_colour_manual(name = "", values = c(0,0,0,0), labels = c("ii  = informed accepted from informed", "iu = informed accepted from uninformed", "ui = uninformed accepted from informed", "uu = uninformed accepted from uninformed")) +
   guides(color = guide_legend(keywidth = unit(0,"mm"))) +
-  geom_errorbar(aes(ymin = ll, ymax = ul), width=.2, color = 'black', position=position_dodge(width=0.5)) +
+  geom_errorbar(aes(ymin = ll, ymax = ul), width=.2, color = 'black', position=position_dodge(width=0.5), linewidth = 0.7) +
   geom_blank(aes(y= maxV))
 #dev.off()
-
 ```
 
+```{r RoleTradeallT, echo=F, fig.cap = "Mean market trading volume by combination of trading partners and regulatory regime (Figure WA1).", warning=F}
+#postscript("Figures/GraphvolumeRoleallT.eps")
+ggplot(data=subset(uT), aes(y= Volume, x= type, group=interaction(IsREG), fill = IsREG, color = type)) +
+  labs(y = "") +
+  geom_bar(stat="identity", position = position_dodge(width = 0.5))+  
+  geom_text(data = subset(dat_text), mapping = aes(x = type, y = 78, label = p), color = "black", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(dat_text), mapping = aes(x = type, y = 78, label = label), color = "black", size = 5) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.title = element_blank(), legend.position = "bottom", legend.direction = "vertical", legend.text = element_text(size=18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill="transparent"), strip.text = element_text(size=18), strip.placement = "outside") +
+  facet_grid(variablename ~ Phase,scales = "free", switch = "y") +
+  scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
+  scale_colour_manual(name = "", values = c(0,0,0,0), labels = c("ii  = informed accepted from informed", "iu = informed accepted from uninformed", "ui = uninformed accepted from informed", "uu = uninformed accepted from uninformed")) +
+  guides(color = guide_legend(keywidth = unit(0,"mm"))) +
+  geom_errorbar(aes(ymin = ll, ymax = ul), width=.2, color = 'black', position=position_dodge(width=0.5), linewidth = 0.7) +
+  geom_blank(aes(y= maxV))
+#dev.off()
+```
 
 ```{r volumetableAll, echo=F, results = 'asis', warning=F}
 ### Table 3 ####
@@ -1442,9 +1468,9 @@ t4 <- linearHypothesis(lnmiddle, c("historyR = (Intercept)"), singular.ok = T, v
 t5 <- linearHypothesis(lnend, c("historyN.R = historyR.R", "(Intercept) = historyR.N"), singular.ok = T, vcov. = vcovCL(lnend, cluster = ~ SessionID, type = "HC3"))
 t6 <- linearHypothesis(lnend, c("historyR.R = historyR.N","historyN.R = (Intercept)"), singular.ok = T, vcov. = vcovCL(lnend, cluster = ~ SessionID, type = "HC3"))
 
-ta <- data.frame("all" = c(t1$`Pr(>F)`[2], t2$`Pr(>F)`[2], t3$`Pr(>F)`[2]), 
-                "center" = c(t4$`Pr(>F)`[2], NA,NA),
-                "end" = c(NA, t5$`Pr(>F)`[2], t6$`Pr(>F)`[2]))
+ta <- data.frame("all" = c(str_replace(as.character(t1$`Pr(>F)`[2]), "^0\\.", "."), str_replace(as.character(t2$`Pr(>F)`[2]), "^0\\.", "."), str_replace(as.character(t3$`Pr(>F)`[2]), "^0\\.", ".")), 
+                "center" = c(str_replace(as.character(t4$`Pr(>F)`[2]), "^0\\.", "."), NA,NA),
+                "end" = c(NA, str_replace(as.character(t5$`Pr(>F)`[2]), "^0\\.", "."), str_replace(as.character(t6$`Pr(>F)`[2]), "^0\\.", ".")))
 rownames(ta) <- c("1$^{st}$ phase effect in the 2$^{nd}$ phase", "1$^{st}$ phase effect in the 3$^{rd}$ phase", "2$^{nd}$ phase effect")
 
 data.frame(format(ta,  digits = 3, scientific = 5))
@@ -1456,9 +1482,9 @@ i <- 1
 while(i<4){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eVolTreatInf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatInf <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatInf <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eVolTreatUni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatUni <- format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatUni <- str_replace(as.character(format(round(t.test(Volume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_VolTreat[i,] <- as.numeric(c(eVolTreatInf, tVolTreatInf, eVolTreatUni, tVolTreatUni))
   i <- i + 1
 }}
@@ -1495,16 +1521,16 @@ eshort3Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary
 eshort3Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 eshort13Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 eshort13Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-tshortInf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshortUni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort1Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort1Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort2Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tshort2Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tshort3Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort3Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort13Inf <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tshort13Uni <- format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tshortInf <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshortUni <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort1Inf <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort1Uni <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort2Inf <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort2Uni <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort3Inf <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort3Uni <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort13Inf <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tshort13Uni <- str_replace(as.character(format(round(t.test(shortsells ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 emarginInf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 emarginUni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -1516,41 +1542,43 @@ emargin3Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjects
 emargin3Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 emargin13Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 emargin13Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-tmarginInf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmarginUni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Inf <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Uni <- format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmarginInf <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmarginUni <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin1Inf <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin1Uni <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin2Inf <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin2Uni <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin3Inf <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin3Uni <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin13Inf <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin13Uni <- str_replace(as.character(format(round(t.test(marginbuysAsset ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 
 dat_textLimit <- data.frame(
-  label = c(paste0("p = ",tLimitVol1Inf,""),paste0("p = ",tLimitVol1Uni,""),paste0("p = ",tLimitVol2Inf,".0000"),paste0("p = ",tLimitVol2Uni,""),paste0("p = ",tLimitVol3Inf,""), paste0("p = ",tLimitVol3Uni,""),
-  paste0("p = ",tshort1Inf,""),paste0("p = ",tshort1Uni,""),paste0("p = ",tshort2Inf,""),paste0("p = ",tshort2Uni,""),paste0("p = ",tshort3Inf,"0"), paste0("p = ",tshort3Uni,""),
-  paste0("p = ",tmargin1Inf,""),paste0("p = ",tmargin1Uni,".0000"),paste0("p = ",tmargin2Inf,""),paste0("p = ",tmargin2Uni,""),paste0("p = ",tmargin3Inf,""), paste0("p = ",tmargin3Uni,"")),
+  label = c(paste0(" = ",tLimitVol1Inf,""),paste0(" = ",tLimitVol1Uni,""),paste0(" = .",tLimitVol2Inf,"000"),paste0(" = ",tLimitVol2Uni,""),paste0(" = ",tLimitVol3Inf,""), paste0(" = ",tLimitVol3Uni,""),
+  paste0(" = ",tshort1Inf,""),paste0(" = ",tshort1Uni,""),paste0(" = ",tshort2Inf,""),paste0(" = ",tshort2Uni,""),paste0(" = ",tshort3Inf,"0"), paste0(" = ",tshort3Uni,""),
+  paste0(" = ",tmargin1Inf,""),paste0(" = .",tmargin1Uni,"000"),paste0(" = ",tmargin2Inf,""),paste0(" = ",tmargin2Uni,""),paste0(" = ",tmargin3Inf,""), paste0(" = ",tmargin3Uni,"")),
   IsREG   = c("NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG","NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG","NOREG", "NOREG", "REG", "REG", "NOREG", "NOREG"),
   Role = c("Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders",
            "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders"),
   Phase = c("Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3","Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3","Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3"),
     Variable = c("Limit volume","Limit volume","Limit volume","Limit volume","Limit volume","Limit volume", "Short sells", "Short sells", "Short sells", "Short sells", "Short sells", "Short sells", "Margin buys", "Margin buys", "Margin buys", "Margin buys", "Margin buys", "Margin buys"), 
   #Variable = c("Traders' mean limit volume","Traders' mean limit volume","Traders' mean limit volume", "Traders' mean limit volume", "Traders' mean limit volume", "Traders' mean limit volume", "Traders' mean short selling volume", "Traders' mean short selling volume", "Traders' mean short selling volume", "Traders' mean short selling volume", "Traders' mean short selling volume", "Traders' mean short selling volume", "Traders' mean margin buys in volume", "Traders' mean margin buys in volume", "Traders' mean margin buys in volume", "Traders' mean margin buys in volume", "Traders' mean margin buys in volume", "Traders' mean margin buys in volume"), 
-  vjust = c(38,38,38,38,38,38,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3)
+  vjust = c(38,38,38,38,38,38,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3),
+  p = c("p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p")
   )
 
 #postscript("Figures/GraphLimitvolumePhaseallTreat.eps")
 ggplot(data=subset(avgtraderphasesummary2, variable == "LimitVolume" | variable == "shortsells" | variable == "marginbuysAsset"), aes(y= value, x= Role, group=(IsREG), fill = IsREG)) +
   geom_bar(stat="identity", position = position_dodge(width = 0.5))+ 
   labs(y="") +
-  geom_text(data = subset(dat_textLimit), mapping = aes(x = Role, y = vjust, label = label), color = "black", size = 4) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent")) +
-  facet_grid(factor(Variable, levels = c("Limit volume", "Short sells", "Margin buys")) ~ Phase, scales = "free") +
+  geom_text(data = subset(dat_textLimit), mapping = aes(x = Role, y = vjust, label = p), color = "black", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(dat_textLimit), mapping = aes(x = Role, y = vjust, label = label), color = "black", size = 5) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill = "transparent"), strip.text = element_text(size=18), strip.placement = "outside") +
+  facet_grid(factor(Variable, levels = c("Limit volume", "Short sells", "Margin buys")) ~ Phase, scales = "free", switch = "y") +
   scale_fill_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
   scale_color_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
-  geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', position=position_dodge(width=0.5))
+  geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', position=position_dodge(width=0.5), linewidth = 0.7)
 #dev.off()
 ```
 
@@ -1628,12 +1656,12 @@ t4 <- linearHypothesis(lnoffermiddle, c("historyR = (Intercept)"), singular.ok =
 t5 <- linearHypothesis(lnofferend, c("historyN.R = historyR.R", "(Intercept) = historyR.N"), singular.ok = T, vcov. = vcovCL(lnofferend, cluster = ~ SessionID, type = "HC3"))
 t6 <- linearHypothesis(lnofferend, c("historyR.R = historyR.N","historyN.R = (Intercept)"), singular.ok = T, vcov. = vcovCL(lnofferend, cluster = ~ SessionID, type = "HC3"))
 
-ta<- data.frame("all" = c(t1$`Pr(>F)`[2], t2$`Pr(>F)`[2], t3$`Pr(>F)`[2]), 
-                "center" = c(t4$`Pr(>F)`[2], NA,NA),
-                "end" = c(NA, t5$`Pr(>F)`[2], t6$`Pr(>F)`[2]))
+ta<- data.frame("all" = c(str_replace(as.character(format(t1$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", "."), str_replace(as.character(format(t2$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", "."), str_replace(as.character(format(t3$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", ".")), 
+                "center" = c(str_replace(as.character(format(t4$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", "."), NA,NA),
+                "end" = c(NA, str_replace(as.character(format(t5$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", "."), str_replace(as.character(format(t6$`Pr(>F)`[2],  digits = 3, scientific = 5)), "^0\\.", ".")))
 rownames(ta) <- c("1$^{st}$ phase effect in the 2$^{nd}$ phase", "1$^{st}$ phase effect in the 3$^{rd}$ phase", "2$^{nd}$ phase effect")
 
-format(ta,  digits = 3, scientific = 5)
+ta
 ```
 
 ```{r tLimitVolTreat, echo = F}
@@ -1642,9 +1670,9 @@ i <- 1
 while(i<4){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eVolTreatInf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatInf <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatInf <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Informed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eVolTreatUni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  tVolTreatUni <- format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  tVolTreatUni <- str_replace(as.character(format(round(t.test(LimitVolume ~ IsREG, data=subset(subjectsummary, Period>0 & Phase == "Phase 2" & embTreatment == t & Role== "Uninformed trader"), paired = T, var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_VolTreat[i,] <- as.numeric(c(eVolTreatInf, tVolTreatInf, eVolTreatUni, tVolTreatUni))
   i <- i + 1
 }}
@@ -1684,7 +1712,7 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
   colnames(vsd) <- c("Role", "embTreatment", "sdd", "sddL", "sddP", "sddPL")
   v <- merge(v, vsd, by=c("Role", "embTreatment"))
   v <- merge(v, vn, by=c("Role", "embTreatment"))
-  v$y <- "From Phase 1 to Phase 2"
+  v$y <- "From~Phase~1~to~Phase~2"
   v$embTreatment <- factor(v$embTreatment, levels = c("All treatments", "NN.RR", "RR.NN", "RR.RR"))
   colnames(v)[colnames(v) == "V1"] <- "d"
   colnames(v)[colnames(v) == "V2"] <- "dL"
@@ -1697,7 +1725,7 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
   colnames(v2sd) <- c("Role", "embTreatment", "sdd", "sddL", "sddP", "sddPL")
   v2 <- merge(v2, v2sd, by=c("Role", "embTreatment"))
   v2 <- merge(v2, v2n, by=c("Role", "embTreatment"))
-  v2$y <- "From Phase 2 to Phase 3"
+  v2$y <- "From~Phase~2~to~Phase~3"
   colnames(v2)[colnames(v2) == "V1"] <- "d"
   colnames(v2)[colnames(v2) == "V2"] <- "dL"
   colnames(v2)[colnames(v2) == "V3"] <- "dP"
@@ -1709,7 +1737,7 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
   colnames(v3sd) <- c("Role", "sdd", "sddL", "sddP", "sddPL")
   v3 <- merge(v3, v3sd, by=c("Role"))
   v3 <- merge(v3, v3n, by=c("Role"))
-  v3$y <- "From Phase 1 to Phase 2"
+  v3$y <- "From~Phase~1~to~Phase~2"
   v3$embTreatment <- "All treatments"
   colnames(v3)[colnames(v3) == "V1"] <- "d"
   colnames(v3)[colnames(v3) == "V2"] <- "dL"
@@ -1722,7 +1750,7 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
   colnames(v4sd) <- c("Role", "sdd", "sddL", "sddP", "sddPL")
   v4 <- merge(v4, v4sd, by=c("Role"))
   v4 <- merge(v4, v4n, by=c("Role"))
-  v4$y <- "From Phase 2 to Phase 3"
+  v4$y <- "From~Phase~2~to~Phase~3"
   v4$embTreatment <- "All treatments"
   colnames(v4)[colnames(v4) == "V1"] <- "d"
   colnames(v4)[colnames(v4) == "V2"] <- "dL"
@@ -1740,22 +1768,23 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
   v$llPL <- v$dPL + qt(.025,v$n)*v$sddPL/sqrt(v$n)
   v$ulPL <- v$dPL + qt(.975,v$n)*v$sddPL/sqrt(v$n)
   v$maxT <- NA
-  v$maxT[v$y == "From Phase 2 to Phase 3"] <- -max(v$ul)
+  v$maxT[v$y == "From~Phase~2~to~Phase~3"] <- -max(v$ul)
   v$maxL <- NA
-  v$maxL[v$y == "From Phase 2 to Phase 3"] <- -max(v$dL)  
+  v$maxL[v$y == "From~Phase~2~to~Phase~3"] <- -max(v$dL)  
   v$maxP <- NA
-  v$maxP[v$y == "From Phase 2 to Phase 3"] <- -max(v$ulP)
+  v$maxP[v$y == "From~Phase~2~to~Phase~3"] <- -max(v$ulP)
   v$maxPL <- NA
-  v$maxPL[v$y == "From Phase 2 to Phase 3"] <- -max(v$dPL)
+  v$maxPL[v$y == "From~Phase~2~to~Phase~3"] <- -max(v$dPL)
+  v$variablename <- paste0("'Difference in ln(odds'['Phase']~')'")
 
 #postscript("Figures/GraphmigrationTreat.eps")  
   ggplot(data=subset(v, embTreatment != "All treatments"), aes(y=d, x= Role, group=interaction(embTreatment,y), fill = Role)) +
   geom_bar(stat="identity") +  
   labs(y=expression("Difference in ln(odds"["Phase"]~")")) +
-  geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent")) +
-  facet_grid(y ~ embTreatment,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders"  = rgb(1,.9,.50))) + 
+  geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2, linewidth = 0.7) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.position = "none", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent"), strip.text = element_text(size = 18)) +
+  facet_grid(y ~ embTreatment,scales = "free", labeller = label_parsed) +
+  scale_fill_manual(values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) + 
   scale_y_continuous(breaks = c(-3:3)/2.5) +
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey")) +
   geom_blank(aes(y= maxT))
@@ -1766,11 +1795,11 @@ v <- aggregate(cbind(log(odds) - log(odds_start), log(oddsLimit) - log(oddsLimit
 #postscript("Figures/Graphmigration2.eps")
 ggplot(data=subset(v, embTreatment == "All treatments"), aes(y=d, x= Role, group=y, fill = Role)) +
   geom_bar(stat="identity") +
-  labs(y="Difference in ln(odds)") +
-  geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent")) +
-  facet_grid(. ~ y,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders" = rgb(1,.9,.50))) + 
+  labs(y="") +
+  geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2, linewidth = 0.7) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.position = "none", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"),  plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill = "transparent"), strip.text = element_text(size=18), strip.placement = "outside") +
+  facet_grid(variablename ~ y,scales = "free", labeller = label_parsed, switch = "y") +
+  scale_fill_manual( values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) + 
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey")) +
   geom_blank(aes(y= -.9))
 #dev.off()
@@ -1822,10 +1851,10 @@ wPU <- wilcox.test(log(odds_end) - log(odds_start) ~ 1, data = subset(phasesumma
 ```
 
 ```{r tableOdds, echo =F}
-taOdds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("V=", w0M1$statistic, ", p =", format(w0M1$p.value, digits = 2, scientific = 5)), paste0("V=", w0I1$statistic, ", p =", format(w0I1$p.value, digits = 1, scientific = 5)), paste0("V=", w0U1$statistic, ", p =", format(w0U1$p.value, digits = 1, scientific = 5)), paste0("V=", wR1$statistic, ", p =", format(wR1$p.value, digits = 1, scientific = 5))),
-                "Diff~0 Phase2~Phase3" = c(paste0("V=", w0M3$statistic, ", p =", format( w0M3$p.value, digits = 1, scientific = 5)), paste0("V=", w0I3$statistic, ", p =", format(w0I3$p.value, digits = 1, scientific = 5)), paste0("V=", w0U3$statistic, ", p =", format(w0U3$p.value, digits = 1, scientific = 5)), paste0("V=", wR3$statistic, ", p =", format(wR3$p.value, digits = 1, scientific = 5))),
-                "Diff Phase1~Phase3" = c(paste0("V=", wPM$statistic, ", p =", format(wPM$p.value, digits = 4, scientific = 5)), paste0("V=", wPI$statistic, ", p =", format(wPI$p.value, digits = 4, scientific = 5)), paste0("V=", wPU$statistic, ", p =", format(wPU$p.value, digits = 4, scientific = 5)), paste0("")), 
-                "Treat diff Phase1&Phase3" = c(paste0("H=", format(kTM13$statistic, digits = 4, scientific = 5), ", p =", format(kTM13$p.value, digits = 4, scientific = 5)), paste0("H=", format(kTI13$statistic, digits = 4, scientific = 5), ", p =", format(kTI13$p.value, digits = 4, scientific = 5)), paste0("H=", format(kTU13$statistic, digits = 4, scientific = 5), ", p =", format(kTU13$p.value, digits = 4, scientific = 5)), paste0("")))
+taOdds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("V=", w0M1$statistic, ", p =", str_replace(as.character(format(w0M1$p.value, digits = 2, scientific = 5)), "^0\\.", ".")), paste0("V=", w0I1$statistic, ", p =", str_replace(as.character(format(w0I1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", w0U1$statistic, ", p =", str_replace(as.character(format(w0U1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", wR1$statistic, ", p =", str_replace(as.character(format(wR1$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff~0 Phase2~Phase3" = c(paste0("V=", w0M3$statistic, ", p =", str_replace(as.character(format( w0M3$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", w0I3$statistic, ", p =", str_replace(as.character(format(w0I3$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", w0U3$statistic, ", p =", str_replace(as.character(format(w0U3$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", wR3$statistic, ", p =", str_replace(as.character(format(wR3$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff Phase1~Phase3" = c(paste0("V=", wPM$statistic, ", p =", str_replace(as.character(format(wPM$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wPI$statistic, ", p =", str_replace(as.character(format(wPI$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wPU$statistic, ", p =", str_replace(as.character(format(wPU$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("")), 
+                "Treat diff Phase1&Phase3" = c(paste0("H=", format(kTM13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kTM13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("H=", format(kTI13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kTI13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("H=", format(kTU13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kTU13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("")))
 
 rownames(taOdds) <- c("Market", "Informed traders", "Uninformed traders", "Role difference")
 
@@ -1993,7 +2022,7 @@ ggplot(data=w, aes(y=d, x= Role, group=interaction(embTreatment,y), fill = Role)
   geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2) +
   theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
   facet_grid(y ~ embTreatment,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders" = rgb(1,.9,.50))) +
+  scale_fill_manual(values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) +
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey"))
 
 ```
@@ -2005,7 +2034,7 @@ ggplot(data=w, aes(y=dwins, x= Role, group=interaction(embTreatment,y), fill = R
   geom_errorbar(aes(ymin=llwins, ymax=ulwins, color=factor(Role)), width=.2) +
   theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
   facet_grid(y ~ embTreatment,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders" = rgb(1,.9,.50))) +
+  scale_fill_manual(values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) +
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey"))
 
 ```
@@ -2016,10 +2045,10 @@ ggplot(data=w, aes(y=dwins, x= Role, group=interaction(embTreatment,y), fill = R
   ggplot(data=subset(v, embTreatment != "All treatments"), aes(y=dP, x= Role, group=interaction(embTreatment,y), fill = Role)) +
   geom_bar(stat="identity") +  
   labs(y=expression("Difference in ln(odds)"["geom"])) +
-  geom_errorbar(aes(ymin=llP, ymax=ulP, color=factor(Role)), width=.2) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
-  facet_grid(y ~ embTreatment,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders" = rgb(1,.9,.50))) + 
+  geom_errorbar(aes(ymin=llP, ymax=ulP, color=factor(Role)), width=.2, linewidth = 0.7) +
+  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.text = element_text(size = 18)) +
+  facet_grid(y ~ embTreatment,scales = "free", labeller = label_parsed) +
+  scale_fill_manual(values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) + 
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey")) +
   geom_blank(aes(y= maxP))
 #dev.off()
@@ -2116,9 +2145,9 @@ ggplot(data=wz, aes(y=d, x= Role, group=interaction(embTreatment,y), fill = Role
   geom_bar(stat="identity") +  
   labs(y=expression("Difference in ln(odds)"["geom"])) +
   geom_errorbar(aes(ymin=ll, ymax=ul, color=factor(Role)), width=.2) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.minor = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
+  theme(text = element_text(size=18),axis.title.x=element_blank(), legend.position = "none", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
   facet_grid( embTreatment ~ market + y,scales = "free") +
-  scale_fill_manual( values = c("All traders" = rgb(.96,.61,0), "Informed\ntraders" = rgb(1,.9,.50), "Uninformed\ntraders" = rgb(1,.9,.50))) +
+  scale_fill_manual(values = c("All traders" = rgb(.86,.35,0), "Informed\ntraders" = rgb(1,.73,.31), "Uninformed\ntraders" = rgb(1,.73,.31))) +
   scale_color_manual("Role", values=c("dimgrey","black", "black", "dimgrey"))
 
 ```
@@ -2200,10 +2229,10 @@ tgPI2 <- t.test(log(oddsInfwins) ~ Phase, data = subset(marketsummary, (Phase !=
 
 #### Tests observing phases
 ```{r tablegeomodds, echo =F}
-tageomodds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("V=", wg0M1$statistic, ", p =", format(wg0M1$p.value, digits = 1, scientific = 5)), paste0("V=", wg0I1$statistic, ", p =", format(wg0I1$p.value, digits = 1, scientific = 5)), paste0("V=", wg0U1$statistic, ", p =", format(wg0U1$p.value, digits = 4, scientific = 5)), paste0("V=", wgR1$statistic, ", p =", format(wgR1$p.value, digits = 1, scientific = 5))),
-                "Diff~0 Phase2~Phase3" = c(paste0("V=", wg0M3$statistic, ", p =", format(wg0M3$p.value, digits = 4, scientific = 5)), paste0("V=", wg0I3$statistic, ", p =", format(wg0I3$p.value, digits = 1, scientific = 5)), paste0("V=", wg0U3$statistic, ", p =", format(wg0U3$p.value, digits = 4, scientific = 5)), paste0("V=", wgR3$statistic, ", p =", format(wgR3$p.value, digits = 1, scientific = 5))),
-                "Diff Phase1~Phase3" = c(paste0("V=", wgPM$statistic, ", p =", format(wgPM$p.value, digits = 4, scientific = 5)), paste0("V=", wgPI$statistic, ", p =", format(wgPI$p.value, digits = 4, scientific = 5)), paste0("V=", wgPU$statistic, ", p =", format(wgPU$p.value, digits = 4, scientific = 5)), paste0("")), 
-                "Treatment diff Phase1&Phase3" = c(paste0("H=", format(kgTM13$statistic, digits = 4, scientific = 5), ", p =", format(kgTM13$p.value, digits = 4, scientific = 5)), paste0("H=", format(kgTI13$statistic, digits = 4, scientific = 5), ", p =", format(kgTI13$p.value, digits = 4, scientific = 5)), paste0("H=", format(kgTU13$statistic, digits = 4, scientific = 5), ", p =", format(kgTU13$p.value, digits = 4, scientific = 5)), paste0("")))
+tageomodds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("V=", wg0M1$statistic, ", p =", str_replace(as.character(format(wg0M1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", wg0I1$statistic, ", p =", str_replace(as.character(format(wg0I1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", wg0U1$statistic, ", p =", str_replace(as.character(format(wg0U1$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wgR1$statistic, ", p =", str_replace(as.character(format(wgR1$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff~0 Phase2~Phase3" = c(paste0("V=", wg0M3$statistic, ", p =", str_replace(as.character(format(wg0M3$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wg0I3$statistic, ", p =", str_replace(as.character(format(wg0I3$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("V=", wg0U3$statistic, ", p =", str_replace(as.character(format(wg0U3$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wgR3$statistic, ", p =", str_replace(as.character(format(wgR3$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff Phase1~Phase3" = c(paste0("V=", wgPM$statistic, ", p =", str_replace(as.character(format(wgPM$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wgPI$statistic, ", p =", str_replace(as.character(format(wgPI$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("V=", wgPU$statistic, ", p =", str_replace(as.character(format(wgPU$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("")), 
+                "Treatment diff Phase1&Phase3" = c(paste0("H=", format(kgTM13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kgTM13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("H=", format(kgTI13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kgTI13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("H=", format(kgTU13$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(kgTU13$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("")))
 
 rownames(tageomodds) <- c("market", "Informed traders", "Uninformed traders", "Role difference")
 
@@ -2212,9 +2241,9 @@ format(t(tageomodds), digits = 1, scientific = 5)
 
 #### Tests observing periods
 ```{r tabletgeomodds, echo =F}
-tageomodds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("t=", format(tg0M1$statistic, digits = 4, scientific = 5), ", p =", format(tg0M1$p.value, digits = 1, scientific = 5)), paste0("t=", format(tg0I1$statistic, digits = 4, scientific = 5), ", p =", format(tg0I1$p.value, digits = 1, scientific = 5)), paste0("t=", format(tg0U1$statistic, digits = 4, scientific = 5), ", p =", format(tg0U1$p.value, digits = 1, scientific = 5)), paste0("t=", format(tgR1$statistic, digits = 4, scientific = 5), ", p =", format(tgR1$p.value, digits = 1, scientific = 5))),
-                "Diff~0 Phase2~Phase3" = c(paste0("t=", format(tg0M3$statistic, digits = 4, scientific = 5), ", p =", format(tg0M3$p.value, digits = 4, scientific = 5)), paste0("t=", format(tg0I3$statistic, digits = 4, scientific = 5), ", p =", format(tg0I3$p.value, digits = 1, scientific = 5)), paste0("t=", format(tg0U3$statistic, digits = 4, scientific = 5), ", p =", format(tg0U3$p.value, digits = 4, scientific = 5)), paste0("t=", format(tgR3$statistic, digits = 4, scientific = 5), ", p =", format(tgR3$p.value, digits = 1, scientific = 5))),
-                "Diff Phase1~Phase3" = c(paste0("t=", format(tgPM$statistic, digits = 4, scientific = 5), ", p =", format(tgPM$p.value, digits = 2, scientific = 5)), paste0("t=", format(tgPI$statistic, digits = 4, scientific = 5), ", p =", format(tgPI$p.value, digits = 3, scientific = 5)), paste0("t=", format(tgPU$statistic, digits = 4, scientific = 5), ", p =", format(tgPU$p.value, digits = 4, scientific = 5)), paste0("")))
+tageomodds <- data.frame("Diff~0 Phase1~Phase2" = c(paste0("t=", format(tg0M1$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0M1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tg0I1$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0I1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tg0U1$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0U1$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tgR1$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tgR1$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff~0 Phase2~Phase3" = c(paste0("t=", format(tg0M3$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0M3$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tg0I3$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0I3$p.value, digits = 1, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tg0U3$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tg0U3$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tgR3$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tgR3$p.value, digits = 1, scientific = 5)), "^0\\.", "."))),
+                "Diff Phase1~Phase3" = c(paste0("t=", format(tgPM$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tgPM$p.value, digits = 2, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tgPI$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tgPI$p.value, digits = 3, scientific = 5)), "^0\\.", ".")), paste0("t=", format(tgPU$statistic, digits = 4, scientific = 5), ", p =", str_replace(as.character(format(tgPU$p.value, digits = 4, scientific = 5)), "^0\\.", ".")), paste0("")))
 
 rownames(tageomodds) <- c("market", "Informed traders", "Uninformed traders", "Role difference")
 
@@ -2225,21 +2254,21 @@ format(t(tageomodds), digits = 1, scientific = 5)
 ```{r toddsstartTreat, echo = F}
 dat_oddsTreat <- matrix(data = NA, ncol = 9, nrow = 4)
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[1,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
 i <- 2
 while(i<5){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 1") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[i,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
   i <- i + 1
 }}
@@ -2253,21 +2282,21 @@ dat_oddsTreat
 ```{r toddsendTreat, echo = F}
 dat_oddsTreat <- matrix(data = NA, ncol = 9, nrow = 4)
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3")), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[1,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
 i <- 2
 while(i<5){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 2" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[i,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
   i <- i + 1
 }}
@@ -2281,21 +2310,21 @@ dat_oddsTreat
 ```{r todds13Treat, echo = F}
 dat_oddsTreat <- matrix(data = NA, ncol = 9, nrow = 4)
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3")), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[1,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
 i <- 2
 while(i<5){
 for(t in c("NN.RR", "RR.NN", "RR.RR")){
   eoddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreat <- format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreat <- str_replace(as.character(format(round(t.test(log(odds) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatInf <- format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatInf <- str_replace(as.character(format(round(t.test(log(oddsInfmax) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   eoddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-  toddsTreatUni <- format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
+  toddsTreatUni <- str_replace(as.character(format(round(t.test(log(oddsUninf) ~ Phase, data=subset(marketsummary, Period>0 & ((regOrder == "NTop" & market == "Top") | (regOrder == "RTop" & market == "Bottom")) & (Phase == "Phase 1" | Phase == "Phase 3") & embTreatment == t), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_oddsTreat[i,] <- as.numeric(c(eoddsTreat, toddsTreat, eoddsTreatInf, toddsTreatInf, eoddsTreatUni, toddsTreatUni))
   i <- i + 1
 }}
@@ -2877,9 +2906,9 @@ ggplot(data = fitbash2) +
   geom_line(aes(time, visregFit, group=group, color=group)) +
   theme_bw() +
   scale_x_continuous(limits = c(-5,185),breaks=c(0,30,60,90,120,150,180)) +
-  labs(colour = " ") + ylab("Spread") + xlab('Time(s)') + ylim(0,NA) +
+  labs(colour = " ") + ylab("Spread") + xlab('Time (seconds)') + ylim(0,NA) +
   scale_color_manual( values = c("NOREG" = rgb(.46, .76, .88), "REG" = rgb(0,.29,.51))) +
-  theme(text = element_text(size = 18), axis.text.y.right = element_text(color = "darkgrey"), axis.title.y.right = element_text(color = "darkgrey"), legend.position = "bottom")
+  theme(text = element_text(size = 18), axis.text.y.right = element_text(color = "darkgrey"), axis.title.y.right = element_text(color = "darkgrey"), legend.position = "bottom", legend.text = element_text(size = 18))
 #dev.off()
 ```
 
@@ -2903,22 +2932,22 @@ ggplot(data = fitbash2) +
 ```{r TP graph, echo=FALSE ,fig.cap="Mean gross trading profits per trader (‘PD’) by regulatory regime, trader type, and phase (Figure 5).", warning=F}
 ### Figure 5 ####
 # Data for Table WA9 ##
-tPDbeforeInf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeUni <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore1Inf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore1Uni <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore2Inf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore2Uni <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore3Inf <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbefore3Uni <- format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunInf <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunUni <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPun1Inf <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPun1Uni <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPun2Inf <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDPun2Uni <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDPun3Inf <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPun3Uni <- format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tPDbeforeInf <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeUni <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore1Inf <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore1Uni <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore2Inf <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore2Uni <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore3Inf <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbefore3Uni <- str_replace(as.character(format(round(t.test(PDbefore ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunInf <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunUni <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun1Inf <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun1Uni <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun2Inf <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun2Uni <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun3Inf <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPun3Uni <- str_replace(as.character(format(round(t.test(PDPun ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 ePDbeforeInf <- format(round(t.test(PDbefore*100 ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 ePDbeforeUni <- format(round(t.test(PDbefore*100 ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -2938,29 +2967,33 @@ ePDPun3Inf <- format(round(t.test(PDPun*100 ~ IsREG, data=subset(subjectsummary,
 ePDPun3Uni <- format(round(t.test(PDPun*100 ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 
 datPD_text <- data.frame(
-  label = c(paste0("p = ",tPDbefore1Inf,"0"), paste0("p = ",tPDbefore1Uni,""), paste0("p = ",tPDbefore2Inf,""), paste0("p = ",tPDbefore2Uni,""), paste0("p = ",tPDbefore3Inf,"0"),paste0("p = ",tPDbefore3Uni,""),paste0("p = ",tPDPun1Inf,""),paste0("p = ",tPDPun1Uni,""),paste0("p = ",tPDPun2Inf,".0000"),paste0("p = ",tPDPun2Uni,""),paste0("p = ",tPDPun3Inf,""),paste0("p = ",tPDPun3Uni,"")),
+  label = c(paste0(" = ", tPDbefore1Inf,"0"), paste0(" = ", tPDbefore1Uni,""), paste0(" = ",tPDbefore2Inf,""), paste0(" = ",tPDbefore2Uni,""), paste0(" = ",tPDbefore3Inf,"0"),paste0(" = ",tPDbefore3Uni,""),paste0(" = ",tPDPun1Inf,""),paste0(" = ",tPDPun1Uni,""),paste0(" = .",tPDPun2Inf,"000"),paste0(" = ",tPDPun2Uni,""),paste0(" = ",tPDPun3Inf,""),paste0(" = ",tPDPun3Uni,"")),
   IsREG = c("REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG"),
   Role = c("Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders"),
   Phase = c("Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3", "Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3"),
   group = c("PDbefore","PDbefore","PDbefore", "PDbefore", "PDbefore", "PDbefore", "REG.PDPun", "REG.PDPun", "REG.PDPun","REG.PDPun","REG.PDPun","REG.PDPun"),
   Variable = c("PDbefore","PDbefore","PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDPun", "PDPun", "PDPun","PDPun","PDPun","PDPun"),
-  vjust = c(0,0,0,0,0,0,.003,.003,.003,.003,.003,.003)
+  vjust = c(0,0,0,0,0,0,.003,.003,.003,.003,.003,.003), 
+  p = c("p","p","p","p","p","p","p","p","p","p","p","p")
 )
 
 avgtraderphasesummary2$group <- interaction(avgtraderphasesummary2$IsREG, avgtraderphasesummary2$variable)
 avgtraderphasesummary2$group <- factor(avgtraderphasesummary2$group, levels = c("NOREG.PDbefore", "REG.PDbefore", "REG.PDPun", "NOREG.PDbeforeVol", "REG.PDbeforeVol", "REG.PDPunVol"))
 avgtraderphasesummary2$group2 <- interaction(avgtraderphasesummary2$IsREG, avgtraderphasesummary2$Variable)
 avgtraderphasesummary2$group2 <- factor(avgtraderphasesummary2$group2, levels = c("NOREG.PDbeforePos", "REG.PDbeforePos", "REG.PDPunPos"))
+avgtraderphasesummary2$variablename <- "Mean gross trading profits per trader"
 
 #postscript("Figures/GraphPDPhaseallTreat.eps")
 ggplot(data=subset(avgtraderphasesummary2, variable == "PDbefore" | ( IsREG != "NOREG" & variable =="PDPun")), aes(y= value*100, x= Role, group = group, fill = group, color = group)) +
   geom_bar(stat="identity", position = position_dodge(width = 0.7), size = 2)+ 
   labs(y="") +
-  geom_text(data = subset(datPD_text[1:6,]), mapping = aes(x = Role, y = 5.5 - vjust, label = label), col = "black", size = 4) +
-  geom_text(data = subset(datPD_text[7:12,]), mapping = aes(x = Role, y = 5.5 - vjust*100, label = label), col = "orange", size = 4) +
-  geom_errorbar(aes(ymin = dol*100, ymax = upl*100), width=.2, color = 'black', size = .7, position=position_dodge(width=0.7)) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
-  facet_grid(. ~ Phase, scales = "free") +
+  geom_text(data = subset(datPD_text[1:6,]), mapping = aes(x = Role, y = 5.5 - vjust, label = p), col = "black", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(datPD_text[1:6,]), mapping = aes(x = Role, y = 5.5 - vjust, label = label), col = "black", size = 5) +
+  geom_text(data = subset(datPD_text[7:12,]), mapping = aes(x = Role, y = 5.45 - vjust*100, label = p), col = "orange", size = 5, hjust = 4.5, fontface = "italic") +
+  geom_text(data = subset(datPD_text[7:12,]), mapping = aes(x = Role, y = 5.45 - vjust*100, label = label), col = "orange", size = 5) +
+  geom_errorbar(aes(ymin = dol*100, ymax = upl*100), width=.2, color = 'black', linewidth = .7, position=position_dodge(width=0.7)) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill = "transparent"), strip.placement = "outside", strip.text = element_text(size=18)) +
+  facet_grid(variablename ~ Phase, scales = "free", switch = "y") +
   scale_color_manual(name = "Regime - Punishment", values = c("REG.PDbefore" = "transparent", "NOREG.PDbefore" = "transparent", "REG.PDPun" = "orange"), breaks = c("NOREG.PDbefore", "REG.PDbefore", "REG.PDPun"), labels = c("NOREG", "REG - before punishment", "REG - after punishment")) +
   scale_fill_manual(name = "Regime - Punishment", values = c("NOREG.PDbefore" = rgb(.46, .76, .88), "REG.PDPun" = rgb(0,.29,.51), "REG.PDbefore" = rgb(0,.29,.51)), breaks = c("NOREG.PDbefore", "REG.PDbefore", "REG.PDPun"), labels = c("NOREG", "REG - before punishment", "REG - after punishment"))
 #dev.off()
@@ -3077,13 +3110,13 @@ avgtraderphasesummaryRank2$rank2 <- factor(avgtraderphasesummaryRank2$rank, labe
 #postscript("Figures/GraphPDPhaseallTreatRank.eps")
 ggplot(data=subset(avgtraderphasesummaryRank2, variable == "PDbefore" | ( IsREG != "NOREG" & variable =="PDPun")), aes(y= value*100, x= rank2, group = group, fill = group, color = group)) +
     geom_bar(stat="identity", position = position_dodge(width = 0.7), size = 2)+ 
-    labs(y="") +
+    labs(y="Mean gross trading profits per trader") +
     #geom_text(data = subset(datPD_text[1:6,]), mapping = aes(x = Role3, y = -6 - vjust, label = label), col = "black", size = 4) +
     #geom_text(data = subset(datPD_text[13:18,]), mapping = aes(x = Role3, y = -6 - vjust, label = label), col = "black", size = 4) +
     #geom_text(data = subset(datPD_text[7:12,]), mapping = aes(x = Role3, y = -6 - vjust*200, label = label), col = "orange", size = 4) +
     #geom_text(data = subset(datPD_text[19:24,]), mapping = aes(x = Role3, y = -6 - vjust*200, label = label), col = "orange", size = 4) +
-    geom_errorbar(aes(ymin = dol*100, ymax = upl*100), width=.2, color = 'black', size = .7, position=position_dodge(width=0.7)) +
-    theme(text = element_text(size=18),axis.title.x=element_blank(), axis.text.x = element_text(size=12), legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
+    geom_errorbar(aes(ymin = dol*100, ymax = upl*100), width=.2, color = 'black', linewidth = .7, position=position_dodge(width=0.7)) +
+    theme(text = element_text(size=18),axis.title.x=element_blank(), axis.text.x = element_text(size=12), legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.text = element_text(size = 18)) +
     facet_grid(Role ~ Phase, scales = "free") +
     scale_color_manual(name = "Regime - Punishment", values = c("REG.PDbefore" = "transparent", "NOREG.PDbefore" = "transparent", "REG.PDPun" = "orange"), breaks = c("NOREG.PDbefore", "REG.PDbefore", "REG.PDPun"), labels = c("NOREG", "REG - before punishment", "REG - after punishment")) +
     scale_fill_manual(name = "Regime - Punishment", values = c("NOREG.PDbefore" = rgb(.46, .76, .88), "REG.PDPun" = rgb(0,.29,.51), "REG.PDbefore" = rgb(0,.29,.51)), breaks = c("NOREG.PDbefore", "REG.PDbefore", "REG.PDPun"), labels = c("NOREG", "REG - before punishment", "REG - after punishment"))
@@ -3111,22 +3144,22 @@ colnames(table) <- c("N", "Any positive rounds", "No positive rounds", "No neutr
 
 ```{r TPVolgraph, echo=FALSE ,fig.cap="Mean gross trading profits per trader per share (‘$\\pi$’) by regulatory regime, trader type, and phase.", warning=F}
 # Data for Table WA10 ##
-tPDbeforeVolInf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVolUni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol1Inf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol1Uni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol2Inf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol2Uni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol3Inf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDbeforeVol3Uni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVolInf <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVolUni <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol1Inf <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol1Uni <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol2Inf <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol2Uni <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol3Inf <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tPDPunVol3Uni <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tPDbeforeVolInf <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVolUni <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol1Inf <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol1Uni <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol2Inf <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol2Uni <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol3Inf <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDbeforeVol3Uni <- str_replace(as.character(format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVolInf <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVolUni <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol1Inf <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol1Uni <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol2Inf <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol2Uni <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol3Inf <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tPDPunVol3Uni <- str_replace(as.character(format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 ePDbeforeVolInf <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 ePDbeforeVolUni <- format(round(t.test(PDbeforeVol ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
@@ -3147,24 +3180,28 @@ ePDPunVol3Uni <- format(round(t.test(PDPunVol ~ IsREG, data=subset(subjectsummar
 
 
 datPDVol_text <- data.frame(
-  label = c(paste0("p = ",tPDbeforeVolInf,""), paste0("p = ",tPDbeforeVolUni,""), paste0("p = ",tPDbeforeVol1Inf,""), paste0("p = ",tPDbeforeVol1Uni,""), paste0("p = ",tPDbeforeVol2Inf,""), paste0("p = ",tPDbeforeVol2Uni,""), paste0("p = ",tPDbeforeVol3Inf,""),paste0("p = ",tPDbeforeVol3Uni,""),paste0("p = ",tPDPunVolInf,""),paste0("p = ",tPDPunVolUni,""),paste0("p = ",tPDPunVol1Inf,""),paste0("p = ",tPDPunVol1Uni,""),paste0("p = ",tPDPunVol2Inf,""),paste0("p = ",tPDPunVol2Uni,""),paste0("p = ",tPDPunVol3Inf,""),paste0("p = ",tPDPunVol3Uni,"")),
+  label = c(paste0(" = ",tPDbeforeVolInf,""), paste0(" = ",tPDbeforeVolUni,""), paste0(" = ",tPDbeforeVol1Inf,""), paste0(" = ",tPDbeforeVol1Uni,""), paste0(" = ",tPDbeforeVol2Inf,""), paste0(" = ",tPDbeforeVol2Uni,""), paste0(" = ",tPDbeforeVol3Inf,""),paste0(" = ",tPDbeforeVol3Uni,""),paste0(" = ",tPDPunVolInf,""),paste0(" = ",tPDPunVolUni,""),paste0(" = ",tPDPunVol1Inf,""),paste0(" = ",tPDPunVol1Uni,""),paste0(" = ",tPDPunVol2Inf,""),paste0(" = ",tPDPunVol2Uni,""),paste0(" = ",tPDPunVol3Inf,""),paste0(" = ",tPDPunVol3Uni,"")),
   IsREG = c("REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG", "REG"),
   Role = c("Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders", "Informed\ntraders", "Uninformed\ntraders"),
   Phase = c("All phases", "All phases", "Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3", "All phases", "All phases", "Phase 1", "Phase 1", "Phase 2", "Phase 2", "Phase 3", "Phase 3"),
   group = c("PDbefore","PDbefore","PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDbefore", "REG.PDPun", "REG.PDPun", "REG.PDPun", "REG.PDPun", "REG.PDPun","REG.PDPun","REG.PDPun","REG.PDPun"),
   Variable = c("PDbefore","PDbefore","PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDbefore", "PDPun", "PDPun", "PDPun", "PDPun", "PDPun","PDPun","PDPun","PDPun"),
-  vjust = c(0,0,0,0,0,0,0,0,.09,.09,.09,.09,.09,.09,.09,.09)
+  vjust = c(0,0,0,0,0,0,0,0,.09,.09,.09,.09,.09,.09,.09,.09),
+  p = c("p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p")
 )
+avgtraderphasesummary2$variablename <- "Mean trading profits per share and trader"
 
 #postscript("Figures/GraphPDPhaseallTreatVol.eps")
 ggplot(data=subset(avgtraderphasesummary2, variable == "PDbeforeVol" | ( IsREG != "NOREG" & variable =="PDPunVol")), aes(y= value, x= Role, group = group, fill = group, color = group)) +
   geom_bar(stat="identity", position = position_dodge(width = 0.7), size = 2) + 
   labs(y="") +
-  geom_text(data = subset(datPDVol_text[3:8,]), mapping = aes(x = Role, y = 1.9 - vjust, label = label), col = "black", size = 4) +
-  geom_text(data = subset(datPDVol_text[11:16,]), mapping = aes(x = Role, y = 1.9 - vjust, label = label), col = "orange", size = 4) +
-  geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', size = .7, position=position_dodge(width=0.7)) +
-  theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
-  facet_grid(. ~ Phase, scales = "free") +
+  geom_text(data = subset(datPDVol_text[3:8,]), mapping = aes(x = Role, y = 1.9 - vjust, label = p), col = "black", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(datPDVol_text[3:8,]), mapping = aes(x = Role, y = 1.9 - vjust, label = label), col = "black", size = 5) +
+  geom_text(data = subset(datPDVol_text[11:16,]), mapping = aes(x = Role, y = 1.9 - vjust, label = p), col = "orange", size = 5, fontface = "italic", hjust = 4.5) +
+  geom_text(data = subset(datPDVol_text[11:16,]), mapping = aes(x = Role, y = 1.9 - vjust, label = label), col = "orange", size = 5) +
+  geom_errorbar(aes(ymin = dol, ymax = upl), width=.2, color = 'black', linewidth = .7, position=position_dodge(width=0.7)) +
+  theme(text = element_text(size=18), axis.title.x=element_blank(), legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.background.y = element_rect(fill = "transparent"), strip.placement = "outside", strip.text = element_text(size = 18)) +
+  facet_grid(variablename ~ Phase, scales = "free", switch = "y") +
   scale_color_manual(name = "Regime - Punishment", values = c("REG.PDbeforeVol" = "transparent", "NOREG.PDbeforeVol" = "transparent", "REG.PDPunVol" = "orange"), breaks = c("NOREG.PDbeforeVol", "REG.PDbeforeVol", "REG.PDPunVol"), labels = c("NOREG", "REG - before punishment", "REG - after punishment")) +
   scale_fill_manual(name = "Regime - Punishment", values = c("NOREG.PDbeforeVol" = rgb(.46, .76, .88), "REG.PDPunVol" = rgb(0,.29,.51), "REG.PDbeforeVol" = rgb(0,.29,.51)), breaks = c("NOREG.PDbeforeVol", "REG.PDbeforeVol", "REG.PDPunVol"), labels = c("NOREG", "REG - before punishment", "REG - after punishment"))
 #dev.off()
@@ -3362,9 +3399,9 @@ coefProfitRank$variable <- factor(coefProfitRank$variable, levels = c("Before", 
 ggplot(data=subset(coefProfitRank), aes(y= Estimate, x= Rank, group=(variable))) +
     geom_point(position = position_dodge(width = 0.5))+ 
     labs(y="") +
-    theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent")) +
+    theme(text = element_text(size=18),axis.title.x=element_blank(),legend.title = element_blank(), legend.position = "bottom", legend.direction = "horizontal", legend.text = element_text(size = 18), panel.grid.major.y = element_line(colour = "lightgrey"), panel.background = element_rect(fill = "transparent"), plot.background = element_rect(fill = "transparent"), strip.text = element_text(size = 18)) +
     facet_grid(Role ~ Phase, scales = "fixed") +
-    geom_errorbar(aes(ymin = Estimate + qt(.025,df)*Std..Error, ymax = Estimate + qt(.975,df)*Std..Error, color = variable), width=.2, position=position_dodge(width=0.5)) +
+    geom_errorbar(aes(ymin = Estimate + qt(.025,df)*Std..Error, ymax = Estimate + qt(.975,df)*Std..Error, color = variable), width=.2, position=position_dodge(width=0.5), linewidth = 0.7) +
     scale_x_continuous(breaks = c(1:7)*2) +
     scale_color_manual(name = "Redistribution", values = c("Before" = "black", "After" = "orange"))
 #dev.off()
@@ -3455,9 +3492,9 @@ dat_profitT<- matrix(data = NA, ncol = 3, nrow = 3)
 i <- 1
 while(i<4){
   for(p in list("Phase 1", "Phase 2", "Phase 3")){
-  sN <- format(round(t.test(PDbefore ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "NOREG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)
-sR <- format(round(t.test(PDbefore ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "REG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)
-sRp <- format(round(t.test(PDPun ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "REG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)
+  sN <- str_replace(as.character(format(round(t.test(PDbefore ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "NOREG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+sR <- str_replace(as.character(format(round(t.test(PDbefore ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "REG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+sRp <- str_replace(as.character(format(round(t.test(PDPun ~ Role, data=subset(subjectsummary, Phase == p & IsREG == "REG"), var.equal=F)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
   dat_profitT[i,] <- (c(sN, sR, sRp))
   i <- i + 1
 }}
@@ -3499,16 +3536,16 @@ emargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsumma
 emargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 emargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
 emargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$estimate, digits = 4), scientific = FALSE)
-tmarginInf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmarginUni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin1Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin2Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin3Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Inf2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
-tmargin13Uni2 <- format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)
+tmarginInf2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmarginUni2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin1Inf2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin1Uni2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>0 & Period<4 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin2Inf2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Informed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin2Uni2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>3 & Period<10 & Role=="Uninformed trader"), var.equal=T, paired = T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin3Inf2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin3Uni2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period>9 & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin13Inf2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Informed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
+tmargin13Uni2 <- str_replace(as.character(format(round(t.test(marginbuys ~ IsREG, data=subset(subjectsummary, Period >0 & (Period <4 | Period>9) & Role=="Uninformed trader"), var.equal=T)$p.value, digits = 4), scientific = FALSE)), "^0\\.", ".")
 
 dat_margin <- data.frame( c(emarginInf2, tmarginInf2, emarginUni2, tmarginUni2), c(emargin1Inf2, tmargin1Inf2, emargin1Uni2, tmargin1Uni2), c(emargin2Inf2, tmargin2Inf2, emargin2Uni2, tmargin2Uni2), c(emargin3Inf2, tmargin3Inf2, emargin3Uni2, tmargin3Uni2), c(emargin13Inf2, tmargin13Inf2, emargin13Uni2, tmargin13Uni2)
                       )
@@ -3883,7 +3920,6 @@ p_GiniPDbeforeall <- coeftest(GiniPDbeforeall, vcov. = vcovCL(GiniPDbeforeall, c
 
 texreg(list(GiniProfitall, GiniProfitbeginning, GiniProfitmiddle, GiniProfitend, GiniPDbeforeall, GiniPDbeforebeginning, GiniPDbeforemiddle, GiniPDbeforeend), custom.note = ("\\parbox{.4\\linewidth}{\\vspace{2pt}%stars.}"), 
        stars = c(0.001,  0.01, 0.05), digits = 2, leading.zero = TRUE,   omit.coef = "(Session)|(subject)", 
-
        custom.model.names = c("all", "Phase 1", "Phase 2", "Phase 3","all", "Phase 1", "Phase 2", "Phase 3"),
        caption = "GiniProfit(volume)", override.se=list(se_GiniProfitall, se_GiniProfitbeginning, se_GiniProfitmiddle, se_GiniProfitend, se_GiniPDbeforeall, se_GiniPDbeforebeginning, se_GiniPDbeforemiddle, se_GiniPDbeforeend), 
        override.p = list(p_GiniProfitall, p_GiniProfitbeginning, p_GiniProfitmiddle, p_GiniProfitend, p_GiniPDbeforeall, p_GiniPDbeforebeginning, p_GiniPDbeforemiddle, p_GiniPDbeforeend))
