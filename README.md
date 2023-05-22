@@ -1,19 +1,6 @@
 # TraderMigration
 This repository provides all data and analyses code used in the JFM paper. Using the data, please cite the paper:
 
-@article{Merl2023,
-title = {Insider trading regulation and trader migration},
-journal = {Journal of Financial Markets},
-pages = {100839},
-year = {2023},
-issn = {1386-4181},
-doi = {https://doi.org/10.1016/j.finmar.2023.100839},
-url = {https://www.sciencedirect.com/science/article/pii/S138641812300037X},
-author = {Robert Merl and Stefan Palan and Dominik Schmidt and Thomas Stöckl},
-keywords = {Experimental finance, Asset market, Insider trading regulation, Market share, Trader migration},
-abstract = {Discussions about insider trading regulation veer between the poles of forbidding insider trading to protect market integrity and allowing insider trading to foster informational efficiency. We study traders’ preferences for regulation by offering them concurrent markets with different regulatory regimes in an experimental setting. We find that informed traders’ preference for the unregulated market causes both informed and uninformed traders to be more active in the unregulated market. This market, thus, sees more trading volume, lower spreads, and less mispricing. Nevertheless, uninformed traders suffer greater losses in unregulated markets, while informed traders profit from the absence of regulation.}
-}
-
 The file ``Data.RData`` consists of nine data tables:
 
 ## marketsummary
